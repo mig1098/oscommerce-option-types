@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>Option Types v2</title>
+    <style type="text/css">
+      * {
+        font-family: Arial;
+        font-family: 'Trebuchet MS' Arial;
+        font-size: 11px;
+      }
+      body {
+        margin:20px;
+      }
+      h2 {
+        font-family: 'Trebuchet MS' Arial;
+        color:#000;
+        font-weight: bold;
+        font-size: 14px;
+      }
+      h1 {
+        font-family: 'Trebuchet MS' Arial;
+        color:#537f7e;
+        font-weight:bold;
+        font-size:18px;
+      }
+      a {
+        color:#537f7e;
+        font-weight:bold;
+        text-decoration:none;
+      }
+      a:hover {
+        text-decoration:underline
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1>Option Types v2</h1>
+      <h2>This contribution is built on top of osCommerce 2.2rc2a.<br>It is an update/upgrade/revision/compilation of the following contributions:</h2>
+      <UL>
+        <LI><b>Option Type Feature v3</b> (Originally by Chandra Roukema)
+        <LI><b>Option Type File Feature v.8</b> (Originally by Matt Fletcher)
+        <LI><b>AJAX Attribute Manager v2.8.6</b> ((Almost unchanged) Originally by Sam West)
+        <LI><b>Improvements by me</b> (AvanOsch aKa Zappo the Wizard of Osch) for <a href="http://shop.crystalcopy.nl" target="_blank">http://shop.crystalcopy.nl</a>
+      </UL>
+      <br>
+      <table border="0"><tr><td width="50%">
+      <h2>The Option Types v2 contribution adds the following functionality to osCommerce:</h2>
+      <UL>
+        <LI><b>The	following Option Types:</b>
+        <UL>
+          <LI>Text (With progress bar)
+          <LI>Text	area (With progress bar)
+          <LI>Uploads
+          <LI>Checkboxes
+          <LI>Radio	buttons
+        </UL>
+        <LI><b>Option Sort Order</b> (this makes it possible to order the attributes in product_info by Option)
+        <LI><b>Option Length</b> (this is for Text fields. Limits to the number of characters, which is shown in a progress bar)
+        <LI><b>Comments for Options</b> (if set in Admin, this is shown after the Option in product_info)
+        <LI><b>Uploads are 'connected' to the customer</b>, who now gets a dropdown with uploaded files when upload option is available.
+        <LI><b>Uploads are placed in temporary directory</b> if the customer is a guest, and in uploads directory if customer is registered (moves files if customer signs in)
+        <LI><b>Temporary Uploads folder is automatically cleaned.</b> How old the files must be for deletion, can be set via Admin.
+        <LI><b>Use AJAX Attribute Manager for editing product attributes</b> (Removes product attributes from product_attributes.php in Admin (hmmm.... ;D ))
+        <UL>
+          <LI>If the AJAX Attribute Manager is not wanted/needed, it is easy to exclude from the installation
+        </UL>
+      </UL>
+      </td>
+      <td><center>
+      <a href="./ReadMe/CatalogPreview1.jpg" target="_blank"><img src="./ReadMe/thumb/OptionTypes.jpg" alt="Catalog with various Option Types" title="Catalog with various Option Types"></a><br>
+      </center></td>
+      </tr>
+      <tr><td>
+      <a href="./ReadMe/ShoppingCart.jpg" target="_blank"><img src="./ReadMe/thumb/ShopCart.jpg" alt="Shopping Cart with Attributes" title="Shopping Cart with Attributes"></a><br>
+      </td>
+      <td>
+      <a href="./ReadMe/CatalogPreview2.jpg" target="_blank"><img src="./ReadMe/thumb/OptionTypes2.jpg" alt="Option Type Uploads with Previous uploads dropdown" title="Option Type Uploads with Previous uploads dropdown"></a><br>
+      </td>
+      </tr>
+      <tr><td><table border="0"><tr><td width="35%"><h1>Admin-Side Screenshots:</h1>
+      All images are links to full-sized screenshots (open in new window).<br>
+      For an explanation of the workings of the Administration Manager, click the lower right image.</td><td>
+      <a href="./ReadMe/AdminCategory.jpg" target="_blank"><img src="./ReadMe/thumb/AdminCat.jpg" alt="Admin New Category" title="Admin New Category"></a><br></td></tr></table>
+      </td>
+      <td>
+      <a href="./ReadMe/AdminOptions.jpg" target="_blank"><img src="./ReadMe/thumb/AdminOpt.jpg" alt="Admin Products Options Page" title="Admin Products Options Page"></a><br>
+      </td>
+      </tr>
+      <tr><td>
+      <a href="./ReadMe/AdminProducts.jpg" target="_blank"><img src="./ReadMe/thumb/AdminProd.jpg" alt="Admin Attribute Manager" title="Admin Attribute Manager"></a><br>
+      </td>
+      <td>
+      <a href="./ReadMe/AttribManager.jpg" target="_blank"><img src="./ReadMe/thumb/AttrMan.jpg" alt="Admin Attribute Manager Explained" title="Admin Attribute Manager Explained"></a><br>
+      </td>
+      </tr>
+      </table>
+      <br>
+      <h1>Installation Instructions:</h1>
+      <UL>
+        <LI>run the SQL file to include the database changes (<b>OptionTypes v2 SQL.sql</b>)
+        <LI><b>Clean Install:</b>
+        <UL>
+          <LI>Copy all provided files in the Option Types v2 folder over your osCommerce installation
+        </UL>  
+        <LI><b>Changed Installation:</b>
+        <UL>
+          <LI>Compare the files in the Option Types v2 folder with your osCommerce installation
+          <LI>ALL changes are commented with // BOF - Zappo - Option Types v2 -
+          <LI>Sub Add-Ons are seperately commented (Attribute Manager for example is: // BOF - Zappo - Option Types v2 - AttribManager - )
+        </UL>  
+        <LI><b>To also use Attribute Manager:</b>
+        <UL>
+          <LI><a href="./ReadMe/AttribManager.html" target="_self">Click here for the installation guide!</a>
+        </UL>  
+        <LI>Go to product_attributes in Admin (Product Options), and start adding other Option Types!
+        <LI><b>Done!</b>
+      </UL>
+      <br>
+     <h2>System Requirements</h2>
+      All the normal OSCommerce requirements, plus ...
+      <ul>
+        <li>XMLHTTP Complient Browser (e.g. IE, Mozilla)</li>
+        <li>Javascript <strong>Enabled</strong> in your Browser</li>
+      </ul>		
+      <h2>Support</h2>
+      <ul>
+        <li><a href="http://addons.oscommerce.com/info/6818" target="_blank">Conribution Page</a></li>
+        <li><a href="http://forums.oscommerce.com/index.php?showtopic=338661" target="_blank">Support Thread</a></li>
+      </ul>
+      <br>
+      <br>
+      <h1>Things still ToDo:</h1>
+      <UL>
+        <LI><b>Write a descent installation guide</b> (Rewrite this file)
+        <LI>Although this contribution has been tested, <b>some more testing</b> wouldn't do any harm ;)
+      </UL>
+      <br>
+      <br>
+    </div>  
+  </BODY>
+</HTML>

@@ -1,0 +1,243 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>Option Types v2 - Option Type Images - ReadMe and Installation</title>
+		<style type="text/css">
+			* {
+				font-family: Arial;
+				font-family: 'Trebuchet MS' Arial;
+				font-size: 11px;
+			}
+			body {
+			  margin:20px;
+			}
+			h2 {
+				font-family: 'Trebuchet MS' Arial;
+				color:#000;
+				font-weight: bold;
+				font-size: 14px;
+			}
+			h1 {
+				font-family: 'Trebuchet MS' Arial;
+				color:#537f7e;
+				font-weight:bold;
+				font-size:18px;
+			}
+			pre {
+				font-family:courier new;
+				padding:9px;
+				font-size:10px;
+			
+			}
+			fieldset {
+				color: #000000;
+			 	border-color: #96CB33;
+        border-style:solid;
+        border-width:1px;
+			}
+			legend {
+			  font-weight:bold;
+			}
+			a {
+				color:#537f7e;
+				font-weight:bold;
+				text-decoration:none;
+			}
+			a:hover {
+				text-decoration:underline
+			}
+		</style>
+	</head>
+
+	<body>
+		<div>
+			<h1>Option Types v2 - Option Type Images</h1>
+	
+			This expansion of Option Types v2 allows the selectable options (through dropdown) to swich a preview Image.<br />
+<br />
+			After some requests and questions about my website (<a href="http://shop.crystalcopy.nl" target="_blank">shop.crystalcopy.nl</a>), I build this add-on.<br> 
+			On my website, it is used as a Font-selector. Because people don't know how every font looks, a preview image comes in handy!<br /><br />
+<br />
+      To have switching images, setup the following:<br>
+      (We'll be adding as Example: <b>Option: Font</b> and <b>Values: Arial, Tahoma, Palatino</b>
+      <UL>
+        <LI>First, set how the images should be named (and searched for) in Admin --> Configuration --> Option Types:
+          <UL>
+            <LI>Set the Option Images directory. &nbsp; &nbsp; <b>Example (standard): images/options/</b><br>
+                (don't forget the images dir, and the trailing "/"!!!)
+            <LI>Create the Option Images directory, if not already present.
+            <LI>Set the images prefix &nbsp; &nbsp; <b>Example (standard): Option_</b><br>
+                (this means Option images should all begin with "Option_")
+            <LI>Set what to use as Image name &nbsp; &nbsp; <b>Example (standard): Name</b><br>
+                This means the "options_values_name" will be used as name. When the other option (ID) is selected, the "options_values_id" will be used as name.
+            <LI>Set if the Language ID should be included in the Option Image Name &nbsp; &nbsp; <b>Example (standard): Yes</b><br>
+                This is for seperating images per Language, and only needs to be set to "Yes" if the Images should differ for each language.<br>
+                If set to "Yes", the following will be added to the Image Name: "_1" (for language_id "1")
+          </UL>
+        <LI>Add the Option (Option Type Image) <b>Example: Font</b>
+        <LI>Add the Option Values (For each image you'd like to switch) <b>Example: Arial, Tahoma, Palatino</b>
+        <LI>With the <b>Example settings</b>, the image names (and path) for <b>"Arial"</b> should be:
+          <UL>
+            <LI>catalog/images/options/<b>Option_Arial_1.jpg</b>
+            <LI>catalog/images/options/<b>Option_Arial_2.jpg (Replace "Arial" if the Name for this language is different)</b>
+            <LI>catalog/images/options/<b>Option_Arial_3.jpg (Replace "Arial" if the Name for this language is different)</b>
+          </UL>
+        <LI>With the settings <b>"Use as Name" set to "Name"</b>, and <b>"Use Language ID" set to "No"</b> the image names should be:
+          <UL>
+            <LI>catalog/images/options/<b>Option_Arial.jpg (If the Name for this language is different, Replace "Arial" with that name)</b>
+          </UL>
+        <LI>With the settings <b>"Use as Name" set to "ID"</b>, and <b>"Use Language ID" set to "No"</b> the image names should be:
+          <UL>
+            <LI>catalog/images/options/<b>Option_10.jpg</b> (Only 1 image needed for all languages)
+          </UL>
+      The following instructions are for adding Option Type Images, <b>if Option Types v2 is already installed</b>.<br>
+      <br>
+	
+1) Open admin/products_attributes.php
+<br/>
+<fieldset>
+<legend>Find (Around line 259 - with Option Types v2 Installed) </legend>
+<pre>
+  $products_options_types_list[OPTIONS_TYPE_FILE] = OPTIONS_TYPE_FILE_NAME;
+</pre>
+</fieldset>
+<fieldset>
+<legend>Add BELOW that line:</legend>
+<pre>
+  $products_options_types_list[OPTIONS_TYPE_IMAGE] = OPTIONS_TYPE_IMAGE_NAME;
+</pre>
+</fieldset>
+
+<br />
+<br />
+2) Open admin/includes/local/configure.php
+<br/>
+<fieldset>
+<legend>Find (Around line 28) </legend>
+<pre>
+  define('OPTIONS_TYPE_FILE', 5);
+  define('OPTIONS_TYPE_FILE_NAME', 'File');
+</pre>
+</fieldset>
+<fieldset>
+<legend>Add BELOW that line:</legend>
+<pre>
+  define('OPTIONS_TYPE_IMAGE', 6);
+  define('OPTIONS_TYPE_IMAGE_NAME', 'Image');
+</pre>
+</fieldset>
+
+<br />
+<br />
+3) Open stylesheet.css
+<br/>
+<fieldset>
+<legend>Add at the bottom of the file:</legend>
+<pre>
+/*BOF - Zappo - Option Types v2 - ONE LINE - Preload Option Type Images */
+  div#ImagePreload { display: none; }
+</pre>
+</fieldset>
+
+<br />
+<br />
+4) Open includes/local/configure.php
+<br/>
+<fieldset>
+<legend>Find (Around line 23 - with Option Types v2 Installed) </legend>
+<pre>
+  define('OPTIONS_TYPE_FILE', 5);
+</pre>
+</fieldset>
+<fieldset>
+<legend>Add BELOW that line:</legend>
+<pre>
+  define('OPTIONS_TYPE_IMAGE', 6);
+</pre>
+</fieldset>
+
+<br />
+<br />
+5) Open includes/modules/option_types.php
+<br/>
+<fieldset>
+<legend>Find (Near the end of the file) </legend>
+<pre>
+    default:
+    $Default = true;  // Set this value to check if current option is Default (drowpdown)
+</pre>
+</fieldset>
+<fieldset>
+<legend>Add ABOVE those lines:</legend>
+<pre>
+//BOF - Zappo - Added Image Selector Option
+    case OPTIONS_TYPE_IMAGE:
+      $Image_Opticount_query = tep_db_query("select count(*) as total from " . TABLE_PRODUCTS_ATTRIBUTES . " where products_id='" . (int)$product_info['products_id'] . "' and options_id ='" . (int)$ProdOpt_ID . "'");
+      $Image_Opticount = tep_db_fetch_array($Image_Opticount_query);
+      $Image_displayed = 0;
+      $products_options_query = tep_db_query("select pov.products_options_values_id, pov.products_options_values_name, pa.options_values_price, pa.price_prefix from " . TABLE_PRODUCTS_ATTRIBUTES . " pa, " . TABLE_PRODUCTS_OPTIONS_VALUES . " pov where pa.products_id = '" . (int)$product_info['products_id'] . "' and pa.options_id = '" . (int)$ProdOpt_ID . "' and pa.options_values_id = pov.products_options_values_id and pov.language_id = '" . (int)$languages_id . "'");
+      while ($products_options = tep_db_fetch_array($products_options_query)) {
+        $pOptValName = $products_options['products_options_values_name'];
+        $Image_displayed++;
+        if ($products_options['options_values_price'] != '0') {
+          $option_price = ' (' . $products_options['price_prefix'] . ' ' . $currencies-&gt;display_price($products_options['options_values_price'], tep_get_tax_rate($product_info['products_tax_class_id'])) .') ';
+        } else {
+          $option_price = '';
+        }
+        $Image_Dropdown_ID = 'id[' . $ProdOpt_ID . ']';
+        $Image_Name = (OPTIONS_TYPE_IMAGENAME == 'Name') ? $products_options['products_options_values_name'] : $products_options['products_options_values_id'];
+        $Real_Image_Name = OPTIONS_TYPE_IMAGEPREFIX . $Image_Name . ((OPTIONS_TYPE_IMAGELANG == 'Yes') ? '_'.$languages_id : '') . '.jpg';
+        if (isset($cart-&gt;contents[$HTTP_GET_VARS['products_id']]['attributes'][$ProdOpt_ID]) &amp;&amp; ($cart-&gt;contents[$HTTP_GET_VARS['products_id']]['attributes'][$ProdOpt_ID] == $products_options['products_options_values_id'])) {
+          $Image_Dropdown[$product_info['products_id']] .= '&lt;option value="' . $products_options['products_options_values_id'] . '" SELECTED&gt;' . $pOptValName . $option_price . '&lt;/option&gt;';
+          $First_ImageText[$product_info['products_id']] = '&lt;img src="' . OPTIONS_TYPE_IMAGEDIR . $Real_Image_Name . '" alt="'.$pOptValName.'" title="'.$pOptValName.'"&gt;';
+          $ImageText[$product_info['products_id']] .= '"&lt;img src=\"' . OPTIONS_TYPE_IMAGEDIR . $Real_Image_Name . '\" alt=\"'.$pOptValName.'\" title=\"'.$pOptValName.'\"&gt;"';
+        } else {
+          $Image_Dropdown[$product_info['products_id']] .= '&lt;option value="' . $products_options['products_options_values_id'] . '"&gt;' . $pOptValName . $option_price . '&lt;/option&gt;';
+          $ImageText[$product_info['products_id']] .= '"&lt;img src=\"' . OPTIONS_TYPE_IMAGEDIR . $Real_Image_Name . '\" alt=\"'.$pOptValName.'\" title=\"'.$pOptValName.'\"&gt;"';
+          if ($First_ImageText[$product_info['products_id']] == '' &amp;&amp; $Image_displayed == 1) $First_ImageText[$product_info['products_id']] = '&lt;img src="' . OPTIONS_TYPE_IMAGEDIR . $Real_Image_Name . '" alt="'.$pOptValName.'" title="'.$pOptValName.'"&gt;';
+        }
+        // BOF - Zappo - PreLoad the Images
+        if ($Image_displayed == 1) echo '&lt;div id="ImagePreload"&gt;';
+        echo '&lt;img src="' . OPTIONS_TYPE_IMAGEDIR . $Real_Image_Name . '" alt="'.$pOptValName.'" title="'.$pOptValName.'"&gt;';
+        if ($Image_displayed != $Image_Opticount['total']) {
+          $ImageText[$product_info['products_id']] .= ',';
+        } else { // - Zappo - PreLoad the Images - Close Div...
+          echo '&lt;/div&gt;'; 
+        }
+        // EOF - Zappo - PreLoad the Images
+      }
+      $ImageSelector_Name = $ProdOpt_Name . ': &lt;script language="JavaScript" type="text/JavaScript"&gt;var ImageText'.$product_info['products_id'] . ' = new Array(' . $ImageText[$product_info['products_id']] . ')&lt;/script&gt;';
+      $ImageSelector_Dropdown = '&lt;select name="' . $Image_Dropdown_ID . '" onChange="document.getElementById(\'ImageSelect' . $product_info['products_id'] . '\').innerHTML=ImageText'.$product_info['products_id'].'[this.selectedIndex];"&gt;' . $Image_Dropdown[$product_info['products_id']] . '&lt;/select&gt; ' . $ProdOpt_Comment;
+      ?&gt;
+      &lt;tr&gt;
+        &lt;td class="main"&gt;&lt;b&gt;&lt;?php echo $ImageSelector_Name; ?&gt;&lt;/b&gt;&lt;/td&gt;
+        &lt;td class="main"&gt;&lt;?php echo $ImageSelector_Dropdown; ?&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td width="100%" class="main" colspan="2"&gt;
+          &lt;center&gt;&lt;?php echo '&lt;div class="main" id="ImageSelect' . $product_info['products_id'] . '"&gt;' . $First_ImageText[$product_info['products_id']] . '&lt;/div&gt;';?&gt;&lt;/center&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;?php
+    break;
+//EOF - Zappo - Added Image Selector Option
+</pre>
+</fieldset>
+
+<br />
+<br />
+6) Run the following SQL, to add the Admin Settings for Option Images
+<br/>
+<fieldset>
+<legend> SQL to run (via phpMyAdmin, for example): </legend>
+<pre>
+INSERT INTO configuration VALUES ('', 'Option Type Image - Images Directory', 'OPTIONS_TYPE_IMAGEDIR', 'images/options/', 'What directory to look for Option Type Images.&lt;br&gt;This is where the Images should be stored.', (SELECT configuration_group_id FROM configuration_group WHERE configuration_group_title = 'Option Types'), '9', now(), now(), NULL, NULL),
+                                 ('', 'Option Type Image - Images Prefix', 'OPTIONS_TYPE_IMAGEPREFIX', 'Option_', 'What prefix to use when looking for Option Type Images.&lt;br&gt;This is what the Image\'s name should begin with.', (SELECT configuration_group_id FROM configuration_group WHERE configuration_group_title = 'Option Types'), '10', now(), now(), NULL, NULL),
+                                 ('', 'Option Type Image - Images Name', 'OPTIONS_TYPE_IMAGENAME', 'Name', 'What Option Value item to use as Name for the Option Type Images.&lt;br&gt;When set to "Name", the images should be named: "PREFIX"-"Option value name"-"LanguageID".jpg (Option_RedShirt_1.jpg)&lt;br&gt;When set to "ID", the images should be named: "PREFIX"-"Option value ID"-"LanguageID".jpg (Option_5_1.jpg)', (SELECT configuration_group_id FROM configuration_group WHERE configuration_group_title = 'Option Types'), '11', now(), now(), NULL, 'tep_cfg_select_option(array(\'Name\', \'ID\'),'),
+                                 ('', 'Option Type Image - Use Language ID', 'OPTIONS_TYPE_IMAGELANG', 'Yes', 'Use language ID in Option Type Images Names?&lt;br&gt;This is only needed if different images are used per Language (images with text for example).', (SELECT configuration_group_id FROM configuration_group WHERE configuration_group_title = 'Option Types'), '12', now(), now(), NULL, 'tep_cfg_select_option(array(\'Yes\', \'No\'),');
+</pre>
+</fieldset>
+<br>
+		</div>
+	</body>
+</html>

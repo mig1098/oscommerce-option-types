@@ -1,0 +1,328 @@
+############################################################
+####               OLD UPDATE INSTRUCTIONS!             ####
+#### DOES NOT INCLUDE UPDATES FROM v.2.1.3 AND ABOVE!!! ####
+############################################################
+
+Manual instructions for adding Attributes Sort Order, and No Progress Bar option to OptionTypes v2.1.1
+(Which means Updating to v2.1.2)
+Because Attribute Values can be added in 2 different ways (osC standard OR Attribute Manager),
+this Update Manual includes 2 seperate sections:
+
+The First section of this file is for Everyone
+
+The Second section is for everyone WITHOUT Attribute Manager. (using normal osc Attributes)
+
+People with Attribute Manager installed, also have to copy the entire updated
+admin/attributeManager folder over the installed one (overwrite all)
+
+
+
+##################################################
+##################################################
+########### FIRST SECTION. FOR EVERYONE ##########
+##################################################
+##################################################
+
+##################################################
+- Run the following SQL:
+------------------------------------------
+#SQL START
+# Add Attributes Sort Order to the basket attributes table
+ALTER TABLE products_attributes
+  ADD products_options_sort_order INT( 2 ) DEFAULT '1' NOT NULL;
+# BOF - Zappo - Option Types v2 - Update Progress Bars Choices (add "None")
+UPDATE `configuration`
+  SET set_function = 'tep_cfg_select_option(array(\'None\', \'Text\', \'TextArea\', \'Both\'),' WHERE `configuration_key` = 'OPTIONS_TYPE_PROGRESS';#SQL END
+------------------------------------------
+
+##################################################
+- open includes/modules/option_types.php
+
+##################################################
+- FIND: (Around line 42)
+------------------------------------------
+      if (OPTIONS_TYPE_PROGRESS != 'TextArea') {
+------------------------------------------
+
+- REPLACE WITH:
+------------------------------------------
+      if (OPTIONS_TYPE_PROGRESS == 'Text' || OPTIONS_TYPE_PROGRESS == 'Both') {
+-----------------------------
+
+##################################################
+- FIND: (Around line 57)
+------------------------------------------
+      if (OPTIONS_TYPE_PROGRESS != 'Text') {
+------------------------------------------
+
+- REPLACE WITH:
+------------------------------------------
+      if (OPTIONS_TYPE_PROGRESS == 'TextArea' || OPTIONS_TYPE_PROGRESS == 'Both') {
+------------------------------------------
+##################################################
+- FIND:
+------------------------------------------
+'" . $ProdOpt_ID . "'");
+------------------------------------------
+
+- REPLACE WITH:
+------------------------------------------
+'" . $ProdOpt_ID . "' order by products_options_sort_order");
+------------------------------------------
+
+##################################################
+DO THIS TWICE!!!
+- FIND: (TWICE!!!)
+------------------------------------------
+$languages_id . "'");
+------------------------------------------
+
+- REPLACE WITH: (TWICE!!!)
+------------------------------------------
+$languages_id . "' order by pa.products_options_sort_order");
+------------------------------------------
+
+##################################################
+- open product_info.php
+
+###################################################
+- FIND:
+------------------------------------------
+pov.products_options_values_id and pov.language_id = '" . (int)$languages_id . "'");
+------------------------------------------
+
+- REPLACE WITH:
+------------------------------------------
+pov.products_options_values_id and pov.language_id = '" . (int)$languages_id . "' order by pa.products_options_sort_order");
+------------------------------------------
+
+###################################################
+
+
+
+
+
+
+##################################################
+##################################################
+#### SECOND SECTION. ONLY FOR PEOPLE USING THE ###
+####  STANDARD OSC ATTRIBUTES ADDING/UPDATING  ###
+##################################################
+##################################################
+
+##################################################
+- open admin/products_attributes.php
+
+##################################################
+DO THIS TWICE!!!
+- FIND: (TWICE!!!)
+------------------------------------------
+        $price_prefix = tep_db_prepare_input($_POST['price_prefix']);
+------------------------------------------
+
+- ADD BELOW: (TWICE!!!)
+------------------------------------------
+// BOF - Zappo - Option Types v2 - Added Attributes Sort Order
+        $value_order = tep_db_prepare_input($_POST['value_order']);
+------------------------------------------
+
+###################################################
+- FIND:
+------------------------------------------
+tep_db_input($value_price) . "')");
+------------------------------------------
+
+- REPLACE WITH:
+------------------------------------------
+tep_db_input($value_price) . "', '" . tep_db_input($price_prefix) . "', '" . (int)$value_order . "')");
+// EOF - Zappo - Option Types v2 - Added Attributes Sort Order
+------------------------------------------
+
+###################################################
+- FIND:
+------------------------------------------
+"' where products_attributes_id = '" . (int)$attribute_id . "'");
+------------------------------------------
+
+- REPLACE WITH:
+------------------------------------------
+"', products_options_sort_order = '" . tep_db_input($value_order) . "' where products_attributes_id = '" . (int)$attribute_id . "'");
+//EOF - Zappo - Option Types v2 - Added Attributes Sort Order
+------------------------------------------
+
+###################################################
+- FIND:
+------------------------------------------
+?>
+            </td>
+          </tr>
+        </table>
+        <form name="attributes" action="<?php echo tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, 'action=' . $form_action . '&' . $page_info); ?>" method="post"><table border="0" width="100%" cellspacing="0" cellpadding="2">
+          <tr>
+            <td colspan="7"><?php echo tep_black_line(); ?></td>
+          </tr>
+          <tr class="dataTableHeadingRow">
+            <td class="dataTableHeadingContent">&nbsp;<?php echo TABLE_HEADING_ID; ?>&nbsp;</td>
+            <td class="dataTableHeadingContent">&nbsp;<?php echo TABLE_HEADING_PRODUCT; ?>&nbsp;</td>
+            <td class="dataTableHeadingContent">&nbsp;<?php echo TABLE_HEADING_OPT_NAME; ?>&nbsp;</td>
+            <td class="dataTableHeadingContent">&nbsp;<?php echo TABLE_HEADING_OPT_VALUE; ?>&nbsp;</td>
+            <td class="dataTableHeadingContent" align="right">&nbsp;<?php echo TABLE_HEADING_OPT_PRICE; ?>&nbsp;</td>
+            <td class="dataTableHeadingContent" align="center">&nbsp;<?php echo TABLE_HEADING_OPT_PRICE_PREFIX; ?>&nbsp;</td>
+            <td class="dataTableHeadingContent" align="center">&nbsp;<?php echo TABLE_HEADING_ACTION; ?>&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="7"><?php echo tep_black_line(); ?></td>
+          </tr>
+<?php
+------------------------------------------
+
+- REPLACE WITH:
+------------------------------------------
+//EOF - Zappo - Option Types v2 - Added Attributes Sort Order
+?>
+            </td>
+          </tr>
+        </table>
+        <form name="attributes" action="<?php echo tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, 'action=' . $form_action . '&' . $page_info); ?>" method="post"><table border="0" width="100%" cellspacing="0" cellpadding="2">
+          <tr>
+            <td colspan="8"><?php echo tep_black_line(); ?></td>
+          </tr>
+          <tr class="dataTableHeadingRow">
+            <td class="dataTableHeadingContent">&nbsp;<?php echo TABLE_HEADING_ID; ?>&nbsp;</td>
+            <td class="dataTableHeadingContent">&nbsp;<?php echo TABLE_HEADING_PRODUCT; ?>&nbsp;</td>
+            <td class="dataTableHeadingContent">&nbsp;<?php echo TABLE_HEADING_OPT_NAME; ?>&nbsp;</td>
+            <td class="dataTableHeadingContent">&nbsp;<?php echo TABLE_HEADING_OPT_VALUE; ?>&nbsp;</td>
+            <td class="dataTableHeadingContent" align="right">&nbsp;<?php echo TABLE_HEADING_OPT_PRICE; ?>&nbsp;</td>
+            <td class="dataTableHeadingContent" align="center">&nbsp;<?php echo TABLE_HEADING_OPT_PRICE_PREFIX; ?>&nbsp;</td>
+            <td class="dataTableHeadingContent" align="center">&nbsp;<?php echo TABLE_HEADING_OPT_ORDER; ?>&nbsp;</td>
+            <td class="dataTableHeadingContent" align="center">&nbsp;<?php echo TABLE_HEADING_ACTION; ?>&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="8"><?php echo tep_black_line(); ?></td>
+          </tr>
+<?php
+//EOF - Zappo - Option Types v2 - Added Attributes Sort Order
+------------------------------------------
+
+###################################################
+- FIND:
+------------------------------------------
+?>
+            </select>&nbsp;</td>
+            <td align="right" class="smallText">&nbsp;<input type="text" name="value_price" value="<?php echo $attributes_values['options_values_price']; ?>" size="6">&nbsp;</td>
+            <td align="center" class="smallText">&nbsp;<input type="text" name="price_prefix" value="<?php echo $attributes_values['price_prefix']; ?>" size="2">&nbsp;</td>
+            <td align="center" class="smallText">&nbsp;<?php echo tep_image_submit('button_update.gif', IMAGE_UPDATE); ?>&nbsp;<?php echo '<a href="' . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, $page_info, 'NONSSL') . '">'; ?><?php echo tep_image_button('button_cancel.gif', IMAGE_CANCEL); ?></a>&nbsp;</td>
+<?php
+------------------------------------------
+
+- REPLACE WITH:
+------------------------------------------
+//BOF - Zappo - Option Types v2 - Added Attributes Sort Order
+?>
+            </select>&nbsp;</td>
+            <td align="right" class="smallText">&nbsp;<input type="text" name="value_price" value="<?php echo $attributes_values['options_values_price']; ?>" size="6">&nbsp;</td>
+            <td align="center" class="smallText">&nbsp;<input type="text" name="price_prefix" value="<?php echo $attributes_values['price_prefix']; ?>" size="2">&nbsp;</td>
+            <td align="center" class="smallText">&nbsp;<input type="text" name="value_order" value="<?php echo $attributes_values['products_options_sort_order']; ?>" size="2">&nbsp;</td>
+            <td align="center" class="smallText">&nbsp;<?php echo tep_image_submit('button_update.gif', IMAGE_UPDATE); ?>&nbsp;<?php echo '<a href="' . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, $page_info, 'NONSSL') . '">'; ?><?php echo tep_image_button('button_cancel.gif', IMAGE_CANCEL); ?></a>&nbsp;</td>
+<?php
+//EOF - Zappo - Option Types v2 - Added Attributes Sort Order
+------------------------------------------
+
+###################################################
+- FIND:
+------------------------------------------
+?>
+            <td class="smallText">&nbsp;<b><?php echo $attributes_values["products_attributes_id"]; ?></b>&nbsp;</td>
+            <td class="smallText">&nbsp;<b><?php echo $products_name_only; ?></b>&nbsp;</td>
+            <td class="smallText">&nbsp;<b><?php echo $options_name; ?></b>&nbsp;</td>
+            <td class="smallText">&nbsp;<b><?php echo $values_name; ?></b>&nbsp;</td>
+            <td align="right" class="smallText">&nbsp;<b><?php echo $attributes_values["options_values_price"]; ?></b>&nbsp;</td>
+            <td align="center" class="smallText">&nbsp;<b><?php echo $attributes_values["price_prefix"]; ?></b>&nbsp;</td>
+            <td align="center" class="smallText">&nbsp;<b><?php echo '<a href="' . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, 'action=delete_attribute&attribute_id=' . $_GET['attribute_id'] . '&' . $page_info) . '">'; ?><?php echo tep_image_button('button_confirm.gif', IMAGE_CONFIRM); ?></a>&nbsp;&nbsp;<?php echo '<a href="' . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, $page_info, 'NONSSL') . '">'; ?><?php echo tep_image_button('button_cancel.gif', IMAGE_CANCEL); ?></a>&nbsp;</b></td>
+<?php
+    } else {
+?>
+            <td class="smallText">&nbsp;<?php echo $attributes_values["products_attributes_id"]; ?>&nbsp;</td>
+            <td class="smallText">&nbsp;<?php echo $products_name_only; ?>&nbsp;</td>
+            <td class="smallText">&nbsp;<?php echo $options_name; ?>&nbsp;</td>
+            <td class="smallText">&nbsp;<?php echo $values_name; ?>&nbsp;</td>
+            <td align="right" class="smallText">&nbsp;<?php echo $attributes_values["options_values_price"]; ?>&nbsp;</td>
+            <td align="center" class="smallText">&nbsp;<?php echo $attributes_values["price_prefix"]; ?>&nbsp;</td>
+            <td align="center" class="smallText">&nbsp;<?php echo '<a href="' . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, 'action=update_attribute&attribute_id=' . $attributes_values['products_attributes_id'] . '&' . $page_info, 'NONSSL') . '">'; ?><?php echo tep_image_button('button_edit.gif', IMAGE_UPDATE); ?></a>&nbsp;&nbsp;<?php echo '<a href="' . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, 'action=delete_product_attribute&attribute_id=' . $attributes_values['products_attributes_id'] . '&' . $page_info, 'NONSSL') , '">'; ?><?php echo tep_image_button('button_delete.gif', IMAGE_DELETE); ?></a>&nbsp;</td>
+<?php
+------------------------------------------
+
+- REPLACE WITH:
+------------------------------------------
+//BOF - Zappo - Option Types v2 - Added Attributes Sort Order
+?>
+            <td class="smallText">&nbsp;<b><?php echo $attributes_values["products_attributes_id"]; ?></b>&nbsp;</td>
+            <td class="smallText">&nbsp;<b><?php echo $products_name_only; ?></b>&nbsp;</td>
+            <td class="smallText">&nbsp;<b><?php echo $options_name; ?></b>&nbsp;</td>
+            <td class="smallText">&nbsp;<b><?php echo $values_name; ?></b>&nbsp;</td>
+            <td align="right" class="smallText">&nbsp;<b><?php echo $attributes_values["options_values_price"]; ?></b>&nbsp;</td>
+            <td align="center" class="smallText">&nbsp;<b><?php echo $attributes_values["price_prefix"]; ?></b>&nbsp;</td>
+            <td align="center" class="smallText">&nbsp;<b><?php echo $attributes_values["products_options_sort_order"]; ?></b>&nbsp;</td>
+            <td align="center" class="smallText">&nbsp;<b><?php echo '<a href="' . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, 'action=delete_attribute&attribute_id=' . $_GET['attribute_id'] . '&' . $page_info) . '">'; ?><?php echo tep_image_button('button_confirm.gif', IMAGE_CONFIRM); ?></a>&nbsp;&nbsp;<?php echo '<a href="' . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, $page_info, 'NONSSL') . '">'; ?><?php echo tep_image_button('button_cancel.gif', IMAGE_CANCEL); ?></a>&nbsp;</b></td>
+<?php
+    } else {
+?>
+            <td class="smallText">&nbsp;<?php echo $attributes_values["products_attributes_id"]; ?>&nbsp;</td>
+            <td class="smallText">&nbsp;<?php echo $products_name_only; ?>&nbsp;</td>
+            <td class="smallText">&nbsp;<?php echo $options_name; ?>&nbsp;</td>
+            <td class="smallText">&nbsp;<?php echo $values_name; ?>&nbsp;</td>
+            <td align="right" class="smallText">&nbsp;<?php echo $attributes_values["options_values_price"]; ?>&nbsp;</td>
+            <td align="center" class="smallText">&nbsp;<?php echo $attributes_values["price_prefix"]; ?>&nbsp;</td>
+            <td align="center" class="smallText">&nbsp;<?php echo $attributes_values["products_options_sort_order"]; ?>&nbsp;</td>
+            <td align="center" class="smallText">&nbsp;<?php echo '<a href="' . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, 'action=update_attribute&attribute_id=' . $attributes_values['products_attributes_id'] . '&' . $page_info, 'NONSSL') . '">'; ?><?php echo tep_image_button('button_edit.gif', IMAGE_UPDATE); ?></a>&nbsp;&nbsp;<?php echo '<a href="' . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, 'action=delete_product_attribute&attribute_id=' . $attributes_values['products_attributes_id'] . '&' . $page_info, 'NONSSL') , '">'; ?><?php echo tep_image_button('button_delete.gif', IMAGE_DELETE); ?></a>&nbsp;</td>
+<?php
+//EOF - Zappo - Option Types v2 - Added Attributes Sort Order
+------------------------------------------
+
+###################################################
+- FIND:
+------------------------------------------
+?>
+            </select>&nbsp;</td>
+            <td align="right" class="smallText">&nbsp;<input type="text" name="value_price" size="6">&nbsp;</td>
+            <td align="right" class="smallText">&nbsp;<input type="text" name="price_prefix" size="2" value="+">&nbsp;</td>
+            <td align="center" class="smallText">&nbsp;<?php echo tep_image_submit('button_insert.gif', IMAGE_INSERT); ?>&nbsp;</td>
+          </tr>
+<?php
+------------------------------------------
+
+- REPLACE WITH:
+------------------------------------------
+//BOF - Zappo - Option Types v2 - Added Attributes Sort Order
+?>
+            </select>&nbsp;</td>
+            <td align="right" class="smallText">&nbsp;<input type="text" name="value_price" size="6">&nbsp;</td>
+            <td align="right" class="smallText">&nbsp;<input type="text" name="price_prefix" size="2" value="+">&nbsp;</td>
+            <td align="right" class="smallText">&nbsp;<input type="text" name="value_order" size="2" value="1">&nbsp;</td>
+            <td align="center" class="smallText">&nbsp;<?php echo tep_image_submit('button_insert.gif', IMAGE_INSERT); ?>&nbsp;</td>
+          </tr>
+<?php
+//EOF - Zappo - Option Types v2 - Added Attributes Sort Order
+------------------------------------------
+
+###################################################
+DO THIS TWICE!!!
+- FIND: (TWICE!!!)
+------------------------------------------
+?>
+          <tr>
+            <td colspan="7"><?php echo tep_black_line(); ?></td>
+------------------------------------------
+
+- REPLACE WITH: (TWICE!!!)
+------------------------------------------
+//BOF - Zappo - Option Types v2 - ONE LINE - Added Attributes Sort Order - Added 1 colspan (two down)
+?>
+          <tr>
+            <td colspan="8"><?php echo tep_black_line(); ?></td>
+------------------------------------------
+##################################################
+##################################################
+
+That's it!
+Attributes are sorted per product now!

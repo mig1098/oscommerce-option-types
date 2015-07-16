@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>Option Types v2 - AJAX Attribute Manager - ReadMe and Installation</title>
+		<style type="text/css">
+			* {
+				font-family: Arial;
+				font-family: 'Trebuchet MS' Arial;
+				font-size: 11px;
+			}
+			body {
+			  margin:20px;
+			}
+			h2 {
+				font-family: 'Trebuchet MS' Arial;
+				color:#000;
+				font-weight: bold;
+				font-size: 14px;
+			}
+			h1 {
+				font-family: 'Trebuchet MS' Arial;
+				color:#537f7e;
+				font-weight:bold;
+				font-size:18px;
+			}
+			pre {
+				font-family:courier new;
+				padding:9px;
+				font-size:10px;
+			
+			}
+			fieldset {
+				color: #000000;
+			 	border-color: #96CB33;
+        border-style:solid;
+        border-width:1px;
+			}
+			legend {
+			  font-weight:bold;
+			}
+			a {
+				color:#537f7e;
+				font-weight:bold;
+				text-decoration:none;
+			}
+			a:hover {
+				text-decoration:underline
+			}
+		</style>
+	</head>
+
+	<body>
+		<div>
+			<h1>AJAX Attribute Manager - v2.8.6 for Option Types v2</h1>
+	
+			The idea of this contribution is to make the administration of product options, option values and attributes much quicker and easier.<br />
+<br />
+
+			It uses a technology known as AJAX (Asynchronous JavaScript And XML). This enables us to do is make page sub-reqests without refreshing a page. <br> 
+			In this case, it enables us to make a attribute manager that sits on the product addition page.  From which, you can do everything that the product attributes page does but in a much more convenient and tidy way.<br /><br />
+<br />
+
+<a href="./AttribManager.jpg" target="_blank"><img src="./thumb/AttrMan.jpg" alt="Admin Attribute Manager Explained" title="Admin Attribute Manager Explained"></a><br>
+<br />
+<br />
+
+<a href="../ReadMe.html" taget="_self"><h2>- Back to Main Option Types v2 ReadMe</h2></a>
+<br>
+			<br />
+			<h2>Contact Details</h2>
+			<ul>
+			 	<li>Original Release
+			 	<ul><li>Website: <a href="http://www.kangroopartners.com" target="_blank">www.kangroopartners.com</a></li>
+			 	<li>Email: <a href="mailto:osc@kangaroopartners.com">osc@kangaroopartners.com</a></li></ul>
+			 	<li>Update: V2.4 Beta - V2.6 Beta by: Frank Heinen
+			 	<ul><li>Email: <a href="mailto:osc@fhs-ecommerce.nl">osc@fhs-ecommerce.nl</a></li></ul>
+			 	<li>Update: V2.8 Beta - V2.8.2 Beta by: Tomasz Iwanow
+			 	<ul><li>Email: <a href="http://www.needit-findit.com/" target="_blank">microvision&#064;gmail.com</a></li></ul>
+			 	<li>Update: V2.8.3 Beta - V2.8.5 Beta by: Urs Nyffenegger
+			 	<ul><li>Email: <a href="http://www.loop66.at/" target="_blank">urs&#064;loop66.at</a></li></ul>
+			 	<li>Update: V2.8.6 for Option Types v2 by: Albert aKa Zappo the Wizard of Osch
+			 	<ul><li>Website: <a href="http://shop.crystalcopy.nl" target="_blank">shop.crystalcopy.nl</a></li>
+			 	<li>Email: <a href="mailto:albert@avanosch.nl">Albert@AvanOsch.nl</a></li></ul>
+			</ul>
+			
+			<h2>Features</h2>
+			<ul>
+			 	<li>Easyly and instantly add and remove Options and Option Values. No page refreshes required</li>
+			 	<li>Easyly add and remove attributes to a product on the product addition page. No page refreshes required</li>
+			 	<li>Optional Instant Database Update for product attributes. No page refreshes required</li>
+			 	<li>Attribute "templates" - Predefined "Attribute Sets" with quick load</li>
+			 	<li>Multilingual support</li>
+        <li><a href="./AttribManagerXtra.html" target="_self">(Optional) Removes Attributes Section From products_attributes.php (Hmmmm... ;D)</a></li>
+        <li><a href="./AttribManagerXtra.html#Rename" target="_self">(Optional) Renames Products Attributes in Admin to Products Options (No more attributes there!)</a></li>
+			</ul>
+			<h2>Notes</h2>
+			<ul>
+			 	<li>Only tested this with IE5+ ,Firefox 1+ and 	Opera 8+</li>
+			 	<li>Only tested on a fresh copy of OSCommerce 2.2RC2(a)</li>
+			 	<li>Also Adjusted for <b>Products as Options</b></li>
+			</ul>
+			<br/>
+
+			<h2>Install Instructions</h2>
+			<b>Note: if you are upgrading from a previous version you must OVERWRITE all files in the attributeManager directory. The best way is to delete the whole folder then add the new one.</b><br />
+<br />
+			1) Copy the contents of the "<b>AttribManager AddOn</b>" Directory into your <b>admin</b> directory.<br/>
+			(Your file structure should look like this /admin/attributeManager/)
+			<br/>
+			<br/>
+			2) Open <b>admin/categories.php</b>
+			<br/>
+			<br/>
+<fieldset>
+<legend>Find (Around line 245 on a fresh 2.2rc2a) </legend>
+<pre>
+            tep_db_perform(TABLE_PRODUCTS, $sql_data_array, 'update', "products_id = '" . (int)$products_id . "'");
+          }
+</pre>
+</fieldset>
+<fieldset>
+<legend> Below add </legend>
+<pre>
+//BOF - Zappo - Option Types v2 - AttribManager - ONE LINE - AJAX Attribute Manager plugin
+  require_once('attributeManager/includes/attributeManagerUpdateAtomic.inc.php'); 
+</pre>
+</fieldset>
+
+<br/>
+<br/>
+<fieldset>
+<legend> Find (Around line 345 on a fresh 2.2rc2a) </legend>
+<pre>
+&lt;/head&gt;
+&lt;body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" bgcolor="#FFFFFF" onload="SetFocus();"&gt;
+</pre>
+</fieldset>
+<fieldset>
+<legend> Replace With </legend>
+<pre>
+&lt;!-- BOF - Zappo - Option Types v2 - AttribManager - AJAX Attribute Manager plugin //--&gt;
+&lt;?php require_once( 'attributeManager/includes/attributeManagerHeader.inc.php' ); ?&gt;
+&lt;/head&gt;
+&lt;body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" bgcolor="#FFFFFF" onload="goOnLoad();"&gt;
+&lt;!-- EOF - Zappo - Option Types v2 - AttribManager - AJAX Attribute Manager plugin (line above: changed SetFocus to goOnLoad) //--&gt;
+</pre>
+</fieldset>
+
+<br />
+<br />
+<fieldset>
+<legend> Find (around line 531 on a fresh 2.2rc2a) </legend>
+<pre>
+            &lt;td class="main"&gt;&lt;?php echo tep_draw_separator('pixel_trans.gif', '24', '15') . '&amp;nbsp;' . tep_draw_input_field('products_price_gross', $pInfo->products_price, 'OnKeyUp="updateNet()"'); ?>&lt;/td&gt;
+          &lt;/tr&gt;
+</pre>
+</fieldset>
+<fieldset>
+<legend> Below add  </legend>
+<pre>
+&lt;!-- BOF - Zappo - Option Types v2 - AttribManager - AJAX Attribute Manager plugin //--&gt;
+          &lt;tr&gt;
+          	&lt;td colspan="2"&gt;&lt;?php require_once( 'attributeManager/includes/attributeManagerPlaceHolder.inc.php' )?&gt;&lt;/td&gt;
+          &lt;/tr>
+&lt;!-- EOF - Zappo - Option Types v2 - AttribManager - AJAX Attribute Manager plugin //--&gt;
+</pre>
+</fieldset>
+			<h2>Finished !</h2>
+
+			---> Go and add or edit a product and you should see the new attribute manager below the price.
+<br />
+<br />
+
+			
+<a href="./AttribManagerXtra.html" taget="_self"><h2>Additonal Install instructions, to remove (the standard, unhandy and now obsolete) "Products Attributes"</h2></a>
+<br>
+<br>
+
+<h3>- Instructions to add Extra Field</h3>
+There is loads of contribution available for the attribute functionality. Each add different columns to the database and have different way of managing their update.
+If you want to add extra field to the Ajax Attribute Manager, to handle database values contained in the product_attributes tables, it is quiet easy to do.
+File to be changed are as follow:<br />
+attributeManager.php for the display of the new field and the insert and update action trigger (around line 196 & 271)<br />
+attributeManager.class.php (around line 457)<br />
+attributeManagerAtomic.class.php (around line 70, 150, 170)<br />
+attributeManagerInstant.class.php (around line 70, 133, 173)<br />
+attributeManagerUpdateAtomic.inc.php (around line 30)<br />
+attributeManager.js (around line 85, 106, 110)<br />
+
+Search for the "price" string and simply mimic the mechanism used for this field, you can also check the way sort order was added
+</textarea>
+			 
+		</div>
+	</body>
+</html>

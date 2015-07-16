@@ -1,0 +1,2244 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038
+{\fonttbl\f0\fnil\fcharset0 Monaco;\f1\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red0\green130\blue0;\red102\green0\blue0;
+\red128\green128\blue128;\red255\green0\blue0;\red0\green128\blue128;\red63\green127\blue127;\red127\green0\blue127;
+\red42\green0\blue255;\red63\green95\blue191;\red42\green0\blue225;\red3\green3\blue3;\red2\green2\blue2;
+\red6\green6\blue6;\red5\green5\blue5;\red0\green5\blue5;\red0\green3\blue3;\red10\green10\blue10;
+\red8\green8\blue8;\red7\green7\blue7;\red6\green0\blue0;\red1\green0\blue0;\red2\green0\blue0;
+\red1\green1\blue1;\red0\green1\blue1;\red7\green0\blue0;}
+\margl1440\margr1440\vieww16400\viewh8900\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\fs22 \cf0 \
+**********\
+Options Types v2 Install Guide \
+by rosemaryann (mod credit goes to the great Zappo! \
+\
+\
+Please feel free to update and edit if I've missed something! I tried to put in approx. line numbers where I could but I have other mods installed so they may not match yours. \
+This install is for the Option Types v2 Install ONLY. I didn't include the Attribute Manager Add on in these instructions.\
+\
+Always remember to backup and save before editing your files.  \
+\
+\
+*********\
+Run SQL file: OptionTypes v2 SQL.sql on your database.\
+\
+*********\
+Copy to your catalog: \
+\
+/catalog/admin/includes/local/configure.php\
+/catalog/images/icons/view.gif\
+/catalog/includes/classes/upload.php\
+/catalog/includes/local/configure.php\
+/catalog/includes/modules/option_types.php\
+/catalog/includes/modules/payment/paypal_standard.php (optional if you use this payment module) \
+\
+\
+*********\
+Create directory: \
+/catalog/images/options/ \
+/catalog/images/temp/\
+/catalog/images/uploads/\
+\
+\
+*********\
+Open /catalog/account_history_info.php\
+\
+***FIND***
+\f1\fs24 \
+\
+	
+\f0\fs22         \cf2 echo \cf3 '<br><nobr><small>&nbsp;<i> - ' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'option'\cf0 ] . \cf3 ': ' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'value'\cf0 ] . \cf3 '</i></small></nobr>'\cf0 ;\
+\
+*** REPLACE WITH ***: \
+\
+	\cf5 //BOF - Zappo - Option Types v2 - Removed <nobr>, because Text options can be very long and added Attribute prices\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf0         \cf2 echo \cf3 '<br><small>&nbsp; - ' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'option'\cf0 ] . \cf3 ': <i>' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'value'\cf0 ] . \cf3 '</i>'\cf0 ;\
+        \cf2 if \cf0 (\cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'price'\cf0 ] != \cf3 '0'\cf0 ) \{\
+          \cf2 echo \cf3 ' - (' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'price_prefix'\cf0 ] . \cf4 $currencies\cf0 ->display_price(\cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'price'\cf0 ], tep_get_tax_rate(\cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'tax'\cf0 ])) . \cf3 ')'\cf0 ;\
+        \}\
+        \cf2 echo \cf3 '</small>'\cf0 ;\
+\pard\pardeftab720\ql\qnatural
+\cf5 //EOF - Zappo - Option Types v2 - Removed <nobr>, because Text options can be very long and added Attribute prices\
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***********\
+Open /catalog/checkout_confirmation.php\
+\
+***FIND***
+\f1\fs24 \
+
+\f0\fs22 \
+	        \cf2 echo \cf3 '<br><nobr><small>&nbsp;<i> - ' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'option'\cf0 ] . \cf3 ': ' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'value'\cf0 ] . \cf3 '</i></small></nobr>'\cf0 ;\
+\
+\
+*** REPLACE WITH ***: \
+	\cf5 //BOF - Zappo - Option Types v2 - Removed <nobr>, because Text options can be very long and added Attribute prices\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf0         \cf2 echo \cf3 '<br><small>&nbsp; - ' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'option'\cf0 ] . \cf3 ': <i>' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'value'\cf0 ] . \cf3 '</i>'\cf0 ;\
+        \cf2 if \cf0 (\cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'price'\cf0 ] != \cf3 '0'\cf0 ) \{\
+          \cf2 echo \cf3 ' - (' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'price_prefix'\cf0 ] . \cf4 $currencies\cf0 ->display_price(\cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'price'\cf0 ], tep_get_tax_rate(\cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'tax'\cf0 ])) . \cf3 ')'\cf0 ;\
+        \}\
+        \cf2 echo \cf3 '</small>'\cf0 ;\
+\pard\pardeftab720\ql\qnatural
+\cf5 //EOF - Zappo - Option Types v2 - Removed <nobr>, because Text options can be very long and added Attribute prices\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***********\
+Open /catalog/checkout_process.php\
+\
+\
+***FIND*** (around line 224): \
+\pard\pardeftab720\ql\qnatural
+\cf0 \
+ \cf4 $sql_data_array \cf0 = \cf2 array\cf0 (\cf3 'orders_id' \cf0 => \cf4 $insert_id\cf0 , \
+                                \cf3 'orders_products_id' \cf0 => \cf4 $order_products_id\cf0 , \
+                                \cf3 'products_options' \cf0 => \cf4 $attributes_values\cf0 [\cf3 'products_options_name'\cf0 ],\
+                                \cf3 'products_options_values' \cf0 => \cf4 $attributes_values\cf0 [\cf3 'products_options_values_name'\cf0 ], \
+                                \cf3 'options_values_price' \cf0 => \cf4 $attributes_values\cf0 [\cf3 'options_values_price'\cf0 ], \
+                                \cf3 'price_prefix' \cf0 => \cf4 $attributes_values\cf0 [\cf3 'price_prefix'\cf0 ]);\
+        tep_db_perform(TABLE_ORDERS_PRODUCTS_ATTRIBUTES, \cf4 $sql_data_array\cf0 );\
+\
+        \cf2 if \cf0 ((DOWNLOAD_ENABLED == \cf3 'true'\cf0 ) && \cf2 isset\cf0 (\cf4 $attributes_values\cf0 [\cf3 'products_attributes_filename'\cf0 ]) && tep_not_null(\cf4 $attributes_values\cf0 [\cf3 'products_attributes_filename'\cf0 ])) \{\
+          \cf4 $sql_data_array \cf0 = \cf2 array\cf0 (\cf3 'orders_id' \cf0 => \cf4 $insert_id\cf0 , \
+                                  \cf3 'orders_products_id' \cf0 => \cf4 $order_products_id\cf0 , \
+                                  \cf3 'orders_products_filename' \cf0 => \cf4 $attributes_values\cf0 [\cf3 'products_attributes_filename'\cf0 ], \
+                                  \cf3 'download_maxdays' \cf0 => \cf4 $attributes_values\cf0 [\cf3 'products_attributes_maxdays'\cf0 ], \
+                                  \cf3 'download_count' \cf0 => \cf4 $attributes_values\cf0 [\cf3 'products_attributes_maxcount'\cf0 ]);\
+          tep_db_perform(\ul TABLE_ORDERS_PRODUCTS_DOWNLOAD\ulnone , \cf4 $sql_data_array\cf0 );\
+        \}\
+        \cf4 $products_ordered_attributes \cf0 .= \cf3 "\\n\\t" \cf0 . \cf4 $attributes_values\cf0 [\cf3 'products_options_name'\cf0 ] . \cf3 ' ' \cf0 . \cf4 $attributes_values\cf0 [\cf3 'products_options_values_name'\cf0 ];\
+      \}\
+    \}\
+\
+\
+*** REPLACE WITH ***: \
+\
+\cf4 $sql_data_array \cf0 = \cf2 array\cf0 (\cf3 'orders_id' \cf0 => \cf4 $insert_id\cf0 , \
+                                \cf3 'orders_products_id' \cf0 => \cf4 $order_products_id\cf0 , \
+                                \cf3 'products_options' \cf0 => \cf4 $attributes_values\cf0 [\cf3 'products_options_name'\cf0 ],\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - ONE LINE - Update insert query.  changed to use value from $order->products.\cf0 \
+                                \cf3 'products_options_values' \cf0 => \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'value'\cf0 ],\
+                                \cf3 'options_values_price' \cf0 => \cf4 $attributes_values\cf0 [\cf3 'options_values_price'\cf0 ], \
+                                \cf3 'price_prefix' \cf0 => \cf4 $attributes_values\cf0 [\cf3 'price_prefix'\cf0 ]);\
+        tep_db_perform(TABLE_ORDERS_PRODUCTS_ATTRIBUTES, \cf4 $sql_data_array\cf0 );\
+\
+        \cf2 if \cf0 ((DOWNLOAD_ENABLED == \cf3 'true'\cf0 ) && \cf2 isset\cf0 (\cf4 $attributes_values\cf0 [\cf3 'products_attributes_filename'\cf0 ]) && tep_not_null(\cf4 $attributes_values\cf0 [\cf3 'products_attributes_filename'\cf0 ])) \{\
+          \cf4 $sql_data_array \cf0 = \cf2 array\cf0 (\cf3 'orders_id' \cf0 => \cf4 $insert_id\cf0 , \
+                                  \cf3 'orders_products_id' \cf0 => \cf4 $order_products_id\cf0 , \
+                                  \cf3 'orders_products_filename' \cf0 => \cf4 $attributes_values\cf0 [\cf3 'products_attributes_filename'\cf0 ], \
+                                  \cf3 'download_maxdays' \cf0 => \cf4 $attributes_values\cf0 [\cf3 'products_attributes_maxdays'\cf0 ], \
+                                  \cf3 'download_count' \cf0 => \cf4 $attributes_values\cf0 [\cf3 'products_attributes_maxcount'\cf0 ]);\
+          tep_db_perform(TABLE_ORDERS_PRODUCTS_DOWNLOAD, \cf4 $sql_data_array\cf0 );\
+        \}\
+\cf5 //BOF - Zappo - Option Types v2 - ONE LINE - Changed to use value from $orders->products and added call to tep_decode_specialchars()\cf0 \
+        \cf4 $products_ordered_attributes \cf0 .= \cf3 "\\n\\t" \cf0 . \cf4 $attributes_values\cf0 [\cf3 'products_options_name'\cf0 ] . \cf3 ' ' \cf0 . tep_decode_specialchars(\cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'value'\cf0 ]);\
+      \}\
+    \}\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***********\
+Open /catalog/product_info.php\
+\
+***FIND***
+\f1\fs24 \
+
+\f0\fs22  (around line 28) \
+\
+\
+\
+		function popupWindow(url) \{\
+\pard\pardeftab720\ql\qnatural
+\cf0   window.open(url,'popupWindow','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,copyhistory=no,width=100,height=100,screenX=150,screenY=150,top=150,left=150')\
+\}\
+\
+\
+*** BELOW ADD *** : \
+\
+	// BOF - Zappo - Option Types v2 - Added for Form Field Progress Bar \
+function textCounter(field,counter,maxlimit,linecounter) \{\
+  // text width//\
+  var fieldWidth =  parseInt(field.offsetWidth);\
+  var charcnt = field.value.length;\
+  var percentage = parseInt(100 - (( maxlimit - charcnt) * 100)/maxlimit) ;\
+  if (linecounter) \{\
+    document.getElementById(counter).style.width =  parseInt((fieldWidth*percentage)/100)+"px";\
+    document.getElementById(linecounter).style.width =  parseInt(fieldWidth)+"px";\
+    document.getElementById(counter).innerHTML="<nobr>Max: "+percentage+"% - ("+charcnt+"/"+maxlimit+")</nobr>";\
+  \} else \{\
+    // trim the extra text\
+    if (charcnt > maxlimit) \{\
+      field.value = field.value.substring(0, maxlimit);\
+    \} else \{\
+      // progress bar percentage\
+      document.getElementById(counter).style.width =  parseInt((fieldWidth*percentage)/100)+"px";\
+      document.getElementById(counter).innerHTML="<nobr>Max: "+percentage+"% - ("+charcnt+"/"+maxlimit+")</nobr>";\
+      // color correction on style from CCFFF -> CC0000\
+      document.getElementById(counter).style["background-color"] = "rgb(80%,"+(100-percentage)+"%,"+(100-percentage)+"%)";\
+    \}  \
+  \}\
+\}\
+// EOF - Zappo - Option Types v2 - Added for Form Field Progress Bar \
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf0 (around line 71)\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 \ul \ulc0 <\ulnone td width=\cf3 "100%" \cf0 valign=\cf3 "top"\cf0 ><?php \cf2 echo \cf0 tep_draw_form(\cf3 'cart_quantity'\cf0 , tep_href_link(FILENAME_PRODUCT_INFO, tep_get_all_get_params(\cf2 array\cf0 (\cf3 'action'\cf0 )) . \cf3 'action=add_product'\cf0 )); \cf6 ?>\cf7 <\cf8 table\cf0  \cf9 border\cf0 =\cf10 "0"\cf0  \cf9 width\cf0 =\cf10 "100%"\cf0  \cf9 cellspacing\cf0 =\cf10 "0"\cf0  \cf9 cellpadding\cf0 =\cf10 "0"\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf11 <!--//BOF - Zappo - Option Types v2 - Added for File upload: 'enctype="multipart/form-data"' //-->\cf0 \
+    \cf7 <\cf8 td\cf0  \cf9 width\cf0 =\cf10 "100%"\cf0  \cf9 valign\cf0 =\cf10 "top"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_draw_form(\cf3 'cart_quantity'\cf0 , tep_href_link(FILENAME_PRODUCT_INFO, tep_get_all_get_params(\cf2 array\cf0 (\cf3 'action'\cf0 )) . \cf3 'action=add_product'\cf0 ), \cf3 'post'\cf0 , \cf3 'enctype="multipart/form-data"'\cf0 ); \cf6 ?>\cf7 <\cf8 table\cf0  \cf9 border\cf0 =\cf10 "0"\cf0  \cf9 width\cf0 =\cf10 "100%"\cf0  \cf9 cellspacing\cf0 =\cf10 "0"\cf0  \cf9 cellpadding\cf0 =\cf10 "0"\cf7 >\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf6 <?php\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf5 //EOF - Zappo - Option Types v2 - Added for File upload: 'enctype="multipart/form-data"'\
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf0  (around line 140)\
+\
+          \cf7 <\cf8 p\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 \ul stripslashes\ulnone (\cf4 $product_info\cf0 [\cf3 'products_description'\cf0 ]); \cf6 ?>\cf7 </\cf8 p\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+	\
+\
+After add: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - ONE LINE - Initialize $number_of_uploads\cf0 \
+    \cf4 $number_of_uploads \cf0 = \cf6 0\cf0 ;\
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf0 \
+	\cf4 $products_options_name_query \cf0 = tep_db_query(\cf3 "select distinct popt.products_options_id, popt.products_options_name from " \cf0 . TABLE_PRODUCTS_OPTIONS . \cf3 " popt, " \cf0 . TABLE_PRODUCTS_ATTRIBUTES . \cf3 " patrib where patrib.products_id='" \cf0 . (int)\cf4 $HTTP_GET_VARS\cf0 [\cf3 'products_id'\cf0 ] . \cf3 "' and patrib.options_id = popt.products_options_id and popt.language_id = '" \cf0 . (int)\cf4 \ul \ulc4 $languages_id\ulnone  \cf0 . \cf3 "' order by popt.products_options_name"\cf0 );\
+      \cf2 while \cf0 (\cf4 \ul $products_options_name \cf0 \ulc0 = tep_db_fetch_array(\cf4 \ulc4 $products_options_name_query\cf0 \ulc0 )\ulnone ) \{\
+        \cf4 $products_options_array \cf0 = \cf2 array\cf0 ();\
+        \cf4 $products_options_query \cf0 = tep_db_query(\cf3 "select pov.products_options_values_id, pov.products_options_values_name, pa.options_values_price, pa.price_prefix from " \cf0 . TABLE_PRODUCTS_ATTRIBUTES . \cf3 " pa, " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES . \cf3 " pov where pa.products_id = '" \cf0 . (int)\cf4 $HTTP_GET_VARS\cf0 [\cf3 'products_id'\cf0 ] . \cf3 "' and pa.options_id = '" \cf0 . (int)\cf4 $products_options_name\cf0 [\cf3 'products_options_id'\cf0 ] . \cf3 "' and pa.options_values_id = pov.products_options_values_id and pov.language_id = '" \cf0 . (int)\cf4 \ul \ulc4 $languages_id\ulnone  \cf0 . \cf3 "'"\cf0 );\
+        \cf2 while \cf0 (\cf4 \ul $products_options \cf0 \ulc0 = tep_db_fetch_array(\cf4 \ulc4 $products_options_query\cf0 \ulc0 )\ulnone ) \{\
+          \cf4 $products_options_array\cf0 [] = \cf2 array\cf0 (\cf3 'id' \cf0 => \cf4 $products_options\cf0 [\cf3 'products_options_values_id'\cf0 ], \cf3 'text' \cf0 => \cf4 $products_options\cf0 [\cf3 'products_options_values_name'\cf0 ]);\
+          \cf2 if \cf0 (\cf4 $products_options\cf0 [\cf3 'options_values_price'\cf0 ] != \cf3 '0'\cf0 ) \{\
+            \cf4 $products_options_array\cf0 [\ul sizeof\ulnone (\cf4 $products_options_array\cf0 )-\cf6 1\cf0 ][\cf3 'text'\cf0 ] .= \cf3 ' (' \cf0 . \cf4 $products_options\cf0 [\cf3 'price_prefix'\cf0 ] . \cf4 \ul \ulc4 $currencies\cf0 \ulnone ->display_price(\cf4 $products_options\cf0 [\cf3 'options_values_price'\cf0 ], tep_get_tax_rate(\cf4 $product_info\cf0 [\cf3 'products_tax_class_id'\cf0 ])) .\cf3 ') '\cf0 ;\
+          \}\
+        \}\
+\
+        \cf2 if \cf0 (\cf2 isset\cf0 (\cf4 $cart\cf0 ->contents[\cf4 $HTTP_GET_VARS\cf0 [\cf3 'products_id'\cf0 ]][\cf3 'attributes'\cf0 ][\cf4 $products_options_name\cf0 [\cf3 'products_options_id'\cf0 ]])) \{\
+          \cf4 $selected_attribute \cf0 = \cf4 $cart\cf0 ->contents[\cf4 $HTTP_GET_VARS\cf0 [\cf3 'products_id'\cf0 ]][\cf3 'attributes'\cf0 ][\cf4 $products_options_name\cf0 [\cf3 'products_options_id'\cf0 ]];\
+        \} \cf2 else \cf0 \{\
+          \cf4 $selected_attribute \cf0 = \cf2 false\cf0 ;\
+        \}\
+\pard\pardeftab720\ql\qnatural
+\cf6 ?>\cf0 \
+            \cf7 <\cf8 tr\cf7 >\cf0 \
+              \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "main"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $products_options_name\cf0 [\cf3 'products_options_name'\cf0 ] . \cf3 ':'\cf0 ; \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+              \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "main"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_draw_pull_down_menu(\cf3 'id[' \cf0 . \cf4 $products_options_name\cf0 [\cf3 'products_options_id'\cf0 ] . \cf3 ']'\cf0 , \cf4 $products_options_array\cf0 , \cf4 $selected_attribute\cf0 ); \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 </\cf8 tr\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+      \}\
+\cf6 ?>\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 *** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Add extra Option Values to Query && Placed Options in new file: option_types.php\cf0 \
+      \cf4 $products_options_name_query \cf0 = tep_db_query(\cf3 "select distinct popt.products_options_id, popt.products_options_name, popt.products_options_type, popt.products_options_length, popt.products_options_comment from " \cf0 . TABLE_PRODUCTS_OPTIONS . \cf3 " popt, " \cf0 . TABLE_PRODUCTS_ATTRIBUTES . \cf3 " patrib where patrib.products_id='" \cf0 . (int)\cf4 $product_info\cf0 [\cf3 'products_id'\cf0 ] . \cf3 "' and patrib.options_id = popt.products_options_id and popt.language_id = '" \cf0 . (int)\cf4 $languages_id \cf0 . \cf3 "' order by popt.products_options_order, popt.products_options_name"\cf0 );\
+      \cf2 while \cf0 (\cf4 $products_options_name \cf0 = tep_db_fetch_array(\cf4 $products_options_name_query\cf0 )) \{\
+\
+        \cf5 // - Zappo - Option Types v2 - Include option_types.php - Contains all Option Types, other than the original Drowpdown...\cf0 \
+        \cf2 include\cf0 (DIR_WS_MODULES . \cf3 'option_types.php'\cf0 );\
+\
+        \cf2 if \cf0 (\cf4 $Default \cf0 == \cf2 true\cf0 ) \{  \cf5 // - Zappo - Option Types v2 - Default action is (standard) dropdown list. If something is not correctly set, we should always fall back to the standard.\cf0 \
+        \cf4 $products_options_array \cf0 = \cf2 array\cf0 ();\
+        \cf4 $products_options_query \cf0 = tep_db_query(\cf3 "select pov.products_options_values_id, pov.products_options_values_name, pa.options_values_price, pa.price_prefix from " \cf0 . TABLE_PRODUCTS_ATTRIBUTES . \cf3 " pa, " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES . \cf3 " pov where pa.products_id = '" \cf0 . (int)\cf4 $HTTP_GET_VARS\cf0 [\cf3 'products_id'\cf0 ] . \cf3 "' and pa.options_id = '" \cf0 . (int)\cf4 $ProdOpt_ID \cf0 . \cf3 "' and pa.options_values_id = pov.products_options_values_id and pov.language_id = '" \cf0 . (int)\cf4 $languages_id \cf0 . \cf3 "' order by pa.products_options_sort_order"\cf0 );\
+        \cf2 while \cf0 (\cf4 $products_options \cf0 = tep_db_fetch_array(\cf4 $products_options_query\cf0 )) \{\
+          \cf4 $products_options_array\cf0 [] = \cf2 array\cf0 (\cf3 'id' \cf0 => \cf4 $products_options\cf0 [\cf3 'products_options_values_id'\cf0 ], \cf3 'text' \cf0 => \cf4 $products_options\cf0 [\cf3 'products_options_values_name'\cf0 ]);\
+          \cf2 if \cf0 (\cf4 $products_options\cf0 [\cf3 'options_values_price'\cf0 ] != \cf3 '0'\cf0 ) \{\
+            \cf4 $products_options_array\cf0 [sizeof(\cf4 $products_options_array\cf0 )-\cf6 1\cf0 ][\cf3 'text'\cf0 ] .= \cf3 ' (' \cf0 . \cf4 $products_options\cf0 [\cf3 'price_prefix'\cf0 ] . \cf4 $currencies\cf0 ->display_price(\cf4 $products_options\cf0 [\cf3 'options_values_price'\cf0 ], tep_get_tax_rate(\cf4 $product_info\cf0 [\cf3 'products_tax_class_id'\cf0 ])) .\cf3 ') '\cf0 ;\
+          \}\
+        \}\
+\
+        \cf2 if \cf0 (\cf2 isset\cf0 (\cf4 $cart\cf0 ->contents[\cf4 $HTTP_GET_VARS\cf0 [\cf3 'products_id'\cf0 ]][\cf3 'attributes'\cf0 ][\cf4 $products_options_name\cf0 [\cf3 'products_options_id'\cf0 ]])) \{\
+          \cf4 $selected_attribute \cf0 = \cf4 $cart\cf0 ->contents[\cf4 $HTTP_GET_VARS\cf0 [\cf3 'products_id'\cf0 ]][\cf3 'attributes'\cf0 ][\cf4 $products_options_name\cf0 [\cf3 'products_options_id'\cf0 ]];\
+        \} \cf2 else \cf0 \{\
+          \cf4 $selected_attribute \cf0 = \cf2 false\cf0 ;\
+        \}\
+\pard\pardeftab720\ql\qnatural
+\cf6 ?>\cf0 \
+            \cf7 <\cf8 tr\cf7 >\cf0 \
+              \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "main"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $ProdOpt_Name \cf0 . \cf3 ':'\cf0 ; \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+              \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "main"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_draw_pull_down_menu(\cf3 'id[' \cf0 . \cf4 $ProdOpt_ID \cf0 . \cf3 ']'\cf0 , \cf4 $products_options_array\cf0 , \cf4 $selected_attribute\cf0 ) . \cf3 ' &nbsp; ' \cf0 . \cf4 $ProdOpt_Comment\cf0 ;  \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 </\cf8 tr\cf7 >\cf6 <?php\cf0 \
+	  \} \cf5 // End if Default=true\cf0 \
+  \}\
+\pard\pardeftab720\ql\qnatural
+\cf5 //EOF - Zappo - Option Types v2 - Add extra Option Values to Query && Placed Options in new file: option_types.php\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf6 ?>\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf0 \
+\
+      \cf2 include\cf0 (DIR_WS_MODULES . FILENAME_ALSO_PURCHASED_PRODUCTS);\
+    \}\
+  \}\
+\
+\
+Add below: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - File Uploading: Hidden field passing number of uploads to next file\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf6 ?>\cf0 \
+        \cf7 </\cf8 td\cf7 >\cf0 \
+      \cf7 </\cf8 tr\cf7 >\cf0 \
+      \cf7 <\cf8 tr\cf7 >\cf0 \
+        \cf7 <\cf8 td\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_draw_hidden_field(\cf3 'number_of_uploads'\cf0 , \cf4 $number_of_uploads\cf0 ); \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+      \cf7 </\cf8 tr\cf7 >\cf0 \
+    \cf7 </\cf8 table\cf7 ></\cf8 form\cf7 ></\cf8 td\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf5 //EOF - Zappo - Option Types v2 - File Uploading: Hidden field passing number of uploads to next file\cf0 \
+\
+\
+\
+********\
+Open /catalog/shopping_cart.php\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf0  (about line 70)\
+\
+\cf4 $info_box_contents\cf0 [\cf6 0\cf0 ][] = \cf2 array\cf0 (\cf3 'params' \cf0 => \cf3 'class="productListing-heading"'\cf0 ,\
+                                    \cf3 'text' \cf0 => TABLE_HEADING_PRODUCTS);\
+\
+Add below: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Added Options Column\cf0 \
+    \cf4 $info_box_contents\cf0 [\cf6 0\cf0 ][] = \cf2 array\cf0 (\cf3 'params' \cf0 => \cf3 'class="productListing-heading"'\cf0 ,\
+                                    \cf3 'text' \cf0 => TABLE_HEADING_OPTIONS);\
+\cf5 //EOF - Zappo - Option Types v2 - Added Options Column\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf0 \
+\
+\cf4 $attributes \cf0 = tep_db_query(\cf3 "select popt.products_options_name, poval.products_options_values_name, pa.options_values_price, pa.price_prefix\cf0 \
+\cf3                                       from " \cf0 . TABLE_PRODUCTS_OPTIONS . \cf3 " popt, " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES . \cf3 " poval, " \cf0 . TABLE_PRODUCTS_ATTRIBUTES . \cf3 " pa\cf0 \
+\cf3                                       where pa.products_id = '" \cf0 . (int)\cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 "'\cf0 \
+\cf3                                        and pa.options_id = '" \cf0 . (int)\cf4 $option \cf0 . \cf3 "'\cf0 \
+\cf3                                        and pa.options_id = popt.products_options_id\cf0 \
+\cf3                                        and pa.options_values_id = '" \cf0 . (int)\cf4 $value \cf0 . \cf3 "'\cf0 \
+\cf3                                        and pa.options_values_id = poval.products_options_values_id\cf0 \
+\cf3                                        and popt.language_id = '" \cf0 . (int)\cf4 \ul $languages_id\ulnone  \cf0 . \cf3 "'\cf0 \
+\cf3                                        and poval.language_id = '" \cf0 . (int)\cf4 \ul $languages_id\ulnone  \cf0 . \cf3 "'"\cf0 );\
+          \cf4 $attributes_values \cf0 = tep_db_fetch_array(\cf4 $attributes\cf0 );\
+\
+          \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf4 $option\cf0 ][\cf3 'products_options_name'\cf0 ] = \cf4 $attributes_values\cf0 [\cf3 'products_options_name'\cf0 ];\
+          \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf4 $option\cf0 ][\cf3 'options_values_id'\cf0 ] = \cf4 $value\cf0 ;\
+          \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf4 $option\cf0 ][\cf3 'products_options_values_name'\cf0 ] = \cf4 $attributes_values\cf0 [\cf3 'products_options_values_name'\cf0 ];\
+\
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - (Hidden field moved below)\cf0 \
+          \cf4 $attributes \cf0 = tep_db_query(\cf3 "select popt.products_options_name, poval.products_options_values_name, pa.options_values_price, pa.price_prefix\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf3                                       from " \cf0 . TABLE_PRODUCTS_OPTIONS . \cf3 " popt, " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES . \cf3 " poval, " \cf0 . TABLE_PRODUCTS_ATTRIBUTES . \cf3 " pa\cf0 \
+\cf3                                       where pa.products_id = '" \cf0 . (int)\cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 "'\cf0 \
+\cf3                                        and pa.options_id = '" \cf0 . (int)\cf4 $option \cf0 . \cf3 "'\cf0 \
+\cf3                                        and pa.options_id = popt.products_options_id\cf0 \
+\cf3                                        and pa.options_values_id = '" \cf0 . (int)\cf4 $value \cf0 . \cf3 "'\cf0 \
+\cf3                                        and pa.options_values_id = poval.products_options_values_id\cf0 \
+\cf3                                        and popt.language_id = '" \cf0 . (int)\cf4 $languages_id \cf0 . \cf3 "'\cf0 \
+\cf3                                        and poval.language_id = '" \cf0 . (int)\cf4 $languages_id \cf0 . \cf3 "'"\cf0 );\
+          \cf4 $attributes_values \cf0 = tep_db_fetch_array(\cf4 $attributes\cf0 );\
+\
+          \cf5 // - Zappo - Option Types v2 - If attrib is Text, assign to $attr_value temporarily (Here's that hidden field)\cf0 \
+          \cf2 if \cf0 (\cf4 $value \cf0 == OPTIONS_VALUE_TEXT_ID) \{\
+            \cf2 echo \cf0 tep_draw_hidden_field(\cf3 'id[' \cf0 . \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 '][' \cf0 . TEXT_PREFIX . \cf4 $option \cf0 . \cf3 ']'\cf0 , \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'attributes_values'\cf0 ][\cf4 $option\cf0 ]);\
+            \cf4 $attr_value \cf0 = \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'attributes_values'\cf0 ][\cf4 $option\cf0 ];\
+          \} \cf2 else \cf0 \{\
+            \cf2 echo \cf0 tep_draw_hidden_field(\cf3 'id[' \cf0 . \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 '][' \cf0 . \cf4 $option \cf0 . \cf3 ']'\cf0 , \cf4 $value\cf0 );\
+            \cf4 $attr_value \cf0 = \cf4 $attributes_values\cf0 [\cf3 'products_options_values_name'\cf0 ];\
+          \}\
+          \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf4 $option\cf0 ][\cf3 'products_options_name'\cf0 ] = \cf4 $attributes_values\cf0 [\cf3 'products_options_name'\cf0 ];\
+          \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf4 $option\cf0 ][\cf3 'options_values_id'\cf0 ] = \cf4 $value\cf0 ;\
+          \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf4 $option\cf0 ][\cf3 'products_options_values_name'\cf0 ] = \cf4 $attr_value \cf0 ;\
+\pard\pardeftab720\ql\qnatural
+\cf5 //EOF - Zappo - Option Types v2 - (Line above Assigns $attr_value)\
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf0 \
+\
+\cf4 $products_name \cf0 = \cf3 '<table border="0" cellspacing="2" cellpadding="2">' \cf0 .\
+                       \cf3 '  <tr>' \cf0 .\
+                       \cf3 '    <td class="productListing-data" align="center"><a href="' \cf0 . tep_href_link(FILENAME_PRODUCT_INFO, \cf3 'products_id=' \cf0 . \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ]) . \cf3 '">' \cf0 . tep_image(DIR_WS_IMAGES . \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'image'\cf0 ], \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'name'\cf0 ], SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT) . \cf3 '</a></td>' \cf0 .\
+                       \cf3 '    <td class="productListing-data" valign="top"><a href="' \cf0 . tep_href_link(FILENAME_PRODUCT_INFO, \cf3 'products_id=' \cf0 . \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ]) . \cf3 '"><b>' \cf0 . \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'name'\cf0 ] . \cf3 '</b></a>'\cf0 ;\
+\
+\
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Rearranged Product(s) cart-listing, and added Options Column\cf0 \
+\cf5 // Rearranged products_name listing, and placed AFTER the Stock-Check (For displaying stock check next to Prod. Name\cf0 \
+\cf5 /*      $products_name = '<table border="0" cellspacing="2" cellpadding="2">' .\cf0 \
+\cf5                        '  <tr>' .\cf0 \
+\cf5                        '    <td class="productListing-data" align="center"><a href="' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $products[$i]['id']) . '">' . tep_image(DIR_WS_IMAGES . $products[$i]['image'], $products[$i]['name'], SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT) . '</a></td>' .\cf0 \
+\cf5                        '    <td class="productListing-data" valign="top"><a href="' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $products[$i]['id']) . '"><b>' . $products[$i]['name'] . '</b></a>';\cf0 \
+\cf5 */\cf0 \
+\cf5 //EOF - Zappo - Option Types v2 - Rearranged Product(s) cart-listing, and added Options Column\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf0 \
+\
+\cf4 $products_name \cf0 .= \cf4 $stock_check\cf0 ;\
+        \}\
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Changed $stock_check to also be used when item is in Stock...\cf0 \
+        \}\
+      \} \cf2 else \cf0 \{\
+        \cf4 $stock_check \cf0 = \cf3 ''\cf0 ;\
+\cf5 //EOF - Zappo - Option Types v2 - Changed $stock_check to also be used when item is in Stock...\
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf0 \
+\
+\cf2 if \cf0 (\cf2 isset\cf0 (\cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ]) && \ul is_array\ulnone (\cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ])) \{\
+\
+\
+Before Add: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Rearanged Product(s) cart-listing, and added Options Column\cf0 \
+      \cf4 $products_name \cf0 = \cf3 '<table border="0" cellspacing="2" cellpadding="2">' \cf0 .\
+                       \cf3 '  <tr>' \cf0 .\
+                       \cf3 '    <td class="productListing-data" align="center"><a href="' \cf0 . tep_href_link(FILENAME_PRODUCT_INFO, \cf3 'products_id=' \cf0 . \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ]) . \cf3 '"><b>' \cf0 . \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'name'\cf0 ] . \cf3 '</b>' \cf0 . \cf4 $stock_check \cf0 . \cf3 '</a></td>' \cf0 .\
+                       \cf3 '  </tr>' \cf0 .\
+                       \cf3 '  <tr>' \cf0 .\
+                       \cf3 '    <td class="productListing-data" align="center"><a href="' \cf0 . tep_href_link(FILENAME_PRODUCT_INFO, \cf3 'products_id=' \cf0 . \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ]) . \cf3 '">' \cf0 . tep_image(DIR_WS_IMAGES . \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'image'\cf0 ], \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'name'\cf0 ], SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT) . \cf3 '</a></td>' \cf0 .\
+                       \cf3 '  </tr>' \cf0 .\
+                       \cf3 '</table>'\cf0 ;\
+      \cf4 $products_Options \cf0 = \cf3 '<table border="0" cellspacing="2" cellpadding="2">' \cf0 .\
+                       \cf3 '  <tr>' \cf0 .\
+                       \cf3 '    <td class="productListing-data">'\cf0 ;\
+\cf5 //EOF - Zappo - Option Types v2 - Rearanged Product(s) cart-listing, and added Options Column\
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf0 \
+\
+\cf4 $products_name \cf0 .= \cf3 '<br><small><i> - ' \cf0 . \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf4 $option\cf0 ][\cf3 'products_options_name'\cf0 ] . \cf3 ' ' \cf0 . \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf4 $option\cf0 ][\cf3 'products_options_values_name'\cf0 ] . \cf3 '</i></small>'\cf0 ;\
+        \}\
+      \}\
+\
+      \cf4 $products_name \cf0 .= \cf3 '    </td>' \cf0 .\
+                        \cf3 '  </tr>' \cf0 .\
+                        \cf3 '</table>'\cf0 ;\
+\
+      \cf4 $info_box_contents\cf0 [\cf4 $cur_row\cf0 ][] = \cf2 array\cf0 (\cf3 'params' \cf0 => \cf3 'class="productListing-data"'\cf0 ,\
+                                             \cf3 'text' \cf0 => \cf4 $products_name\cf0 );\
+\
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Rearanged Product(s) cart-listing, added Options Column, Upload preview link, and added Prices to Attributes\cf0 \
+          \cf4 $imageDir \cf0 = (tep_session_registered) ? UPL_DIR : TMP_DIR;\
+          \cf4 $image_link1 \cf0 = \cf3 ''\cf0 ;\
+          \cf4 $image_link2 \cf0 = \cf3 ''\cf0 ;\
+          \cf2 if \cf0 (file_exists(\cf4 $imageDir\cf0 .\cf4 $products\cf0 [\cf4 $i\cf0 ][\cf4 $option\cf0 ][\cf3 'products_options_values_name'\cf0 ])) \{\
+            \cf4 $image_link1 \cf0 = \cf3 '<a href="' \cf0 . \cf4 $imageDir \cf0 . \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf4 $option\cf0 ][\cf3 'products_options_values_name'\cf0 ] . \cf3 '" target="_blank">'\cf0 ;\
+            \cf4 $image_link2 \cf0 = tep_image(DIR_WS_ICONS . \cf3 'view.gif'\cf0 ) . \cf3 '</a>'\cf0 ;\
+          \}\
+          \cf4 $Option_Price \cf0 = (\cf4 $products\cf0 [\cf4 $i\cf0 ][\cf4 $option\cf0 ][\cf3 'options_values_price'\cf0 ] != \cf3 '0'\cf0 ) ? \cf3 ' - (' \cf0 . \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf4 $option\cf0 ][\cf3 'price_prefix'\cf0 ] . \cf4 $currencies\cf0 ->display_price(\cf4 $products\cf0 [\cf4 $i\cf0 ][\cf4 $option\cf0 ][\cf3 'options_values_price'\cf0 ], tep_get_tax_rate(\cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'tax_class_id'\cf0 ])) . \cf3 ')' \cf0 : \cf3 ''\cf0 ;\
+          \cf4 $products_Options \cf0 .= \cf3 '<small>- ' \cf0 . \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf4 $option\cf0 ][\cf3 'products_options_name'\cf0 ] . \cf3 ': <i>' \cf0 . \cf4 $image_link1 \cf0 . \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf4 $option\cf0 ][\cf3 'products_options_values_name'\cf0 ] . \cf4 $image_link2 \cf0 . \cf3 '</i>' \cf0 . \cf4 $Option_Price \cf0 . \cf3 '</small><br>'\cf0 ;\
+        \}\
+      \}\
+\
+      \cf4 $products_Options \cf0 .= \cf3 '    </td>' \cf0 .\
+                        \cf3 '  </tr>' \cf0 .\
+                        \cf3 '</table>'\cf0 ;\
+\
+      \cf4 $info_box_contents\cf0 [\cf4 $cur_row\cf0 ][] = \cf2 array\cf0 (\cf3 'params' \cf0 => \cf3 'class="productListing-data"'\cf0 ,\
+                                             \cf3 'text' \cf0 => \cf4 $products_name\cf0 );\
+\
+      \cf4 $info_box_contents\cf0 [\cf4 $cur_row\cf0 ][] = \cf2 array\cf0 (\cf3 'params' \cf0 => \cf3 'class="productListing-data"'\cf0 ,\
+                                             \cf3 'text' \cf0 => \cf4 $products_Options\cf0 );\
+\cf5 //EOF - Zappo - Option Types v2 - Rearanged Product(s) cart-listing, added Options Column, Upload preview link, and added Prices to Attributes\cf0 \
+\
+\
+*******\
+Open /catalog/stylesheet.css\
+\
+At the end add: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf11 /*BOF - Zappo - Option Types v2 - Progress Bar */\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf8 .progress\cf0 \{\
+  \cf9 width\cf0 : \cf12 1px\cf0 ;\
+  \cf9 height\cf0 : \cf12 12px\cf0 ;\
+  \cf9 color\cf0 : \cf12 grey\cf0 ;\
+  \cf9 font-size\cf0 : \cf12 10px\cf0 ;\
+ \cf11 /* overflow: hidden; */\cf0 \
+  \cf9 background-color\cf0 : \cf12 #bbc3d3\cf0 ;\
+  \cf9 padding-left\cf0 : \cf12 5px\cf0 ;\
+\}\
+\cf8 .bar\cf0 \{\
+  \cf9 border-style\cf0 : \cf12 solid\cf0 ;\
+  \cf9 border-width\cf0 : \cf12 1px\cf0 ;\
+  \cf9 border-color\cf0 : \cf12 #bbc3d3\cf0 ;\
+\}\
+\pard\pardeftab720\ql\qnatural
+\cf11 /*EOF - Zappo - Option Types v2 - Progress Bar */\cf0 \
+\
+\cf11 /*BOF - Zappo - Option Types v2 - ONE LINE - Preload Option Type Images */\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf8 div#ImagePreload\cf0  \{ \cf9 display\cf0 : \cf12 none\cf0 ; \}\
+\
+\
+**********\
+Open /catalog/admin/includes/database_tables.php\
+\
+Before the ?> Add \
+\
+    define(\cf3 'TABLE_FILES_UPLOADED'\cf0 , \cf3 'files_uploaded'\cf0 );  \cf5 //BOF - Zappo - Option Types v2 - ONE LINE - File Uploading\cf0 \
+    define(\cf3 'TABLE_PRODUCTS_OPTIONS_TYPES'\cf0 , \cf3 'products_options_types'\cf0 );  \cf5 //BOF - Zappo - Option Types v2 - ONE LINE - Option Types\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 ******\
+Open /catalog/admin/includes/languages/english/products_attributes.php\
+\
+\
+Before the ?> Add \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Add defines for Option Type, Comment, Length, Sort Order\cf0 \
+define(\cf3 'TABLE_HEADING_OPT_TYPE'\cf0 , \cf3 'Option Type'\cf0 );\
+define(\cf3 'TABLE_HEADING_OPT_LENGTH'\cf0 , \cf3 'Value Length'\cf0 );\
+define(\cf3 'TABLE_HEADING_OPT_ORDER'\cf0 , \cf3 'Sort Order'\cf0 );\
+define(\cf3 'TABLE_HEADING_OPT_COMMENT'\cf0 , \cf3 'Comment'\cf0 );\
+\cf5 //EOF - Zappo - Option Types v2 - Add defines for Option Type, Comment, Length, Sort Order\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 ******\
+Open /catalog/admin/invoice.php\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf0 \
+\
+\cf2 echo \cf3 '<br><nobr><small>&nbsp;<i> - ' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'option'\cf0 ] . \cf3 ': ' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'value'\cf0 ];\
+          \cf2 if \cf0 (\cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'price'\cf0 ] != \cf3 '0'\cf0 ) \cf2 echo \cf3 ' (' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'prefix'\cf0 ] . \cf4 $currencies\cf0 ->format(\cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'price'\cf0 ] * \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'qty'\cf0 ], \cf2 true\cf0 , \cf4 $order\cf0 ->info[\cf3 'currency'\cf0 ], \cf4 $order\cf0 ->info[\cf3 'currency_value'\cf0 ]) . \cf3 ')'\cf0 ;\
+          \cf2 echo \cf3 '</i></small></nobr>'\cf0 ;\
+\
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Removed <nobr>, because Text options can be very long\cf0 \
+          \cf2 echo \cf3 '<br><small>&nbsp;<i> - ' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'option'\cf0 ] . \cf3 ': ' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'value'\cf0 ];\
+          \cf2 if \cf0 (\cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'price'\cf0 ] != \cf3 '0'\cf0 ) \cf2 echo \cf3 ' (' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'prefix'\cf0 ] . \cf4 $currencies\cf0 ->format(\cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'price'\cf0 ] * \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'qty'\cf0 ], \cf2 true\cf0 , \cf4 $order\cf0 ->info[\cf3 'currency'\cf0 ], \cf4 $order\cf0 ->info[\cf3 'currency_value'\cf0 ]) . \cf3 ')'\cf0 ;\
+          \cf2 echo \cf3 '</i></small>'\cf0 ;\
+\cf5 //EOF - Zappo - Option Types v2 - Removed <nobr>, because Text options can be very long\
+\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf13 **********\
+Open /catalog/admin/orders.php\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf13  \
+\
+\pard\pardeftab720\ql\qnatural
+\cf2 echo \cf3 '<br><nobr><small>&nbsp;<i> - ' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'option'\cf0 ] . \cf3 ': ' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'value'\cf0 ];\
+          \cf2 if \cf0 (\cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'price'\cf0 ] != \cf3 '0'\cf0 ) \cf2 echo \cf3 ' (' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'prefix'\cf0 ] . \cf4 $currencies\cf0 ->format(\cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'price'\cf0 ] * \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'qty'\cf0 ], \cf2 true\cf0 , \cf4 $order\cf0 ->info[\cf3 'currency'\cf0 ], \cf4 $order\cf0 ->info[\cf3 'currency_value'\cf0 ]) . \cf3 ')'\cf0 ;\
+          \cf2 echo \cf3 '</i></small></nobr>'\cf0 ;\
+\
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Removed <nobr>, because Text options can be very long\cf0 \
+          \cf2 echo \cf3 '<br><small>&nbsp;<i> - ' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'option'\cf0 ] . \cf3 ': ' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'value'\cf0 ];\
+          \cf2 if \cf0 (\cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'price'\cf0 ] != \cf3 '0'\cf0 ) \cf2 echo \cf3 ' (' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'prefix'\cf0 ] . \cf4 $currencies\cf0 ->format(\cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'price'\cf0 ] * \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'qty'\cf0 ], \cf2 true\cf0 , \cf4 $order\cf0 ->info[\cf3 'currency'\cf0 ], \cf4 $order\cf0 ->info[\cf3 'currency_value'\cf0 ]) . \cf3 ')'\cf0 ;\
+          \cf2 echo \cf3 '</i></small>'\cf0 ;\
+\cf5 //EOF - Zappo - Option Types v2 - Removed <nobr>, because Text options can be very long\
+\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf14 **********\
+Open /catalog/admin/packingslip.php\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf14 \
+\pard\pardeftab720\ql\qnatural
+\cf2 echo \cf3 '<br><nobr>&nbsp;<i> - ' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'option'\cf0 ] . \cf3 ': ' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'value'\cf0 ];\
+          \cf2 echo \cf3 '</i></nobr>'\cf0 ;\
+\
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Removed <nobr>, because Text options can be very long\cf0 \
+          \cf2 echo \cf3 '<br><small>&nbsp;<i> - ' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'option'\cf0 ] . \cf3 ': ' \cf0 . \cf4 $order\cf0 ->products[\cf4 $i\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $j\cf0 ][\cf3 'value'\cf0 ];\
+          \cf2 echo \cf3 '</i></small>'\cf0 ;\
+\cf5 //EOF - Zappo - Option Types v2 - Removed <nobr>, because Text options can be very long\
+\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf14 *******\
+Open /catalog/admin/product_attributes.php\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf14 \
+\pard\pardeftab720\ql\qnatural
+\cf0   \cf4 $page_info \cf0 = \cf3 'option_page=' \cf0 . \cf4 $option_page \cf0 . \cf3 '&value_page=' \cf0 . \cf4 $value_page \cf0 . \cf3 '&attribute_page=' \cf0 . \cf4 $attribute_page\cf0 ;\
+\
+\
+*** BELOW ADD *** : \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Check if the option_value TEXT_UPLOAD_NAME is in place, and insert if not found\cf0 \
+  \cf4 $textoptions_query \cf0 = tep_db_query(\cf3 "select products_options_values_name from " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES . \cf3 " where products_options_values_id = '" \cf0 . OPTIONS_VALUES_TEXT_ID . \cf3 "' and language_id = '" \cf0 . \cf4 $languages_id \cf0 . \cf3 "'"\cf0 );\
+  \cf4 $textoptions \cf0 = tep_db_fetch_array(\cf4 $textoptions_query\cf0 );\
+  \cf2 if \cf0 (\cf2 empty\cf0 (\cf4 $textoptions\cf0 [\cf3 'products_options_values_name'\cf0 ]) || \cf4 $textoptions\cf0 [\cf3 'products_options_values_name'\cf0 ] != TEXT_UPLOAD_NAME) \{\
+    tep_db_query(\cf3 "delete from " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES . \cf3 " where products_options_values_id = '" \cf0 . OPTIONS_VALUES_TEXT_ID . \cf3 "'"\cf0 );\
+    \cf2 for \cf0 (\cf4 $i\cf0 =\cf6 0\cf0 , \cf4 $n\cf0 =sizeof(\cf4 $languages\cf0 ); \cf4 $i\cf0 <\cf4 $n\cf0 ; \cf4 $i \cf0 ++) \{\
+      tep_db_query(\cf3 "insert into " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES . \cf3 " (products_options_values_id, language_id, products_options_values_name) values ('" \cf0 . OPTIONS_VALUES_TEXT_ID . \cf3 "', '" \cf0 . (int)\cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 "', '" \cf0 . TEXT_UPLOAD_NAME . \cf3 "')"\cf0 );\
+    \}\
+  \}	\
+\cf5 //EOF - Zappo - Option Types v2 - Check if the option_value TEXT_UPLOAD_NAME is in place, and insert if not found\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf15 \
+\
+\pard\pardeftab720\ql\qnatural
+\cf4 $products_options_id \cf0 = tep_db_prepare_input(\ul $HTTP_POST_VARS\ulnone [\cf3 'products_options_id'\cf0 ]);\
+        \cf4 $option_name_array \cf0 = \cf4 $HTTP_POST_VARS\cf0 [\cf3 'option_name'\cf0 ];\
+\
+        \cf2 for \cf0 (\cf4 $i\cf0 =\cf6 0\cf0 , \cf4 $n\cf0 =\ul sizeof\ulnone (\cf4 $languages\cf0 ); \cf4 $i\cf0 <\cf4 $n\cf0 ; \cf4 $i \cf0 ++) \{\
+          \cf4 $option_name \cf0 = tep_db_prepare_input(\cf4 $option_name_array\cf0 [\cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ]]);\
+\
+          tep_db_query(\cf3 "insert into " \cf0 . TABLE_PRODUCTS_OPTIONS . \cf3 " (products_options_id, products_options_name, language_id) values ('" \cf0 . (int)\cf4 $products_options_id \cf0 . \cf3 "', '" \cf0 . tep_db_input(\cf4 $option_name\cf0 ) . \cf3 "', '" \cf0 . (int)\cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 "')"\cf0 );\
+        \}\
+\
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Update to add option values to products_option.\cf0 \
+        \cf4 $products_options_id \cf0 = tep_db_prepare_input(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'products_options_id'\cf0 ]);\
+        \cf4 $option_name_array \cf0 = \cf4 $HTTP_POST_VARS\cf0 [\cf3 'option_name'\cf0 ];\
+        \cf4 $option_cmmnt_array \cf0 = \cf4 $HTTP_POST_VARS\cf0 [\cf3 'option_comment'\cf0 ];\
+        \cf4 $option_type \cf0 = \cf4 $HTTP_POST_VARS\cf0 [\cf3 'option_type'\cf0 ];\
+        \cf4 $option_length \cf0 = \cf4 $HTTP_POST_VARS\cf0 [\cf3 'option_length'\cf0 ];\
+        \cf4 $option_order \cf0 = \cf4 $HTTP_POST_VARS\cf0 [\cf3 'option_order'\cf0 ];\
+\
+        \cf2 for \cf0 (\cf4 $i\cf0 =\cf6 0\cf0 , \cf4 $n\cf0 =sizeof(\cf4 $languages\cf0 ); \cf4 $i\cf0 <\cf4 $n\cf0 ; \cf4 $i \cf0 ++) \{\
+          \cf4 $option_name \cf0 = tep_db_prepare_input(\cf4 $option_name_array\cf0 [\cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ]]);\
+          \cf4 $option_comment \cf0 = tep_db_prepare_input(\cf4 $option_cmmnt_array\cf0 [\cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ]]);\
+\
+          tep_db_query(\cf3 "insert into " \cf0 . TABLE_PRODUCTS_OPTIONS . \cf3 " (products_options_id, products_options_name, language_id, products_options_type, products_options_length, products_options_comment, products_options_order) values ('" \cf0 . (int)\cf4 $products_options_id \cf0 . \cf3 "', '" \cf0 . tep_db_input(\cf4 $option_name\cf0 ) . \cf3 "', '" \cf0 . (int)\cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 "', '" \cf0 . \cf4 $option_type \cf0 . \cf3 "', '" \cf0 . \cf4 $option_length \cf0 . \cf3 "', '" \cf0 . tep_db_input(\cf4 $option_comment\cf0 ) . \cf3 "', '" \cf0 . \cf4 $option_order \cf0 . \cf3 "')"\cf0 );\
+        \}\
+\cf5 //EOF - Zappo - Option Types v2 - Update to add option values to products_option.\cf0 \
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf0 \
+\
+\cf2 for \cf0 (\cf4 $i\cf0 =\cf6 0\cf0 , \cf4 $n\cf0 =\ul sizeof\ulnone (\cf4 $languages\cf0 ); \cf4 $i\cf0 <\cf4 $n\cf0 ; \cf4 $i \cf0 ++) \{\
+          \cf4 $value_name \cf0 = tep_db_prepare_input(\cf4 $value_name_array\cf0 [\cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ]]);\
+\
+          tep_db_query(\cf3 "insert into " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES . \cf3 " (products_options_values_id, language_id, products_options_values_name) values ('" \cf0 . (int)\cf4 $value_id \cf0 . \cf3 "', '" \cf0 . (int)\cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 "', '" \cf0 . tep_db_input(\cf4 $value_name\cf0 ) . \cf3 "')"\cf0 );\
+        \}\
+\
+        tep_db_query(\cf3 "insert into " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES_TO_PRODUCTS_OPTIONS . \cf3 " (products_options_id, products_options_values_id) values ('" \cf0 . (int)\cf4 $option_id \cf0 . \cf3 "', '" \cf0 . (int)\cf4 $value_id \cf0 . \cf3 "')"\cf0 );\
+\
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - For TEXT and FILE option types, No need to add anything...\cf0 \
+        \cf5 // Let's Check for OptionType first...\cf0 \
+        \cf4 $optionType_query \cf0 = tep_db_query(\cf3 "select products_options_type from " \cf0 . TABLE_PRODUCTS_OPTIONS . \cf3 " where products_options_id = '" \cf0 . (int)\cf4 $option_id \cf0 . \cf3 "' and language_id = '" \cf0 . \cf4 $languages_id \cf0 . \cf3 "'"\cf0 );\
+        \cf4 $optionType \cf0 = tep_db_fetch_array(\cf4 $optionType_query\cf0 );\
+        \cf2 switch \cf0 (\cf4 $optionType\cf0 [\cf3 'products_options_type'\cf0 ]) \{\
+          \cf2 case \cf0 OPTIONS_TYPE_TEXT:\
+          \cf2 case \cf0 OPTIONS_TYPE_TEXTAREA:\
+          \cf2 case \cf0 OPTIONS_TYPE_FILE:\
+            \cf5 // Do Nothing...\cf0 \
+          \cf2 break\cf0 ;\
+          \cf2 default\cf0 :\
+        \cf2 for \cf0 (\cf4 $i\cf0 =\cf6 0\cf0 , \cf4 $n\cf0 =sizeof(\cf4 $languages\cf0 ); \cf4 $i\cf0 <\cf4 $n\cf0 ; \cf4 $i \cf0 ++) \{\
+          \cf4 $value_name \cf0 = tep_db_prepare_input(\cf4 $value_name_array\cf0 [\cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ]]);\
+\
+          tep_db_query(\cf3 "insert into " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES . \cf3 " (products_options_values_id, language_id, products_options_values_name) values ('" \cf0 . (int)\cf4 $value_id \cf0 . \cf3 "', '" \cf0 . (int)\cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 "', '" \cf0 . tep_db_input(\cf4 $value_name\cf0 ) . \cf3 "')"\cf0 );\
+        \}\
+\
+        tep_db_query(\cf3 "insert into " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES_TO_PRODUCTS_OPTIONS . \cf3 " (products_options_id, products_options_values_id) values ('" \cf0 . (int)\cf4 $option_id \cf0 . \cf3 "', '" \cf0 . (int)\cf4 $value_id \cf0 . \cf3 "')"\cf0 );\
+\
+          \cf2 break\cf0 ;\
+        \}\
+\cf5 //EOF - Zappo - Option Types v2 - For TEXT and FILE option types, No need to add anything...\
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf15 \
+\
+\pard\pardeftab720\ql\qnatural
+\cf4 $products_id \cf0 = tep_db_prepare_input(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'products_id'\cf0 ]);\
+        \cf4 $options_id \cf0 = tep_db_prepare_input(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'options_id'\cf0 ]);\
+        \cf4 $values_id \cf0 = tep_db_prepare_input(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'values_id'\cf0 ]);\
+\
+\
+*** REPLACE WITH ***: \
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - For TEXT and FILE option types, Lock the value and always use OPTIONS_VALUES_TEXT.\cf0 \
+        \cf4 $products_options_query \cf0 = tep_db_query(\cf3 "select products_options_type from " \cf0 . TABLE_PRODUCTS_OPTIONS . \cf3 " where products_options_id = '" \cf0 . \cf4 $HTTP_POST_VARS\cf0 [\cf3 'options_id'\cf0 ] . \cf3 "'"\cf0 );\
+        \cf4 $products_options_array \cf0 = tep_db_fetch_array(\cf4 $products_options_query\cf0 );\
+        \cf4 $values_id \cf0 = tep_db_prepare_input(((\cf4 $products_options_array\cf0 [\cf3 'products_options_type'\cf0 ] == OPTIONS_TYPE_TEXT) || (\cf4 $products_options_array\cf0 [\cf3 'products_options_type'\cf0 ] == OPTIONS_TYPE_TEXTAREA) || (\cf4 $products_options_array\cf0 [\cf3 'products_options_type'\cf0 ] == OPTIONS_TYPE_FILE)) ? OPTIONS_VALUE_TEXT_ID : \cf4 $HTTP_POST_VARS\cf0 [\cf3 'values_id'\cf0 ]);\
+        \cf4 $products_id \cf0 = tep_db_prepare_input(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'products_id'\cf0 ]);\
+        \cf4 $options_id \cf0 = tep_db_prepare_input(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'options_id'\cf0 ]);\
+\cf5 //        $values_id = tep_db_prepare_input($HTTP_POST_VARS['values_id']);\cf0 \
+\cf5 //EOF - Zappo - Option Types v2 - For TEXT and FILE option types, Lock the value and always use OPTIONS_VALUES_TEXT.\cf0 \
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf0  \
+\
+        tep_db_query(\cf3 "insert into " \cf0 . TABLE_PRODUCTS_ATTRIBUTES . \cf3 " values (null, '" \cf0 . (int)\cf4 $products_id \cf0 . \cf3 "', '" \cf0 . (int)\cf4 $options_id \cf0 . \cf3 "', '" \cf0 . (int)\cf4 $values_id \cf0 . \cf3 "', '" \cf0 . (float)tep_db_input(\cf4 $value_price\cf0 ) . \cf3 "', '" \cf0 . tep_db_input(\cf4 $price_prefix\cf0 ) . \cf3 "')"\cf0 );\
+\
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 // BOF - Zappo - Option Types v2 - Added Attributes Sort Order\cf0 \
+        \cf4 $value_order \cf0 = tep_db_prepare_input(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'value_order'\cf0 ]);\
+\
+        tep_db_query(\cf3 "insert into " \cf0 . TABLE_PRODUCTS_ATTRIBUTES . \cf3 " values (null, '" \cf0 . (int)\cf4 $products_id \cf0 . \cf3 "', '" \cf0 . (int)\cf4 $options_id \cf0 . \cf3 "', '" \cf0 . (int)\cf4 $values_id \cf0 . \cf3 "', '" \cf0 . (float)tep_db_input(\cf4 $value_price\cf0 ) . \cf3 "', '" \cf0 . tep_db_input(\cf4 $price_prefix\cf0 ) . \cf3 "', '" \cf0 . (int)\cf4 $value_order \cf0 . \cf3 "')"\cf0 );\
+\cf5 // EOF - Zappo - Option Types v2 - Added Attributes Sort Order\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf14 \
+\
+\pard\pardeftab720\ql\qnatural
+\cf0  \cf4 $option_name_array \cf0 = \cf4 $HTTP_POST_VARS\cf0 [\cf3 'option_name'\cf0 ];\
+        \cf4 $option_id \cf0 = tep_db_prepare_input(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'option_id'\cf0 ]);\
+\
+        \cf2 for \cf0 (\cf4 $i\cf0 =\cf6 0\cf0 , \cf4 $n\cf0 =\ul sizeof\ulnone (\cf4 $languages\cf0 ); \cf4 $i\cf0 <\cf4 $n\cf0 ; \cf4 $i \cf0 ++) \{\
+          \cf4 $option_name \cf0 = tep_db_prepare_input(\cf4 $option_name_array\cf0 [\cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ]]);\
+\
+          tep_db_query(\cf3 "update " \cf0 . TABLE_PRODUCTS_OPTIONS . \cf3 " set products_options_name = '" \cf0 . tep_db_input(\cf4 $option_name\cf0 ) . \cf3 "' where products_options_id = '" \cf0 . (int)\cf4 $option_id \cf0 . \cf3 "' and language_id = '" \cf0 . (int)\cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 "'"\cf0 );\
+        \}\
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Update to add option values to products_option.\cf0 \
+        \cf4 $option_name_array \cf0 = \cf4 $HTTP_POST_VARS\cf0 [\cf3 'option_name'\cf0 ];\
+        \cf4 $option_cmmnt_array \cf0 = \cf4 $HTTP_POST_VARS\cf0 [\cf3 'option_comment'\cf0 ];\
+        \cf4 $option_type \cf0 = \cf4 $HTTP_POST_VARS\cf0 [\cf3 'option_type'\cf0 ];\
+        \cf4 $option_length \cf0 = \cf4 $HTTP_POST_VARS\cf0 [\cf3 'option_length'\cf0 ];\
+        \cf4 $option_order \cf0 = \cf4 $HTTP_POST_VARS\cf0 [\cf3 'option_order'\cf0 ];\
+        \cf4 $option_id \cf0 = tep_db_prepare_input(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'option_id'\cf0 ]);\
+\
+        \cf2 for \cf0 (\cf4 $i\cf0 =\cf6 0\cf0 , \cf4 $n\cf0 =sizeof(\cf4 $languages\cf0 ); \cf4 $i\cf0 <\cf4 $n\cf0 ; \cf4 $i \cf0 ++) \{\
+          \cf4 $option_name \cf0 = tep_db_prepare_input(\cf4 $option_name_array\cf0 [\cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ]]);\
+          \cf4 $option_comment \cf0 = tep_db_prepare_input(\cf4 $option_cmmnt_array\cf0 [\cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ]]);\
+\
+          tep_db_query(\cf3 "update " \cf0 . TABLE_PRODUCTS_OPTIONS . \cf3 " set products_options_name = '" \cf0 . tep_db_input(\cf4 $option_name\cf0 ) . \cf3 "', products_options_comment = '" \cf0 . tep_db_input(\cf4 $option_comment\cf0 ) . \cf3 "', products_options_type = '" \cf0 . \cf4 $option_type \cf0 . \cf3 "', products_options_length = '" \cf0 . \cf4 $option_length \cf0 . \cf3 "', products_options_order = '" \cf0 . \cf4 $option_order \cf0 . \cf3 "' where products_options_id = '" \cf0 . (int)\cf4 $option_id \cf0 . \cf3 "' and language_id = '" \cf0 . (int)\cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 "'"\cf0 );\
+        \}\
+\
+        \cf5 // - Zappo - Option Types v2 - Automate insertion, deletion or replacement of text option values\cf0 \
+        \cf2 switch \cf0 (\cf4 $option_type\cf0 ) \{\
+          \cf2 case \cf0 OPTIONS_TYPE_TEXT:\
+          \cf2 case \cf0 OPTIONS_TYPE_TEXTAREA:\
+          \cf2 case \cf0 OPTIONS_TYPE_FILE:\
+            \cf5 // Let's Check for pov2po value first... (IF AN OPTION'S TYPE IS CHANGED, ALL OPTION VAlUES ARE LOST!!!)\cf0 \
+            \cf4 $pov2po_query \cf0 = tep_db_query(\cf3 "select products_options_values_to_products_options_id as id from " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES_TO_PRODUCTS_OPTIONS . \cf3 " where products_options_id = '" \cf0 . (int)\cf4 $option_id \cf0 . \cf3 "'"\cf0 );\
+            \cf4 $pov2po \cf0 = tep_db_fetch_array(\cf4 $pov2po_query\cf0 );\
+            \cf2 if \cf0 (\cf4 $pov2po\cf0 [\cf3 'id'\cf0 ]) \{\
+              \cf5 // - Zappo - Option Types v2 - NEXT LINE DELETES ALL OPTION VALUES IF OPTION TYPE IS CHANGED!!!\cf0 \
+              tep_db_query(\cf3 "delete from " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES_TO_PRODUCTS_OPTIONS . \cf3 " where products_options_id = '" \cf0 . \cf4 $option_id \cf0 . \cf3 "'"\cf0 );\
+            \}\
+            \cf5 // Now Let's Check for and Update product_attribute values... (IF AN OPTION'S TYPE IS CHANGED, ALL ATTRIBUTES' OPTION VAlUES ARE LOST!!!)\cf0 \
+            \cf4 $done \cf0 = \cf2 false\cf0 ;\
+            \cf4 $pattrib_query \cf0 = tep_db_query(\cf3 "select * from " \cf0 . TABLE_PRODUCTS_ATTRIBUTES . \cf3 " where options_id = '" \cf0 . (int)\cf4 $option_id \cf0 . \cf3 "' and options_values_id != '" \cf0 . OPTIONS_VALUES_TEXT_ID . \cf3 "'"\cf0 );\
+            \cf2 while \cf0 (\cf4 $pattrib \cf0 = tep_db_fetch_array(\cf4 $pattrib_query\cf0 )) \{\
+              \cf5 // - Zappo - Option Types v2 - NEXT LINE UPDATES ALL OPTION VALUES IF OPTION TYPE IS CHANGED!!! (You'll probably have some double values!)\cf0 \
+              \cf2 if \cf0 (\cf4 $done \cf0 == \cf2 false\cf0 ) \{\
+                tep_db_query(\cf3 "update " \cf0 . TABLE_PRODUCTS_ATTRIBUTES . \cf3 " set options_values_id = '" \cf0 . OPTIONS_VALUES_TEXT_ID . \cf3 "' where options_id = '" \cf0 . \cf4 $option_id \cf0 . \cf3 "'"\cf0 );\
+                \cf4 $done \cf0 = \cf2 true\cf0 ;\
+              \}\
+            \}\
+          \cf2 default\cf0 :\
+            tep_db_query(\cf3 "delete from " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES_TO_PRODUCTS_OPTIONS . \cf3 " where products_options_values_id = '" \cf0 . OPTIONS_VALUES_TEXT_ID . \cf3 "'"\cf0 );\
+          \cf2 break\cf0 ;	\
+        \}\
+\cf5 //EOF - Zappo - Option Types v2 - Update to add option values to products_option.\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf16 \
+\
+\pard\pardeftab720\ql\qnatural
+\cf2 for \cf0 (\cf4 $i\cf0 =\cf6 0\cf0 , \cf4 $n\cf0 =\ul sizeof\ulnone (\cf4 $languages\cf0 ); \cf4 $i\cf0 <\cf4 $n\cf0 ; \cf4 $i \cf0 ++) \{\
+          \cf4 $value_name \cf0 = tep_db_prepare_input(\cf4 $value_name_array\cf0 [\cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ]]);\
+\
+          tep_db_query(\cf3 "update " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES . \cf3 " set products_options_values_name = '" \cf0 . tep_db_input(\cf4 $value_name\cf0 ) . \cf3 "' where products_options_values_id = '" \cf0 . tep_db_input(\cf4 $value_id\cf0 ) . \cf3 "' and language_id = '" \cf0 . (int)\cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 "'"\cf0 );\
+        \}\
+\
+        tep_db_query(\cf3 "update " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES_TO_PRODUCTS_OPTIONS . \cf3 " set products_options_id = '" \cf0 . (int)\cf4 $option_id \cf0 . \cf3 "'  where products_options_values_id = '" \cf0 . (int)\cf4 $value_id \cf0 . \cf3 "'"\cf0 );\
+\
+\
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - For TEXT and FILE option types, automatically add OPTIONS_VALUE_TEXT and TEXT_UPLOAD_NAME\cf0 \
+        \cf5 // Let's Check for OptionType first...\cf0 \
+        \cf4 $optionType_query \cf0 = tep_db_query(\cf3 "select distinct products_options_type from " \cf0 . TABLE_PRODUCTS_OPTIONS . \cf3 " where products_options_id = '" \cf0 . (int)\cf4 $option_id \cf0 . \cf3 "' and language_id = '" \cf0 . \cf4 $languages_id \cf0 . \cf3 "'"\cf0 );\
+        \cf4 $optionType \cf0 = tep_db_fetch_array(\cf4 $optionType_query\cf0 );\
+        \cf2 switch \cf0 (\cf4 $optionType\cf0 [\cf3 'products_options_type'\cf0 ]) \{\
+          \cf2 case \cf0 OPTIONS_TYPE_TEXT:\
+          \cf2 case \cf0 OPTIONS_TYPE_TEXTAREA:\
+          \cf2 case \cf0 OPTIONS_TYPE_FILE:\
+            \cf5 // Let's Check for pov2po value first... (IF AN OPTION'S TYPE IS CHANGED, ALL OPTION VAlUES ARE LOST!!!)\cf0 \
+            \cf4 $pov2po_query \cf0 = tep_db_query(\cf3 "select distinct products_options_values_to_products_options_id as id from " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES_TO_PRODUCTS_OPTIONS . \cf3 " where products_options_id = '" \cf0 . (int)\cf4 $option_id \cf0 . \cf3 "'"\cf0 );\
+            \cf4 $pov2po \cf0 = tep_db_fetch_array(\cf4 $optionType_query\cf0 );\
+            \cf2 if \cf0 (\cf4 $pov2po\cf0 [\cf3 'id'\cf0 ]) \{\
+              \cf5 // - Zappo - Option Types v2 - NEXT LINES DELETE ALL OPTION VALUES IF OPTION TYPE IS CHANGED!!!\cf0 \
+              tep_db_query(\cf3 "delete from " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES_TO_PRODUCTS_OPTIONS . \cf3 " where products_options_id = '" \cf0 . \cf4 $option_id \cf0 . \cf3 "'"\cf0 );\
+            \}\
+            tep_db_query(\cf3 "delete from " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES . \cf3 " where products_options_values_id = '" \cf0 . \cf4 $value_id \cf0 . \cf3 "'"\cf0 );\
+          \cf2 break\cf0 ;\
+          \cf2 default\cf0 :\
+            \cf2 for \cf0 (\cf4 $i\cf0 =\cf6 0\cf0 , \cf4 $n\cf0 =sizeof(\cf4 $languages\cf0 ); \cf4 $i\cf0 <\cf4 $n\cf0 ; \cf4 $i \cf0 ++) \{\
+              \cf4 $value_name \cf0 = tep_db_prepare_input(\cf4 $value_name_array\cf0 [\cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ]]);\
+\
+              tep_db_query(\cf3 "update " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES . \cf3 " set products_options_values_name = '" \cf0 . tep_db_input(\cf4 $value_name\cf0 ) . \cf3 "' where products_options_values_id = '" \cf0 . tep_db_input(\cf4 $value_id\cf0 ) . \cf3 "' and language_id = '" \cf0 . (int)\cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 "'"\cf0 );\
+            \}\
+            tep_db_query(\cf3 "update " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES_TO_PRODUCTS_OPTIONS . \cf3 " set products_options_id = '" \cf0 . (int)\cf4 $option_id \cf0 . \cf3 "'  where products_options_values_id = '" \cf0 . (int)\cf4 $value_id \cf0 . \cf3 "'"\cf0 );\
+          \cf2 break\cf0 ;\
+        \}\
+\cf5 //EOF - Zappo - Option Types v2 - For TEXT and FILE option types, automatically add OPTIONS_VALUE_TEXT and TEXT_UPLOAD_NAME\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf0 \
+\
+\cf4 $products_id \cf0 = tep_db_prepare_input(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'products_id'\cf0 ]);\
+        \cf4 $options_id \cf0 = tep_db_prepare_input(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'options_id'\cf0 ]);\
+        \cf4 $values_id \cf0 = tep_db_prepare_input(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'values_id'\cf0 ]);\
+\
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Enforce rule that TEXT and FILE Options use value OPTIONS_VALUE_TEXT_ID\cf0 \
+        \cf4 $products_options_query \cf0 = tep_db_query(\cf3 "select products_options_type from " \cf0 . TABLE_PRODUCTS_OPTIONS . \cf3 " where products_options_id = '" \cf0 . \cf4 $HTTP_POST_VARS\cf0 [\cf3 'options_id'\cf0 ] . \cf3 "'"\cf0 );\
+        \cf4 $products_options_array \cf0 = tep_db_fetch_array(\cf4 $products_options_query\cf0 );\
+        \cf2 switch \cf0 (\cf4 $products_options_array\cf0 [\cf3 'products_options_type'\cf0 ]) \{\
+          \cf2 case \cf0 OPTIONS_TYPE_TEXT:\
+          \cf2 case \cf0 OPTIONS_TYPE_TEXTAREA:\
+          \cf2 case \cf0 OPTIONS_TYPE_FILE:\
+            \cf4 $values_id \cf0 = OPTIONS_VALUE_TEXT_ID;\
+          \cf2 break\cf0 ;\
+          \cf2 default\cf0 : \
+          \cf4 $values_id \cf0 = tep_db_prepare_input(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'values_id'\cf0 ]);\
+        \}\
+        \cf4 $products_id \cf0 = tep_db_prepare_input(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'products_id'\cf0 ]);\
+        \cf4 $options_id \cf0 = tep_db_prepare_input(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'options_id'\cf0 ]);\
+\cf5 //        $values_id = tep_db_prepare_input($HTTP_POST_VARS['values_id']);\cf0 \
+\cf5 //EOF - Zappo - Option Types v2 - Enforce rule that TEXT and FILE Options use value OPTIONS_VALUE_TEXT_ID\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf13 \
+\
+\pard\pardeftab720\ql\qnatural
+\cf4 $attribute_id \cf0 = tep_db_prepare_input(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'attribute_id'\cf0 ]);\
+\
+        tep_db_query(\cf3 "update " \cf0 . TABLE_PRODUCTS_ATTRIBUTES . \cf3 " set products_id = '" \cf0 . (int)\cf4 $products_id \cf0 . \cf3 "', options_id = '" \cf0 . (int)\cf4 $options_id \cf0 . \cf3 "', options_values_id = '" \cf0 . (int)\cf4 $values_id \cf0 . \cf3 "', options_values_price = '" \cf0 . (float)tep_db_input(\cf4 $value_price\cf0 ) . \cf3 "', price_prefix = '" \cf0 . tep_db_input(\cf4 $price_prefix\cf0 ) . \cf3 "' where products_attributes_id = '" \cf0 . (int)\cf4 $attribute_id \cf0 . \cf3 "'"\cf0 );\
+\
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 // BOF - Zappo - Option Types v2 - Added Attributes Sort Order\cf0 \
+        \cf4 $value_order \cf0 = tep_db_prepare_input(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'value_order'\cf0 ]);\
+        \cf4 $attribute_id \cf0 = tep_db_prepare_input(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'attribute_id'\cf0 ]);\
+\
+        tep_db_query(\cf3 "update " \cf0 . TABLE_PRODUCTS_ATTRIBUTES . \cf3 " set products_id = '" \cf0 . (int)\cf4 $products_id \cf0 . \cf3 "', options_id = '" \cf0 . (int)\cf4 $options_id \cf0 . \cf3 "', options_values_id = '" \cf0 . (int)\cf4 $values_id \cf0 . \cf3 "', options_values_price = '" \cf0 . (float)tep_db_input(\cf4 $value_price\cf0 ) . \cf3 "', price_prefix = '" \cf0 . tep_db_input(\cf4 $price_prefix\cf0 ) . \cf3 "', products_options_sort_order = '" \cf0 . tep_db_input(\cf4 $value_order\cf0 ) . \cf3 "' where products_attributes_id = '" \cf0 . (int)\cf4 $attribute_id \cf0 . \cf3 "'"\cf0 );\
+\cf5 //EOF - Zappo - Option Types v2 - Added Attributes Sort Order\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf16 \
+\
+\pard\pardeftab720\ql\qnatural
+\cf0         tep_db_query(\cf3 "delete from " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES . \cf3 " where products_options_values_id = '" \cf0 . (int)\cf4 $value_id \cf0 . \cf3 "'"\cf0 );\
+\pard\pardeftab720\ql\qnatural
+\cf5 \
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 Add below: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - ONE LINE - Added query to auto-delete from pov2po\cf0 \
+        tep_db_query(\cf3 "delete from " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES_TO_PRODUCTS_OPTIONS . \cf3 " where products_options_id = '" \cf0 . (int)\cf4 $option_id \cf0 . \cf3 "'"\cf0 );\
+   \
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf0 \
+\
+tep_redirect(tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf4 $page_info\cf0 ));\
+        \cf2 break\cf0 ;\
+    \}\
+  \}\
+\
+\
+Add below: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Define Option Types List\cf0 \
+  \cf4 $products_options_types_list\cf0 [OPTIONS_TYPE_SELECT] = OPTIONS_TYPE_SELECT_NAME;\
+  \cf4 $products_options_types_list\cf0 [OPTIONS_TYPE_TEXT] = OPTIONS_TYPE_TEXT_NAME;\
+  \cf4 $products_options_types_list\cf0 [OPTIONS_TYPE_TEXTAREA] = OPTIONS_TYPE_TEXTAREA_NAME;\
+  \cf4 $products_options_types_list\cf0 [OPTIONS_TYPE_RADIO] = OPTIONS_TYPE_RADIO_NAME;\
+  \cf4 $products_options_types_list\cf0 [OPTIONS_TYPE_CHECKBOX] = OPTIONS_TYPE_CHECKBOX_NAME;\
+  \cf4 $products_options_types_list\cf0 [OPTIONS_TYPE_FILE] = OPTIONS_TYPE_FILE_NAME;\
+  \cf4 $products_options_types_list\cf0 [OPTIONS_TYPE_IMAGE] = OPTIONS_TYPE_IMAGE_NAME;\
+\cf5 // Draw a pulldown for Option Types\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf2 function \cf0 draw_optiontype_pulldown(\cf4 $name\cf0 , \cf4 $default \cf0 = \cf3 ''\cf0 ) \{\
+  \cf2 global \cf4 $products_options_types_list\cf0 ;\
+  \cf4 $values \cf0 = \cf2 array\cf0 ();\
+  \cf2 foreach \cf0 (\cf4 $products_options_types_list \cf2 as \cf4 $id \cf0 => \cf4 $text\cf0 ) \{\
+    \cf4 $values\cf0 [] = \cf2 array\cf0 (\cf3 'id' \cf0 => \cf4 $id\cf0 , \cf3 'text' \cf0 => \cf4 $text\cf0 );\
+  \}\
+  \cf2 return \cf0 tep_draw_pull_down_menu(\cf4 $name\cf0 , \cf4 $values\cf0 , \cf4 $default\cf0 );\
+\}\
+\pard\pardeftab720\ql\qnatural
+\cf5 // Translate option_type_values to english string\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf2 function \cf0 translate_type_to_name(\cf4 $opt_type\cf0 ) \{\
+  \cf2 global \cf4 $products_options_types_list\cf0 ;\
+  \cf2 return isset\cf0 (\cf4 $products_options_types_list\cf0 [\cf4 $opt_type\cf0 ]) ? \cf4 $products_options_types_list\cf0 [\cf4 $opt_type\cf0 ] : \cf3 'Error ' \cf0 . \cf4 $opt_type\cf0 ;\
+\}\
+\pard\pardeftab720\ql\qnatural
+\cf5 //EOF - Zappo - Option Types v2 - Define Option Types List\
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf14 \
+\
+\pard\pardeftab720\ql\qnatural
+\cf6 ?>\cf0 \
+                \cf7 </\cf8 td\cf7 >\cf0 \
+              \cf7 </\cf8 tr\cf7 >\cf0 \
+              \cf7 <\cf8 tr\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 colspan\cf0 =\cf10 "3"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_black_line(); \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+              \cf7 </\cf8 tr\cf7 >\cf0 \
+              \cf7 <\cf8 tr\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingRow"\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_ID; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_OPT_NAME; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf0  \cf9 align\cf0 =\cf10 "center"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_ACTION; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+              \cf7 </\cf8 tr\cf7 >\cf0 \
+              \cf7 <\cf8 tr\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 colspan\cf0 =\cf10 "3"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_black_line(); \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+              \cf7 </\cf8 tr\cf7 >\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf17 *** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Add column for Option Type, Comment, Length, Sort Order\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf6 ?>\cf0 \
+                \cf7 </\cf8 td\cf7 >\cf0 \
+              \cf7 </\cf8 tr\cf7 >\cf0 \
+              \cf7 <\cf8 tr\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 colspan\cf0 =\cf10 "7"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_black_line(); \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+              \cf7 </\cf8 tr\cf7 >\cf0 \
+              \cf7 <\cf8 tr\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingRow"\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_ID; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_OPT_NAME; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_OPT_TYPE ; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_OPT_ORDER; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_OPT_LENGTH; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_OPT_COMMENT; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf0  \cf9 align\cf0 =\cf10 "center"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_ACTION; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+              \cf7 </\cf8 tr\cf7 >\cf0 \
+              \cf7 <\cf8 tr\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 colspan\cf0 =\cf10 "7"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_black_line(); \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+              \cf7 </\cf8 tr\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf5 //EOF - Zappo - Option Types v2 - Add column for Option Type, Comment, Length, Sort Order\cf0 \
+?>\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf0  \
+\
+\cf4 $inputs \cf0 = \cf3 ''\cf0 ;\
+        \cf2 for \cf0 (\cf4 $i \cf0 = \cf6 0\cf0 , \cf4 $n \cf0 = \ul sizeof\ulnone (\cf4 $languages\cf0 ); \cf4 $i \cf0 < \cf4 $n\cf0 ; \cf4 $i \cf0 ++) \{\
+          \cf4 $option_name \cf0 = tep_db_query(\cf3 "select products_options_name from " \cf0 . TABLE_PRODUCTS_OPTIONS . \cf3 " where products_options_id = '" \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_id'\cf0 ] . \cf3 "' and language_id = '" \cf0 . \cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 "'"\cf0 );\
+          \cf4 $option_name \cf0 = tep_db_fetch_array(\cf4 $option_name\cf0 );\
+          \cf4 $inputs \cf0 .= \cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'code'\cf0 ] . \cf3 ':&nbsp;<input type="text" name="option_name[' \cf0 . \cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 ']" size="20" value="' \cf0 . \cf4 $option_name\cf0 [\cf3 'products_options_name'\cf0 ] . \cf3 '">&nbsp;<br>'\cf0 ;\
+        \}\
+\pard\pardeftab720\ql\qnatural
+\cf6 ?>\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $options_values\cf0 [\cf3 'products_options_id'\cf0 ]; \cf6 ?>\cf7 <\cf8 input\cf0  \cf9 type\cf0 =\cf10 "hidden"\cf0  \cf9 name\cf0 =\cf10 "option_id"\cf0  \cf9 value\cf0 ="\cf6 <?php\cf0  \cf2 echo \cf4 $options_values\cf0 [\cf3 'products_options_id'\cf0 ]; \cf6 ?>\cf0 "\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $inputs\cf0 ; \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 tep_image_submit(\cf3 'button_update.gif'\cf0 , IMAGE_UPDATE); \cf6 ?>\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf4 $page_info\cf0 , \cf3 'NONSSL'\cf0 ) . \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_cancel.gif'\cf0 , IMAGE_CANCEL); \cf6 ?>\cf7 \ul \ulc7 </\cf8 \ulc8 a\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf6 <?php\cf0 \
+        \cf2 echo \cf3 '</form>' \cf0 . \cf3 "\\n"\cf0 ;\
+      \} \cf2 else \cf0 \{\
+\cf6 ?>\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $options_values\cf0 [\cf3 "products_options_id"\cf0 ]; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $options_values\cf0 [\cf3 "products_options_name"\cf0 ]; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf3 'action=update_option&option_id=' \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_id'\cf0 ] . \cf3 '&' \cf0 . \cf4 $page_info\cf0 , \cf3 'NONSSL'\cf0 ) . \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_edit.gif'\cf0 , IMAGE_UPDATE); \cf6 ?>\cf7 \ul </\cf8 \ulc8 a\cf7 \ulc7 >\cf10 \ulnone &nbsp;&nbsp;\cf6 <?php\cf0  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf3 'action=delete_product_option&option_id=' \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_id'\cf0 ] . \cf3 '&' \cf0 . \cf4 $page_info\cf0 , \cf3 'NONSSL'\cf0 ) , \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_delete.gif'\cf0 , IMAGE_DELETE); \cf6 ?>\cf7 \ul </\cf8 \ulc8 a\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+      \}\
+\cf6 ?>\cf0 \
+              \cf7 </\cf8 tr\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+      \cf4 $max_options_id_query \cf0 = tep_db_query(\cf3 "select max(products_options_id) + 1 as next_id from " \cf0 . TABLE_PRODUCTS_OPTIONS);\
+      \cf4 $max_options_id_values \cf0 = tep_db_fetch_array(\cf4 $max_options_id_query\cf0 );\
+      \cf4 $next_id \cf0 = \cf4 $max_options_id_values\cf0 [\cf3 'next_id'\cf0 ];\
+    \}\
+\cf6 ?>\cf0 \
+              \cf7 <\cf8 tr\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 colspan\cf0 =\cf10 "3"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_black_line(); \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+              \cf7 </\cf8 tr\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+    \cf2 if \cf0 (\cf4 $action \cf0 != \cf3 'update_option'\cf0 ) \{\
+\cf6 ?>\cf0 \
+              \cf7 <\cf8 tr\cf0  \cf9 class\cf0 ="\cf6 <?php\cf0  \cf2 echo \cf0 (\ul floor\ulnone (\cf4 $rows\cf0 /\cf6 2\cf0 ) == (\cf4 $rows\cf0 /\cf6 2\cf0 ) ? \cf3 'attributes-even' \cf0 : \cf3 'attributes-odd'\cf0 ); \cf6 ?>\cf0 "\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+      \cf2 echo \cf3 '<form name="options" action="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf3 'action=add_product_options&' \cf0 . \cf4 $page_info\cf0 , \cf3 'NONSSL'\cf0 ) . \cf3 '" method="post"><input type="hidden" name="products_options_id" value="' \cf0 . \cf4 $next_id \cf0 . \cf3 '">'\cf0 ;\
+      \cf4 $inputs \cf0 = \cf3 ''\cf0 ;\
+      \cf2 for \cf0 (\cf4 $i \cf0 = \cf6 0\cf0 , \cf4 $n \cf0 = \ul sizeof\ulnone (\cf4 $languages\cf0 ); \cf4 $i \cf0 < \cf4 $n\cf0 ; \cf4 $i \cf0 ++) \{\
+        \cf4 $inputs \cf0 .= \cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'code'\cf0 ] . \cf3 ':&nbsp;<input type="text" name="option_name[' \cf0 . \cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 ']" size="20">&nbsp;<br>'\cf0 ;\
+      \}\
+\cf6 ?>\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $next_id\cf0 ; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $inputs\cf0 ; \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 tep_image_submit(\cf3 'button_insert.gif'\cf0 , IMAGE_INSERT); \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+      \cf2 echo \cf3 '</form>'\cf0 ;\
+\cf6 ?>\cf0 \
+              \cf7 </\cf8 tr\cf7 >\cf0 \
+              \cf7 <\cf8 tr\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 colspan\cf0 =\cf10 "3"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_black_line(); \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+              \cf7 </\cf8 tr\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+\cf7 \
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf18 *** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Add column for Option Type, Comment, Length, Sort Order\cf0 \
+        \cf4 $NameInput \cf0 = \cf3 ''\cf0 ;\
+        \cf4 $CommentInput \cf0 = \cf3 ''\cf0 ;\
+        \cf2 for \cf0 (\cf4 $i \cf0 = \cf6 0\cf0 , \cf4 $n \cf0 = sizeof(\cf4 $languages\cf0 ); \cf4 $i \cf0 < \cf4 $n\cf0 ; \cf4 $i \cf0 ++) \{\
+          \cf4 $option_name \cf0 = tep_db_query(\cf3 "select products_options_name, products_options_comment from " \cf0 . TABLE_PRODUCTS_OPTIONS . \cf3 " where products_options_id = '" \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_id'\cf0 ] . \cf3 "' and language_id = '" \cf0 . \cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 "'"\cf0 );\
+          \cf4 $option_name \cf0 = tep_db_fetch_array(\cf4 $option_name\cf0 );\
+          \cf4 $NameInput \cf0 .= tep_image(DIR_WS_CATALOG_LANGUAGES . \cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'directory'\cf0 ] . \cf3 '/images/' \cf0 . \cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'image'\cf0 ], \cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'name'\cf0 ]) . \cf3 ' &nbsp; ' \cf0 . TABLE_HEADING_OPT_NAME . \cf3 '<br>' \cf0 . \
+                        \cf3 '<input type="text" name="option_name[' \cf0 . \cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 ']" size="24" value="' \cf0 . \cf4 $option_name\cf0 [\cf3 'products_options_name'\cf0 ] . \cf3 '"><br>'\cf0 ;\
+          \cf4 $CommentInput \cf0 .= TABLE_HEADING_OPT_COMMENT . \cf3 '<br><input type="text" name="option_comment[' \cf0 . \cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 ']" size="24" value="' \cf0 . \cf4 $option_name\cf0 [\cf3 'products_options_comment'\cf0 ] . \cf3 '"><br>'\cf0 ;\
+        \}\
+\pard\pardeftab720\ql\qnatural
+\cf6 ?>\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $options_values\cf0 [\cf3 'products_options_id'\cf0 ]; \cf6 ?>\cf7 <\cf8 input\cf0  \cf9 type\cf0 =\cf10 "hidden"\cf0  \cf9 name\cf0 =\cf10 "option_id"\cf0  \cf9 value\cf0 ="\cf6 <?php\cf0  \cf2 echo \cf4 $options_values\cf0 [\cf3 'products_options_id'\cf0 ]; \cf6 ?>\cf0 "\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $NameInput\cf0 ; \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $CommentInput\cf0 ; \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf0  \cf9 colspan\cf0 =\cf10 "3"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_OPT_LENGTH . \cf3 ': <input type="text" name="option_length" size="4" value="' \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_length'\cf0 ] . \cf3 '"><br>' \cf0 . \
+                                                             TABLE_HEADING_OPT_ORDER . \cf3 ': <input type="text" name="option_order" size="3" value="' \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_order'\cf0 ] . \cf3 '"><br>' \cf0 . \
+                                                             TABLE_HEADING_OPT_TYPE . \cf3 ': ' \cf0 . draw_optiontype_pulldown(\cf3 'option_type'\cf0 , \cf4 $options_values\cf0 [\cf3 'products_options_type'\cf0 ]); \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 tep_image_submit(\cf3 'button_update.gif'\cf0 , IMAGE_UPDATE); \cf6 ?>\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf4 $page_info\cf0 , \cf3 'NONSSL'\cf0 ) . \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_cancel.gif'\cf0 , IMAGE_CANCEL); \cf6 ?>\cf7 </\cf8 a\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+        \cf2 echo \cf3 '</form>' \cf0 . \cf3 "\\n"\cf0 ;\
+      \} \cf2 else \cf0 \{\
+\cf6 ?>\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $options_values\cf0 [\cf3 "products_options_id"\cf0 ]; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $options_values\cf0 [\cf3 "products_options_name"\cf0 ]; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 translate_type_to_name(\cf4 $options_values\cf0 [\cf3 "products_options_type"\cf0 ]); \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $options_values\cf0 [\cf3 "products_options_order"\cf0 ]; \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $options_values\cf0 [\cf3 "products_options_length"\cf0 ]; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $options_values\cf0 [\cf3 "products_options_comment"\cf0 ]; \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf3 'action=update_option&option_id=' \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_id'\cf0 ] . \cf3 '&option_order_by=' \cf0 . \cf4 $option_order_by \cf0 . \cf3 '&option_page=' \cf0 . \cf4 $option_page \cf0 . \cf3 '&' \cf0 . \cf4 $page_info\cf0 , \cf3 'NONSSL'\cf0 ) . \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_edit.gif'\cf0 , IMAGE_UPDATE); \cf6 ?>\cf7 </\cf8 a\cf7 >\cf10 &nbsp;&nbsp;\cf6 <?php\cf0  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf3 'action=delete_product_option&option_id=' \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_id'\cf0 ] . \cf3 '&' \cf0 . \cf4 $page_info\cf0 , \cf3 'NONSSL'\cf0 ) , \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_delete.gif'\cf0 , IMAGE_DELETE); \cf6 ?>\cf7 </\cf8 a\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+      \}\
+\cf6 ?>\cf0 \
+              \cf7 </\cf8 tr\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+      \cf4 $max_options_id_query \cf0 = tep_db_query(\cf3 "select max(products_options_id) + 1 as next_id from " \cf0 . TABLE_PRODUCTS_OPTIONS);\
+      \cf4 $max_options_id_values \cf0 = tep_db_fetch_array(\cf4 $max_options_id_query\cf0 );\
+      \cf4 $next_id \cf0 = \cf4 $max_options_id_values\cf0 [\cf3 'next_id'\cf0 ];\
+    \}\
+\cf6 ?>\cf0 \
+              \cf7 <\cf8 tr\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 colspan\cf0 =\cf10 "7"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_black_line(); \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+              \cf7 </\cf8 tr\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+    \cf2 if \cf0 (\cf4 $action \cf0 != \cf3 'update_option'\cf0 ) \{\
+\cf6 ?>\cf0 \
+              \cf7 <\cf8 tr\cf0  \cf9 class\cf0 ="\cf6 <?php\cf0  \cf2 echo \cf0 (floor(\cf4 $rows\cf0 /\cf6 2\cf0 ) == (\cf4 $rows\cf0 /\cf6 2\cf0 ) ? \cf3 'attributes-even' \cf0 : \cf3 'attributes-odd'\cf0 ); \cf6 ?>\cf0 "\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+      \cf2 echo \cf3 '<form name="options" action="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf3 'action=add_product_options&' \cf0 . \cf4 $page_info\cf0 , \cf3 'NONSSL'\cf0 ) . \cf3 '" method="post"><input type="hidden" name="products_options_id" value="' \cf0 . \cf4 $next_id \cf0 . \cf3 '">'\cf0 ;\
+        \cf4 $NameInput \cf0 = \cf3 ''\cf0 ;\
+        \cf4 $CommentInput \cf0 = \cf3 ''\cf0 ;\
+        \cf2 for \cf0 (\cf4 $i \cf0 = \cf6 0\cf0 , \cf4 $n \cf0 = sizeof(\cf4 $languages\cf0 ); \cf4 $i \cf0 < \cf4 $n\cf0 ; \cf4 $i \cf0 ++) \{\
+          \cf4 $NameInput \cf0 .= tep_image(DIR_WS_CATALOG_LANGUAGES . \cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'directory'\cf0 ] . \cf3 '/images/' \cf0 . \cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'image'\cf0 ], \cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'name'\cf0 ]) . \cf3 ' &nbsp; ' \cf0 . TABLE_HEADING_OPT_NAME . \cf3 ':<br>' \cf0 . \
+                        \cf3 '<input type="text" name="option_name[' \cf0 . \cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 ']" size="24"><br>'\cf0 ;\
+          \cf4 $CommentInput \cf0 .= TABLE_HEADING_OPT_COMMENT . \cf3 ':<br><input type="text" name="option_comment[' \cf0 . \cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 ']" size="24"><br>'\cf0 ;\
+      \}\
+\cf6 ?>\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $next_id\cf0 ; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $NameInput\cf0 ; \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $CommentInput\cf0 ; \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf0  \cf9 colspan\cf0 =\cf10 "3"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_OPT_LENGTH . \cf3 ': <input type="text" name="option_length" size="4"><br>' \cf0 . \
+                                                             TABLE_HEADING_OPT_ORDER . \cf3 ': <input type="text" name="option_order" size="3"><br>' \cf0 . \
+                                                             TABLE_HEADING_OPT_TYPE . \cf3 ': ' \cf0 . draw_optiontype_pulldown(\cf3 'option_type'\cf0 ); \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 tep_image_submit(\cf3 'button_insert.gif'\cf0 , IMAGE_INSERT); \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+      \cf2 echo \cf3 '</form>'\cf0 ;\
+\cf6 ?>\cf0 \
+              \cf7 </\cf8 tr\cf7 >\cf0 \
+              \cf7 <\cf8 tr\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 colspan\cf0 =\cf10 "7"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_black_line(); \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+              \cf7 </\cf8 tr\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf5 //EOF - Zappo - Option Types v2 - Add column for Option Type, Comment, Length, Sort Order\
+\
+\pard\pardeftab720\ql\qnatural
+\cf19 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf19 \
+\
+\pard\pardeftab720\ql\qnatural
+\cf0       \cf4 $options_name \cf0 = tep_options_name(\cf4 $values_values\cf0 [\cf3 'products_options_id'\cf0 ]);\
+\pard\pardeftab720\ql\qnatural
+\cf5 \
+\
+\pard\pardeftab720\ql\qnatural
+\cf16 *** BELOW ADD *** : \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - ONE LINE - Fetch products_options_id for deleting the option value\cf0 \
+\cf5 //    (TEXT and FILE Options use the same CUSTOMER-INPUT value, and only one reference should be deleted)\cf0 \
+      \cf4 $option_id \cf0 = \cf4 $values_values\cf0 [\cf3 'products_options_id'\cf0 ];\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf20 \
+\
+\pard\pardeftab720\ql\qnatural
+\cf4 $options \cf0 = tep_db_query(\cf3 "select products_options_id, products_options_name from " \cf0 . TABLE_PRODUCTS_OPTIONS . \cf3 " where language_id = '" \cf0 . (int)\cf4 \ul \ulc4 $languages_id\ulnone  \cf0 . \cf3 "' order by products_options_name"\cf0 );\
+        \cf2 while \cf0 (\cf4 \ul $options_values \cf0 \ulc0 = tep_db_fetch_array(\cf4 \ulc4 $options\cf0 \ulc0 )\ulnone ) \{\
+          \cf2 echo \cf3 "\\n" \cf0 . \cf3 '<option name="' \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_name'\cf0 ] . \cf3 '" value="' \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_id'\cf0 ] . \cf3 '"'\cf0 ;\
+          \cf2 if \cf0 (\cf4 $values_values\cf0 [\cf3 'products_options_id'\cf0 ] == \cf4 $options_values\cf0 [\cf3 'products_options_id'\cf0 ]) \{ \
+            \cf2 echo \cf3 ' selected'\cf0 ;\
+          \}\
+          \cf2 echo \cf3 '>' \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_name'\cf0 ] . \cf3 '</option>'\cf0 ;\
+\
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Exclude Text and Upload Options from Dropdown\cf0 \
+        \cf4 $options \cf0 = tep_db_query(\cf3 "select products_options_id, products_options_name, products_options_type from " \cf0 . TABLE_PRODUCTS_OPTIONS . \cf3 " where language_id = '" \cf0 . (int)\cf4 $languages_id \cf0 . \cf3 "' order by products_options_name"\cf0 );\
+        \cf2 while \cf0 (\cf4 $options_values \cf0 = tep_db_fetch_array(\cf4 $options\cf0 )) \{\
+          \cf2 switch \cf0 (\cf4 $options_values\cf0 [\cf3 'products_options_type'\cf0 ]) \{\
+            \cf2 case \cf0 OPTIONS_TYPE_TEXT:\
+            \cf2 case \cf0 OPTIONS_TYPE_TEXTAREA:\
+            \cf2 case \cf0 OPTIONS_TYPE_FILE:\
+              \cf5 // Exclude from dropdown\cf0 \
+            \cf2 break\cf0 ;\
+            \cf2 default\cf0 :\
+              \cf2 echo \cf3 "\\n" \cf0 . \cf3 '<option name="' \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_name'\cf0 ] . \cf3 '" value="' \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_id'\cf0 ] . \cf3 '"'\cf0 ;\
+              \cf2 if \cf0 (\cf4 $values_values\cf0 [\cf3 'products_options_id'\cf0 ] == \cf4 $options_values\cf0 [\cf3 'products_options_id'\cf0 ]) \{ \
+                \cf2 echo \cf3 ' selected'\cf0 ;\
+              \}\
+              \cf2 echo \cf3 '>' \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_name'\cf0 ] . \cf3 '</option>'\cf0 ;\
+            \}\
+\cf5 //EOF - Zappo - Option Types v2 - Exclude Text and Upload Options from Dropdown\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf13 \
+\
+\pard\pardeftab720\ql\qnatural
+\cf6 ?>\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $values_values\cf0 [\cf3 "products_options_values_id"\cf0 ]; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $options_name\cf0 ; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $values_name\cf0 ; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf3 'action=update_option_value&value_id=' \cf0 . \cf4 $values_values\cf0 [\cf3 'products_options_values_id'\cf0 ] . \cf3 '&' \cf0 . \cf4 $page_info\cf0 , \cf3 'NONSSL'\cf0 ) . \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_edit.gif'\cf0 , IMAGE_UPDATE); \cf6 ?>\cf7 \ul \ulc7 </\cf8 \ulc8 a\cf7 \ulc7 >\cf10 \ulnone &nbsp;&nbsp;\cf6 <?php\cf0  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf3 'action=delete_option_value&value_id=' \cf0 . \cf4 $values_values\cf0 [\cf3 'products_options_values_id'\cf0 ] . \cf3 '&' \cf0 . \cf4 $page_info\cf0 , \cf3 'NONSSL'\cf0 ) , \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_delete.gif'\cf0 , IMAGE_DELETE); \cf6 ?>\cf7 \ul </\cf8 \ulc8 a\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf6 <?php\
+\
+\
+\cf0 *** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Added option ID to Delete button's href && Lock OPTIONS_VALUE_TEXT\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf6 ?>\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $values_values\cf0 [\cf3 "products_options_values_id"\cf0 ]; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $options_name\cf0 ; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $values_name\cf0 ; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+                \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf0  \cf9 height\cf0 =\cf10 "24"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 if \cf0 (\cf4 $values_values\cf0 [\cf3 "products_options_values_id"\cf0 ] != OPTIONS_VALUE_TEXT_ID) \{\
+                  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf3 'action=update_option_value&value_id=' \cf0 . \cf4 $values_values\cf0 [\cf3 'products_options_values_id'\cf0 ] . \cf3 '&' \cf0 . \cf4 $page_info\cf0 , \cf3 'NONSSL'\cf0 ) . \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_edit.gif'\cf0 , IMAGE_UPDATE); \cf6 ?>\cf7 </\cf8 a\cf7 >\cf10 &nbsp;&nbsp;\cf6 <?php\cf0  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf3 'action=delete_option_value&value_id=' \cf0 . \cf4 $values_values\cf0 [\cf3 'products_options_values_id'\cf0 ] . \cf3 '&' \cf0 . \cf4 $page_info \cf0 . \cf3 '&option_id=' \cf0 . \cf4 $option_id\cf0 , \cf3 'NONSSL'\cf0 ) , \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_delete.gif'\cf0 , IMAGE_DELETE);\
+                \} \cf6 ?>\cf7 </\cf8 a\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf5 //EOF - Zappo - Option Types v2 - Added option ID to Delete button's href && Lock OPTIONS_VALUE_TEXT\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf21 \
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 \
+      \cf4 $options \cf0 = tep_db_query(\cf3 "select products_options_id, products_options_name from " \cf0 . TABLE_PRODUCTS_OPTIONS . \cf3 " where language_id = '" \cf0 . \cf4 \ul \ulc4 $languages_id\ulnone  \cf0 . \cf3 "' order by products_options_name"\cf0 );\
+      \cf2 while \cf0 (\cf4 \ul $options_values \cf0 \ulc0 = tep_db_fetch_array(\cf4 \ulc4 $options\cf0 \ulc0 )\ulnone ) \{\
+        \cf2 echo \cf3 '<option name="' \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_name'\cf0 ] . \cf3 '" value="' \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_id'\cf0 ] . \cf3 '">' \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_name'\cf0 ] . \cf3 '</option>'\cf0 ;\
+      \}\
+\
+      \cf4 $inputs \cf0 = \cf3 ''\cf0 ;\
+      \cf2 for \cf0 (\cf4 $i \cf0 = \cf6 0\cf0 , \cf4 $n \cf0 = \ul sizeof\ulnone (\cf4 $languages\cf0 ); \cf4 $i \cf0 < \cf4 $n\cf0 ; \cf4 $i \cf0 ++) \{\
+        \cf4 $inputs \cf0 .= \cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'code'\cf0 ] . \cf3 ':&nbsp;<input type="text" name="value_name[' \cf0 . \cf4 $languages\cf0 [\cf4 $i\cf0 ][\cf3 'id'\cf0 ] . \cf3 ']" size="15">&nbsp;<br>'\cf0 ;\
+\
+\
+*** REPLACE WITH ***: \
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Exclude Text and Upload Options from Dropdown\cf0 \
+      \cf4 $options \cf0 = tep_db_query(\cf3 "select products_options_id, products_options_name, products_options_type from " \cf0 . TABLE_PRODUCTS_OPTIONS . \cf3 " where language_id = '" \cf0 . \cf4 $languages_id \cf0 . \cf3 "' order by products_options_name"\cf0 );\
+      \cf2 while \cf0 (\cf4 $options_values \cf0 = tep_db_fetch_array(\cf4 $options\cf0 )) \{\
+        \cf2 switch \cf0 (\cf4 $options_values\cf0 [\cf3 'products_options_type'\cf0 ]) \{\
+          \cf2 case \cf0 OPTIONS_TYPE_TEXT:\
+          \cf2 case \cf0 OPTIONS_TYPE_TEXTAREA:\
+          \cf2 case \cf0 OPTIONS_TYPE_FILE:\
+            \cf5 // Exclude from dropdown\cf0 \
+          \cf2 break\cf0 ;\
+          \cf2 default\cf0 :\
+            \cf2 echo \cf3 '<option name="' \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_name'\cf0 ] . \cf3 '" value="' \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_id'\cf0 ] . \cf3 '">' \cf0 . \cf4 $options_values\cf0 [\cf3 'products_options_name'\cf0 ] . \cf3 '</option>'\cf0 ;\
+        \}\
+\cf5 //EOF - Zappo - Option Types v2 - Exclude Text and Upload Options from Dropdown\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf0  \
+\
+\cf6 ?>\cf0 \
+            \cf7 </\cf8 td\cf7 >\cf0 \
+          \cf7 </\cf8 tr\cf7 >\cf0 \
+        \cf7 </\cf8 table\cf7 >\cf0 \
+        \cf7 <\cf8 form\cf0  \cf9 name\cf0 =\cf10 "attributes"\cf0  \cf9 action\cf0 ="\cf6 <?php\cf0  \cf2 echo \cf0 tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf3 'action=' \cf0 . \cf4 $form_action \cf0 . \cf3 '&' \cf0 . \cf4 $page_info\cf0 ); \cf6 ?>\cf0 " \cf9 method\cf0 =\cf10 "post"\cf7 ><\cf8 table\cf0  \cf9 border\cf0 =\cf10 "0"\cf0  \cf9 width\cf0 =\cf10 "100%"\cf0  \cf9 cellspacing\cf0 =\cf10 "0"\cf0  \cf9 cellpadding\cf0 =\cf10 "2"\cf7 >\cf0 \
+          \cf7 <\cf8 tr\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 colspan\cf0 =\cf10 "7"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_black_line(); \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+          \cf7 </\cf8 tr\cf7 >\cf0 \
+          \cf7 <\cf8 tr\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingRow"\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_ID; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_PRODUCT; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_OPT_NAME; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_OPT_VALUE; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf0  \cf9 align\cf0 =\cf10 "right"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_OPT_PRICE; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf0  \cf9 align\cf0 =\cf10 "center"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_OPT_PRICE_PREFIX; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf0  \cf9 align\cf0 =\cf10 "center"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_ACTION; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+          \cf7 </\cf8 tr\cf7 >\cf0 \
+          \cf7 <\cf8 tr\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 colspan\cf0 =\cf10 "7"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_black_line(); \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+          \cf7 </\cf8 tr\cf7 >\cf0 \
+\cf6 <?php\
+\
+\pard\pardeftab720\ql\qnatural
+\cf22 *** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 // BOF - Zappo - Option Types v2 - Added Attributes Sort Order\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf6 ?>\cf0 \
+            \cf7 </\cf8 td\cf7 >\cf0 \
+          \cf7 </\cf8 tr\cf7 >\cf0 \
+        \cf7 </\cf8 table\cf7 >\cf0 \
+        \cf7 <\cf8 form\cf0  \cf9 name\cf0 =\cf10 "attributes"\cf0  \cf9 action\cf0 ="\cf6 <?php\cf0  \cf2 echo \cf0 tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf3 'action=' \cf0 . \cf4 $form_action \cf0 . \cf3 '&' \cf0 . \cf4 $page_info\cf0 ); \cf6 ?>\cf0 " \cf9 method\cf0 =\cf10 "post"\cf7 ><\cf8 table\cf0  \cf9 border\cf0 =\cf10 "0"\cf0  \cf9 width\cf0 =\cf10 "100%"\cf0  \cf9 cellspacing\cf0 =\cf10 "0"\cf0  \cf9 cellpadding\cf0 =\cf10 "2"\cf7 >\cf0 \
+          \cf7 <\cf8 tr\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 colspan\cf0 =\cf10 "8"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_black_line(); \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+          \cf7 </\cf8 tr\cf7 >\cf0 \
+          \cf7 <\cf8 tr\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingRow"\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_ID; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_PRODUCT; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_OPT_NAME; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_OPT_VALUE; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf0  \cf9 align\cf0 =\cf10 "right"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_OPT_PRICE; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf0  \cf9 align\cf0 =\cf10 "center"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_OPT_PRICE_PREFIX; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf0  \cf9 align\cf0 =\cf10 "center"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_OPT_ORDER; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "dataTableHeadingContent"\cf0  \cf9 align\cf0 =\cf10 "center"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 TABLE_HEADING_ACTION; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+          \cf7 </\cf8 tr\cf7 >\cf0 \
+          \cf7 <\cf8 tr\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 colspan\cf0 =\cf10 "8"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_black_line(); \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+          \cf7 </\cf8 tr\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf5 // EOF - Zappo - Option Types v2 - Added Attributes Sort Order\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf14 \
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf4 $values \cf0 = tep_db_query(\cf3 "select * from " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES . \cf3 " where language_id ='" \cf0 . \cf4 \ul \ulc4 $languages_id\ulnone  \cf0 . \cf3 "' order by products_options_values_name"\cf0 );\
+\
+\
+*** REPLACE WITH ***: \
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - ONE LINE - Exclude Text and Upload Option Values from Dropdown (They are Auto-Added)\cf0 \
+      \cf4 $values \cf0 = tep_db_query(\cf3 "select * from " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES . \cf3 " where products_options_values_id != '0' and language_id ='" \cf0 . \cf4 $languages_id \cf0 . \cf3 "' order by products_options_values_name"\cf0 );\
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf0 \
+\
+\pard\pardeftab720\ql\qnatural
+\cf6 ?>\cf0         \
+            \cf7 </\cf8 select\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "right"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf7 <\cf8 input\cf0  \cf9 type\cf0 =\cf10 "text"\cf0  \cf9 name\cf0 =\cf10 "value_price"\cf0  \cf9 value\cf0 ="\cf6 <?php\cf0  \cf2 echo \cf4 $attributes_values\cf0 [\cf3 'options_values_price'\cf0 ]; \cf6 ?>\cf0 " \cf9 size\cf0 =\cf10 "6"\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf7 <\cf8 input\cf0  \cf9 type\cf0 =\cf10 "text"\cf0  \cf9 name\cf0 =\cf10 "price_prefix"\cf0  \cf9 value\cf0 ="\cf6 <?php\cf0  \cf2 echo \cf4 $attributes_values\cf0 [\cf3 'price_prefix'\cf0 ]; \cf6 ?>\cf0 " \cf9 size\cf0 =\cf10 "2"\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 tep_image_submit(\cf3 'button_update.gif'\cf0 , IMAGE_UPDATE); \cf6 ?>\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf4 $page_info\cf0 , \cf3 'NONSSL'\cf0 ) . \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_cancel.gif'\cf0 , IMAGE_CANCEL); \cf6 ?>\cf7 \ul \ulc7 </\cf8 \ulc8 a\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf6 <?php\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf23 *** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Added Attributes Sort Order\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf6 ?>\cf0 \
+            \cf7 </\cf8 select\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "right"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf7 <\cf8 input\cf0  \cf9 type\cf0 =\cf10 "text"\cf0  \cf9 name\cf0 =\cf10 "value_price"\cf0  \cf9 value\cf0 ="\cf6 <?php\cf0  \cf2 echo \cf4 $attributes_values\cf0 [\cf3 'options_values_price'\cf0 ]; \cf6 ?>\cf0 " \cf9 size\cf0 =\cf10 "6"\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf7 <\cf8 input\cf0  \cf9 type\cf0 =\cf10 "text"\cf0  \cf9 name\cf0 =\cf10 "price_prefix"\cf0  \cf9 value\cf0 ="\cf6 <?php\cf0  \cf2 echo \cf4 $attributes_values\cf0 [\cf3 'price_prefix'\cf0 ]; \cf6 ?>\cf0 " \cf9 size\cf0 =\cf10 "2"\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf7 <\cf8 input\cf0  \cf9 type\cf0 =\cf10 "text"\cf0  \cf9 name\cf0 =\cf10 "value_order"\cf0  \cf9 value\cf0 ="\cf6 <?php\cf0  \cf2 echo \cf4 $attributes_values\cf0 [\cf3 'products_options_sort_order'\cf0 ]; \cf6 ?>\cf0 " \cf9 size\cf0 =\cf10 "2"\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 tep_image_submit(\cf3 'button_update.gif'\cf0 , IMAGE_UPDATE); \cf6 ?>\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf4 $page_info\cf0 , \cf3 'NONSSL'\cf0 ) . \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_cancel.gif'\cf0 , IMAGE_CANCEL); \cf6 ?>\cf7 </\cf8 a\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf5 //EOF - Zappo - Option Types v2 - Added Attributes Sort Order\
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ***FIND***
+\f1\fs24 \
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs22 \cf0  \
+\
+\
+\cf6 ?>\cf0 \
+            \cf7 \ul <\cf8 \ulc8 td\cf0 \ulc0  \cf9 \ulc9 class\cf0 \ulc0 =\cf10 \ulc10 "smallText"\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf7 <\cf8 b\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $attributes_values\cf0 [\cf3 "products_attributes_id"\cf0 ]; \cf6 ?>\cf7 </\cf8 b\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 \ul <\cf8 \ulc8 td\cf0 \ulc0  \cf9 \ulc9 class\cf0 \ulc0 =\cf10 \ulc10 "smallText"\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf7 <\cf8 b\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $products_name_only\cf0 ; \cf6 ?>\cf7 </\cf8 b\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 \ul <\cf8 \ulc8 td\cf0 \ulc0  \cf9 \ulc9 class\cf0 \ulc0 =\cf10 \ulc10 "smallText"\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf7 <\cf8 b\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $options_name\cf0 ; \cf6 ?>\cf7 </\cf8 b\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 \ul <\cf8 \ulc8 td\cf0 \ulc0  \cf9 \ulc9 class\cf0 \ulc0 =\cf10 \ulc10 "smallText"\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf7 <\cf8 b\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $values_name\cf0 ; \cf6 ?>\cf7 </\cf8 b\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 \ul <\cf8 \ulc8 td\cf0 \ulc0  \cf9 \ulc9 align\cf0 \ulc0 =\cf10 \ulc10 "right"\cf0 \ulc0  \cf9 \ulc9 class\cf0 \ulc0 =\cf10 \ulc10 "smallText"\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf7 <\cf8 b\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $attributes_values\cf0 [\cf3 "options_values_price"\cf0 ]; \cf6 ?>\cf7 </\cf8 b\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 \ul <\cf8 \ulc8 td\cf0 \ulc0  \cf9 \ulc9 align\cf0 \ulc0 =\cf10 \ulc10 "center"\cf0 \ulc0  \cf9 \ulc9 class\cf0 \ulc0 =\cf10 \ulc10 "smallText"\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf7 <\cf8 b\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $attributes_values\cf0 [\cf3 "price_prefix"\cf0 ]; \cf6 ?>\cf7 </\cf8 b\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 \ul <\cf8 \ulc8 td\cf0 \ulc0  \cf9 \ulc9 align\cf0 \ulc0 =\cf10 \ulc10 "center"\cf0 \ulc0  \cf9 \ulc9 class\cf0 \ulc0 =\cf10 \ulc10 "smallText"\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf7 <\cf8 b\cf7 >\cf6 <?php\cf0  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf3 'action=delete_attribute&attribute_id=' \cf0 . \cf4 $HTTP_GET_VARS\cf0 [\cf3 'attribute_id'\cf0 ] . \cf3 '&' \cf0 . \cf4 $page_info\cf0 ) . \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_confirm.gif'\cf0 , IMAGE_CONFIRM); \cf6 ?>\cf7 \ul </\cf8 \ulc8 a\cf7 \ulc7 >\cf10 \ulnone &nbsp;&nbsp;\cf6 <?php\cf0  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf4 $page_info\cf0 , \cf3 'NONSSL'\cf0 ) . \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_cancel.gif'\cf0 , IMAGE_CANCEL); \cf6 ?>\cf7 \ul </\cf8 \ulc8 a\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf7 </\cf8 b\cf7 ></\cf8 td\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+    \} \cf2 else \cf0 \{\
+\cf6 ?>\cf0 \
+            \cf7 \ul <\cf8 \ulc8 td\cf0 \ulc0  \cf9 \ulc9 class\cf0 \ulc0 =\cf10 \ulc10 "smallText"\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $attributes_values\cf0 [\cf3 "products_attributes_id"\cf0 ]; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 \ul <\cf8 \ulc8 td\cf0 \ulc0  \cf9 \ulc9 class\cf0 \ulc0 =\cf10 \ulc10 "smallText"\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $products_name_only\cf0 ; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 \ul <\cf8 \ulc8 td\cf0 \ulc0  \cf9 \ulc9 class\cf0 \ulc0 =\cf10 \ulc10 "smallText"\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $options_name\cf0 ; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 \ul <\cf8 \ulc8 td\cf0 \ulc0  \cf9 \ulc9 class\cf0 \ulc0 =\cf10 \ulc10 "smallText"\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $values_name\cf0 ; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 \ul <\cf8 \ulc8 td\cf0 \ulc0  \cf9 \ulc9 align\cf0 \ulc0 =\cf10 \ulc10 "right"\cf0 \ulc0  \cf9 \ulc9 class\cf0 \ulc0 =\cf10 \ulc10 "smallText"\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $attributes_values\cf0 [\cf3 "options_values_price"\cf0 ]; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 \ul <\cf8 \ulc8 td\cf0 \ulc0  \cf9 \ulc9 align\cf0 \ulc0 =\cf10 \ulc10 "center"\cf0 \ulc0  \cf9 \ulc9 class\cf0 \ulc0 =\cf10 \ulc10 "smallText"\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $attributes_values\cf0 [\cf3 "price_prefix"\cf0 ]; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 \ul <\cf8 \ulc8 td\cf0 \ulc0  \cf9 \ulc9 align\cf0 \ulc0 =\cf10 \ulc10 "center"\cf0 \ulc0  \cf9 \ulc9 class\cf0 \ulc0 =\cf10 \ulc10 "smallText"\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf6 <?php\cf0  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf3 'action=update_attribute&attribute_id=' \cf0 . \cf4 $attributes_values\cf0 [\cf3 'products_attributes_id'\cf0 ] . \cf3 '&' \cf0 . \cf4 $page_info\cf0 , \cf3 'NONSSL'\cf0 ) . \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_edit.gif'\cf0 , IMAGE_UPDATE); \cf6 ?>\cf7 \ul </\cf8 \ulc8 a\cf7 \ulc7 >\cf10 \ulnone &nbsp;&nbsp;\cf6 <?php\cf0  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf3 'action=delete_product_attribute&attribute_id=' \cf0 . \cf4 $attributes_values\cf0 [\cf3 'products_attributes_id'\cf0 ] . \cf3 '&' \cf0 . \cf4 $page_info\cf0 , \cf3 'NONSSL'\cf0 ) , \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_delete.gif'\cf0 , IMAGE_DELETE); \cf6 ?>\cf7 \ul </\cf8 \ulc8 a\cf7 \ulc7 >\cf10 \ulnone &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+\cf6 <?php\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf24 *** REPLACE WITH ***: \
+\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Added Attributes Sort Order\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf6 ?>\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf7 <\cf8 b\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $attributes_values\cf0 [\cf3 "products_attributes_id"\cf0 ]; \cf6 ?>\cf7 </\cf8 b\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf7 <\cf8 b\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $products_name_only\cf0 ; \cf6 ?>\cf7 </\cf8 b\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf7 <\cf8 b\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $options_name\cf0 ; \cf6 ?>\cf7 </\cf8 b\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf7 <\cf8 b\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $values_name\cf0 ; \cf6 ?>\cf7 </\cf8 b\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "right"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf7 <\cf8 b\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $attributes_values\cf0 [\cf3 "options_values_price"\cf0 ]; \cf6 ?>\cf7 </\cf8 b\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf7 <\cf8 b\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $attributes_values\cf0 [\cf3 "price_prefix"\cf0 ]; \cf6 ?>\cf7 </\cf8 b\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf7 <\cf8 b\cf7 >\cf6 <?php\cf0  \cf2 echo \cf4 $attributes_values\cf0 [\cf3 "products_options_sort_order"\cf0 ]; \cf6 ?>\cf7 </\cf8 b\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf7 <\cf8 b\cf7 >\cf6 <?php\cf0  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf3 'action=delete_attribute&attribute_id=' \cf0 . \cf4 $HTTP_GET_VARS\cf0 [\cf3 'attribute_id'\cf0 ] . \cf3 '&' \cf0 . \cf4 $page_info\cf0 ) . \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_confirm.gif'\cf0 , IMAGE_CONFIRM); \cf6 ?>\cf7 </\cf8 a\cf7 >\cf10 &nbsp;&nbsp;\cf6 <?php\cf0  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf4 $page_info\cf0 , \cf3 'NONSSL'\cf0 ) . \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_cancel.gif'\cf0 , IMAGE_CANCEL); \cf6 ?>\cf7 </\cf8 a\cf7 >\cf10 &nbsp;\cf7 </\cf8 b\cf7 ></\cf8 td\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+    \} \cf2 else \cf0 \{\
+\cf6 ?>\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $attributes_values\cf0 [\cf3 "products_attributes_id"\cf0 ]; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $products_name_only\cf0 ; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $options_name\cf0 ; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $values_name\cf0 ; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "right"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $attributes_values\cf0 [\cf3 "options_values_price"\cf0 ]; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $attributes_values\cf0 [\cf3 "price_prefix"\cf0 ]; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf4 $attributes_values\cf0 [\cf3 "products_options_sort_order"\cf0 ]; \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf3 'action=update_attribute&attribute_id=' \cf0 . \cf4 $attributes_values\cf0 [\cf3 'products_attributes_id'\cf0 ] . \cf3 '&' \cf0 . \cf4 $page_info\cf0 , \cf3 'NONSSL'\cf0 ) . \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_edit.gif'\cf0 , IMAGE_UPDATE); \cf6 ?>\cf7 </\cf8 a\cf7 >\cf10 &nbsp;&nbsp;\cf6 <?php\cf0  \cf2 echo \cf3 '<a href="' \cf0 . tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, \cf3 'action=delete_product_attribute&attribute_id=' \cf0 . \cf4 $attributes_values\cf0 [\cf3 'products_attributes_id'\cf0 ] . \cf3 '&' \cf0 . \cf4 $page_info\cf0 , \cf3 'NONSSL'\cf0 ) , \cf3 '">'\cf0 ; \cf6 ?><?php\cf0  \cf2 echo \cf0 tep_image_button(\cf3 'button_delete.gif'\cf0 , IMAGE_DELETE); \cf6 ?>\cf7 </\cf8 a\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf5 //EOF - Zappo - Option Types v2 - Added Attributes Sort Order\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 *** FIND ***\
+\
+\
+\cf6 ?>\cf0 \
+          \cf7 <\cf8 tr\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 colspan\cf0 =\cf10 "7"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_black_line(); \cf6 ?>\cf7 </\cf8 td\cf7 >\cf0 \
+\
+*** REPLACE WITH ***: \
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - ONE LINE - Added Attributes Sort Order - Added 1 colspan (two down)\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf6 ?>\cf0 \
+          \cf7 <\cf8 tr\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 colspan\cf0 =\cf10 "8"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_black_line(); \cf6 ?>\cf7 </\cf8 td\cf7 >\
+\
+\
+\cf0 *** FIND ***\
+\
+\
+    \cf4 $values \cf0 = tep_db_query(\cf3 "select * from " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES . \cf3 " where language_id = '" \cf0 . \cf4 \ul \ulc4 $languages_id\ulnone  \cf0 . \cf3 "' order by products_options_values_name"\cf0 );\
+\
+\
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - ONE LINE - Exclude Text and Upload Option Values from Dropdown (They are Auto-Added)\cf0 \
+    \cf4 $values \cf0 = tep_db_query(\cf3 "select * from " \cf0 . TABLE_PRODUCTS_OPTIONS_VALUES . \cf3 " where products_options_values_id != '0' and language_id = '" \cf0 . \cf4 $languages_id \cf0 . \cf3 "' order by products_options_values_name"\cf0 );\
+\
+\
+\
+*** FIND ***\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf6 ?>\cf0 \
+            \cf7 </\cf8 select\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "right"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf7 <\cf8 input\cf0  \cf9 type\cf0 =\cf10 "text"\cf0  \cf9 name\cf0 =\cf10 "value_price"\cf0  \cf9 size\cf0 =\cf10 "6"\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "right"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf7 <\cf8 input\cf0  \cf9 type\cf0 =\cf10 "text"\cf0  \cf9 name\cf0 =\cf10 "price_prefix"\cf0  \cf9 size\cf0 =\cf10 "2"\cf0  \cf9 value\cf0 =\cf10 "+"\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 tep_image_submit(\cf3 'button_insert.gif'\cf0 , IMAGE_INSERT); \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+          \cf7 </\cf8 tr\cf7 >\cf0 \
+\cf6 <?php\
+\
+\pard\pardeftab720\ql\qnatural
+\cf23 *** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Added Attributes Sort Order\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf6 ?>\cf0 \
+            \cf7 </\cf8 select\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "right"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf7 <\cf8 input\cf0  \cf9 type\cf0 =\cf10 "text"\cf0  \cf9 name\cf0 =\cf10 "value_price"\cf0  \cf9 size\cf0 =\cf10 "6"\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "right"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf7 <\cf8 input\cf0  \cf9 type\cf0 =\cf10 "text"\cf0  \cf9 name\cf0 =\cf10 "price_prefix"\cf0  \cf9 size\cf0 =\cf10 "2"\cf0  \cf9 value\cf0 =\cf10 "+"\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "right"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf7 <\cf8 input\cf0  \cf9 type\cf0 =\cf10 "text"\cf0  \cf9 name\cf0 =\cf10 "value_order"\cf0  \cf9 size\cf0 =\cf10 "2"\cf0  \cf9 value\cf0 =\cf10 "1"\cf7 >\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 align\cf0 =\cf10 "center"\cf0  \cf9 class\cf0 =\cf10 "smallText"\cf7 >\cf10 &nbsp;\cf6 <?php\cf0  \cf2 echo \cf0 tep_image_submit(\cf3 'button_insert.gif'\cf0 , IMAGE_INSERT); \cf6 ?>\cf10 &nbsp;\cf7 </\cf8 td\cf7 >\cf0 \
+          \cf7 </\cf8 tr\cf7 >\cf0 \
+\cf6 <?php\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf5 //EOF - Zappo - Option Types v2 - Added Attributes Sort Order\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 *** FIND ***\
+\
+\pard\pardeftab720\ql\qnatural
+\cf25 \
+\pard\pardeftab720\ql\qnatural
+\cf6 ?>\cf0 \
+          \cf7 <\cf8 tr\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 colspan\cf0 =\cf10 "7"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_black_line(); \cf6 ?>\cf7 </\cf8 td\cf7 >\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 *** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - ONE LINE - Added Attributes Sort Order - Added 1 colspan (two down)\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf6 ?>\cf0 \
+          \cf7 <\cf8 tr\cf7 >\cf0 \
+            \cf7 <\cf8 td\cf0  \cf9 colspan\cf0 =\cf10 "8"\cf7 >\cf6 <?php\cf0  \cf2 echo \cf0 tep_black_line(); \cf6 ?>\cf7 </\cf8 td\cf7 >\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf26 \
+*********\
+Open /catalog/includes/application_top.php\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 *** FIND ***\
+\
+\pard\pardeftab720\ql\qnatural
+\cf26 \
+\pard\pardeftab720\ql\qnatural
+\cf0   \cf4 $navigation\cf0 ->add_current_page();\
+\
+\
+*** BELOW ADD *** : \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Moved infobox and messageStack here from below\cf0 \
+\cf5 // infobox\cf0 \
+  \cf2 require\cf0 (DIR_WS_CLASSES . \cf3 'boxes.php'\cf0 );\
+\
+\cf5 // initialize the message stack for output messages\cf0 \
+  \cf2 require\cf0 (DIR_WS_CLASSES . \cf3 'message_stack.php'\cf0 );\
+  \cf4 $messageStack \cf0 = \cf2 new \cf0 messageStack;\
+\
+\cf5 //EOF - Zappo - Option Types v2 - Moved infobox and messageStack here from below\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 *** FIND ***\
+\
+\pard\pardeftab720\ql\qnatural
+\cf21 \
+\pard\pardeftab720\ql\qnatural
+\cf0       \cf2 case \cf3 'add_product' \cf0 :    \cf2 if \cf0 (\cf2 isset\cf0 (\cf4 $HTTP_POST_VARS\cf0 [\cf3 'products_id'\cf0 ]) && is_numeric(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'products_id'\cf0 ])) \{\
+                                \cf4 $cart\cf0 ->add_cart(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'products_id'\cf0 ], \cf4 $cart\cf0 ->get_quantity(tep_get_uprid(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'products_id'\cf0 ], \cf4 $HTTP_POST_VARS\cf0 [\cf3 'id'\cf0 ]))+\cf6 1\cf0 , \cf4 $HTTP_POST_VARS\cf0 [\cf3 'id'\cf0 ]);\
+         \
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - File uploading: Purge the Temporary Upload Dir\cf0 \
+                                \cf4 $purgeDir \cf0 = opendir(TMP_DIR) or \cf2 die \cf0 (\cf3 'Could not open '\cf0 .TMP_DIR);\
+                                \cf2 while \cf0 (\cf4 $file \cf0 = readdir(\cf4 $purgeDir\cf0 )) \{\
+                                  \cf2 if \cf0 (\cf4 $file \cf0 != (\cf3 '.htaccess'\cf0 ) && \cf4 $file \cf0 != (\cf3 '.'\cf0 ) && \cf4 $file \cf0 != (\cf3 '..'\cf0 ) && filemtime(TMP_DIR . \cf4 $file\cf0 ) < strtotime(OPTIONS_TYPE_PURGETIME)) \{\
+                                    unlink(TMP_DIR . \cf4 $file\cf0 );  \cf5 // Delete file from server...\cf0 \
+                                    tep_db_query(\cf3 "delete from " \cf0 . TABLE_FILES_UPLOADED . \cf3 " where files_uploaded_name = '" \cf0 . \cf4 $file \cf0 . \cf3 "'"\cf0 ); \cf5 // Remove File's database entry....\cf0 \
+                                  \}\
+                                \}\
+                                closedir(\cf4 $purgeDir\cf0 );\
+                                \cf5 //EOF - Zappo - Option Types v2 - File uploading: Purge the Temporary Upload Dir\cf0 \
+\
+                                \cf5 //BOF - Zappo - Option Types v2 - ONE LINE - Set real_ids for processing\cf0 \
+                                \cf4 $real_ids \cf0 = \cf4 $HTTP_POST_VARS\cf0 [\cf3 'id'\cf0 ];\
+                                \cf5 //BOF - Zappo - Option Types v2 - File uploading: save uploaded files with unique file names, in the proper folder\cf0 \
+                                \cf2 if \cf0 (\cf4 $HTTP_POST_VARS\cf0 [\cf3 'number_of_uploads'\cf0 ] > \cf6 0\cf0 ) \{\
+                                  \cf2 require\cf0 (DIR_WS_CLASSES . \cf3 'upload.php'\cf0 );\
+                                  \cf2 for \cf0 (\cf4 $i \cf0 = \cf6 1\cf0 ; \cf4 $i \cf0 <= \cf4 $HTTP_POST_VARS\cf0 [\cf3 'number_of_uploads'\cf0 ]; \cf4 $i\cf0 ++) \{\
+                                    \cf4 $TEMP_FILE \cf0 = \cf4 $_FILES\cf0 [\cf3 'id'\cf0 ][\cf3 'tmp_name'\cf0 ][TEXT_PREFIX . \cf4 $HTTP_POST_VARS\cf0 [UPLOAD_PREFIX . \cf4 $i\cf0 ]];\
+                                    \cf2 if \cf0 (tep_not_null(\cf4 $TEMP_FILE\cf0 ) && \cf4 $TEMP_FILE \cf0 != \cf3 'none'\cf0 ) \{\
+                                      \cf4 $products_options_file \cf0 = \cf2 new \cf0 upload(\cf3 'id'\cf0 );\
+                                      \cf5 //BOF - Zappo - Option Types v2 - Set Upload directory (Registered customers in Uploads, other in Temporary folder)\cf0 \
+                                      \cf2 if \cf0 (tep_session_is_registered(\cf3 'customer_id'\cf0 )) \{  \cf5 // IF the customer is registered, use Upload Dir\cf0 \
+                                        \cf4 $products_options_file\cf0 ->set_destination(UPL_DIR);\
+                                      \} \cf2 else \cf0 \{ \cf5 // If the customer is not registered, use Temporary Dir\cf0 \
+                                        \cf4 $products_options_file\cf0 ->set_destination(TMP_DIR);\
+                                      \}\
+                                      \cf5 //EOF - Zappo - Option Types v2 - Set Upload directory (Registered customers in Uploads, other in Temporary folder)\cf0 \
+                                      \cf2 if \cf0 (\cf4 $products_options_file\cf0 ->parse(TEXT_PREFIX . \cf4 $HTTP_POST_VARS\cf0 [UPLOAD_PREFIX . \cf4 $i\cf0 ])) \{\
+                                        \cf2 if \cf0 (tep_session_is_registered(\cf3 'customer_id'\cf0 )) \{\
+                                          tep_db_query(\cf3 "insert into " \cf0 . TABLE_FILES_UPLOADED . \cf3 " (sesskey, customers_id, files_uploaded_name, date) values('" \cf0 . tep_session_id() . \cf3 "', '" \cf0 . \cf4 $customer_id \cf0 . \cf3 "', '" \cf0 . tep_db_input(\cf4 $products_options_file\cf0 ->filename) . \cf3 "', '" \cf0 . date(\cf3 "d-m-y"\cf0 ) . \cf3 "')"\cf0 );\
+                                        \} \cf2 else \cf0 \{\
+                                          tep_db_query(\cf3 "insert into " \cf0 . TABLE_FILES_UPLOADED . \cf3 " (sesskey, files_uploaded_name, date) values('" \cf0 . tep_session_id() . \cf3 "', '" \cf0 . tep_db_input(\cf4 $products_options_file\cf0 ->filename) . \cf3 "', '" \cf0 . date(\cf3 "d-m-y"\cf0 ) . \cf3 "')"\cf0 );\
+                                        \}\
+                                        \cf5 //BOF - Zappo - Option Types v2 - Set File Prefix\cf0 \
+                                        \cf2 if \cf0 (OPTIONS_TYPE_FILEPREFIX == \cf3 'Database'\cf0 ) \{  \cf5 //  Database ID as File prefix\cf0 \
+                                          \cf4 $insert_id \cf0 = tep_db_insert_id() . \cf3 '_'\cf0 ;\
+                                        \} \cf2 else \cf0 \{  \cf5 //  Date, time or both as File prefix (Change date formatting here)\cf0 \
+                                          \cf2 if \cf0 (OPTIONS_TYPE_FILEPREFIX == \cf3 'Date' \cf0 || OPTIONS_TYPE_FILEPREFIX == \cf3 'DateTime'\cf0 ) \{\
+                                            \cf4 $insert_id \cf0 = \cf3 'D'\cf0 .date(\cf3 "d-m-y_"\cf0 );\
+                                          \}\
+                                          \cf4 $insert_id \cf0 .= (OPTIONS_TYPE_FILEPREFIX == \cf3 'DateTime' \cf0 || OPTIONS_TYPE_FILEPREFIX == \cf3 'Time'\cf0 ) ? \cf3 'T'\cf0 .date(\cf3 "H-i_"\cf0 ) : \cf3 ''\cf0 ;\
+                                        \}\
+                                        \cf5 //EOF - Zappo - Option Types v2 - Set File Prefix\cf0 \
+                                        \cf5 // Update filename in Database with correct prefix (For comparing database names with real files)\cf0 \
+                                        tep_db_query(\cf3 "update " \cf0 . TABLE_FILES_UPLOADED . \cf3 " set files_uploaded_name = '" \cf0 . tep_db_input(\cf4 $insert_id \cf0 . \cf4 $products_options_file\cf0 ->filename) . \cf3 "' where sesskey = '" \cf0 . tep_session_id() . \cf3 "' and files_uploaded_name = '" \cf0 . tep_db_input(\cf4 $products_options_file\cf0 ->filename) . \cf3 "' and date = '" \cf0 . date(\cf3 "d-m-y"\cf0 ) . \cf3 "'"\cf0 );\
+                                        \cf4 $real_ids\cf0 [TEXT_PREFIX . \cf4 $HTTP_POST_VARS\cf0 [UPLOAD_PREFIX . \cf4 $i\cf0 ]] = \cf4 $insert_id \cf0 . \cf4 $products_options_file\cf0 ->filename;\
+                                        \cf4 $products_options_file\cf0 ->set_filename(\cf4 $insert_id \cf0 . \cf4 $products_options_file\cf0 ->filename);\
+                                        \cf2 if \cf0 (!(\cf4 $products_options_file\cf0 ->save())) \{\
+                                          \cf2 break \cf6 2\cf0 ;\
+                                        \}\
+                                      \} \cf2 else \cf0 \{\
+                                        \cf2 break \cf6 2\cf0 ;\
+                                      \}\
+                                    \} \cf2 else \cf0 \{ \cf5 // No file uploaded -- use previously uploaded file (From Dropdown)\cf0 \
+                                      \cf4 $real_ids\cf0 [TEXT_PREFIX . \cf4 $HTTP_POST_VARS\cf0 [UPLOAD_PREFIX . \cf4 $i\cf0 ]] = \cf4 $HTTP_POST_VARS\cf0 [TEXT_PREFIX . UPLOAD_PREFIX . \cf4 $i\cf0 ];\
+                                    \}\
+                                  \}\
+                                \}\
+                                \cf5 //EOF - Zappo - Option Types v2 - File uploading: save uploaded files with unique file names, in the proper folder\cf0 \
+                                \cf5 //BOF - Zappo - Option Types v2 - ONE LINE - Replace the posted array with the processed one.\cf0 \
+                                \cf4 $cart\cf0 ->add_cart(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'products_id'\cf0 ], \cf4 $cart\cf0 ->get_quantity(tep_get_uprid(\cf4 $HTTP_POST_VARS\cf0 [\cf3 'products_id'\cf0 ], \cf4 $real_ids\cf0 ))+\cf6 1\cf0 , \cf4 $real_ids\cf0 );\
+                        \
+\
+\
+*** FIND ***\
+\
+\cf5 // infobox\cf0 \
+  \cf2 require\cf0 (DIR_WS_CLASSES . \cf3 'boxes.php'\cf0 );\
+\
+*** REPLACE WITH ***: \
+\
+\cf5 //BOF - Zappo - Option Types v2 - ONE LINE - infobox moved up from here...\cf0 \
+\
+\
+*** FIND ***\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf5 // initialize the message stack for output messages\cf0 \
+  \cf2 require\cf0 (DIR_WS_CLASSES . \cf3 'message_stack.php'\cf0 );\
+  \cf4 $messageStack \cf0 = \cf2 new \cf0 messageStack;\
+\
+*** REPLACE WITH ***: \
+\
+\cf5 //BOF - Zappo - Option Types v2 - ONE LINE - message stack moved up from here...\cf0 \
+\
+\
+\
+***********\
+Open /catalog/includes/database_tables.php\
+\
+\
+*** BEFORE THE END ?> ADD ***: \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf0     define(\cf3 'TABLE_FILES_UPLOADED'\cf0 , \cf3 'files_uploaded'\cf0 );  \cf5 //BOF - Zappo - Option Types v2 - ONE LINE - File Uploading\cf0 \
+    define(\cf3 'TABLE_PRODUCTS_OPTIONS_TYPES'\cf0 , \cf3 'products_options_types'\cf0 );  \cf5 //BOF - Zappo - Option Types v2 - ONE LINE - Option Types\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf14 ********\
+Open /catalog/includes/classes/order.php\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf6 \
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 *** FIND ***\
+\
+\pard\pardeftab720\ql\qnatural
+\cf27 \
+\pard\pardeftab720\ql\qnatural
+\cf0  \cf4 $this\cf0 ->products[\cf4 $index\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $subindex\cf0 ] = \cf2 array\cf0 (\cf3 'option' \cf0 => \cf4 $attributes\cf0 [\cf3 'products_options_name'\cf0 ],\
+                                                                     \cf3 'value' \cf0 => \cf4 $attributes\cf0 [\cf3 'products_options_values_name'\cf0 ],\
+                                                                     \cf3 'option_id' \cf0 => \cf4 $option\cf0 ,\
+                                                                     \cf3 'value_id' \cf0 => \cf4 $value\cf0 ,\
+                                                                     \cf3 'prefix' \cf0 => \cf4 $attributes\cf0 [\cf3 'price_prefix'\cf0 ],\
+                                                                     \cf3 'price' \cf0 => \cf4 $attributes\cf0 [\cf3 'options_values_price'\cf0 ]);\
+\
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Determine if attribute is a text attribute and change products array if it is.\cf0 \
+            \cf2 if \cf0 (\cf4 $value \cf0 == OPTIONS_VALUE_TEXT_ID)\{\
+              \cf4 $attr_value \cf0 = \cf4 $products\cf0 [\cf4 $i\cf0 ][\cf3 'attributes_values'\cf0 ][\cf4 $option\cf0 ];\
+            \} \cf2 else \cf0 \{\
+              \cf4 $attr_value \cf0 = \cf4 $attributes\cf0 [\cf3 'products_options_values_name'\cf0 ];\
+            \}\
+            \cf4 $this\cf0 ->products[\cf4 $index\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $subindex\cf0 ] = \cf2 array\cf0 (\cf3 'option' \cf0 => \cf4 $attributes\cf0 [\cf3 'products_options_name'\cf0 ],\
+                                                                     \cf3 'value' \cf0 => \cf4 $attr_value\cf0 ,   \cf5 // changed to use $attr_value\cf0 \
+                                                                     \cf3 'option_id' \cf0 => \cf4 $option\cf0 ,\
+                                                                     \cf3 'value_id' \cf0 => \cf4 $value\cf0 ,\
+                                                                     \cf3 'prefix' \cf0 => \cf4 $attributes\cf0 [\cf3 'price_prefix'\cf0 ],\
+                                                                     \cf3 'price' \cf0 => \cf4 $attributes\cf0 [\cf3 'options_values_price'\cf0 ]);\
+\cf5 //EOF - Zappo - Option Types v2 - Determine if attribute is a text attribute and change products array if it is.\
+\
+\pard\pardeftab720\ql\qnatural
+\cf6 \
+\
+\pard\pardeftab720\ql\qnatural
+\cf23 ********\
+Open /catalog/includes/classes/shopping_cart.php\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 *** FIND ***\
+\
+\pard\pardeftab720\ql\qnatural
+\cf23 \
+\pard\pardeftab720\ql\qnatural
+\cf0 reset(\cf4 $this\cf0 ->contents[\cf4 $products_id\cf0 ][\cf3 'attributes'\cf0 ]);\
+              \cf2 while \cf0 (\cf2 \ul \ulc2 list\cf0 \ulc0 (\cf4 \ulc4 $option\cf0 \ulc0 , \cf4 \ulc4 $value\cf0 \ulc0 ) = each(\cf4 \ulc4 $this\cf0 \ulc0 ->contents[\cf4 \ulc4 $products_id\cf0 \ulc0 ][\cf3 \ulc3 'attributes'\cf0 \ulc0 ])\ulnone ) \{\
+                tep_db_query(\cf3 "insert into " \cf0 . TABLE_CUSTOMERS_BASKET_ATTRIBUTES . \cf3 " (customers_id, products_id, products_options_id, products_options_value_id) values ('" \cf0 . (int)\cf4 $customer_id \cf0 . \cf3 "', '" \cf0 . tep_db_input(\cf4 $products_id\cf0 ) . \cf3 "', '" \cf0 . (int)\cf4 $option \cf0 . \cf3 "', '" \cf0 . (int)\cf4 $value \cf0 . \cf3 "')"\cf0 );\
+   \
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Update query to include attribute value && Check for Uploads from customer and copy to Upload dir\cf0 \
+              \cf4 $uploads_query \cf0 = tep_db_query(\cf3 "select files_uploaded_name from " \cf0 . TABLE_FILES_UPLOADED . \cf3 " where sesskey = '" \cf0 . tep_session_id() . \cf3 "'"\cf0 );\
+              \cf2 while \cf0 (\cf4 $uploads_array \cf0 = tep_db_fetch_array(\cf4 $uploads_query\cf0 )) \{\
+                \cf2 if \cf0 (file_exists(TMP_DIR . \cf4 $uploads_array\cf0 [\cf3 'files_uploaded_name'\cf0 ])) \{ \cf5 // Customer upload found in TMP dir --> Copy to Upload Dir\cf0 \
+                  @rename(TMP_DIR . \cf4 $uploads_array\cf0 [\cf3 'files_uploaded_name'\cf0 ], UPL_DIR . \cf4 $uploads_array\cf0 [\cf3 'files_uploaded_name'\cf0 ]);\
+                  \cf5 // Set Customer_ID for the files that are found\cf0 \
+                  tep_db_query(\cf3 "update " \cf0 . TABLE_FILES_UPLOADED . \cf3 " set customers_id = '" \cf0 . (int)\cf4 $customer_id \cf0 . \cf3 "' where sesskey = '" \cf0 . tep_session_id() . \cf3 "' and files_uploaded_name = '" \cf0 . \cf4 $uploads_array\cf0 [\cf3 'files_uploaded_name'\cf0 ] . \cf3 "'"\cf0 );\
+                \}\
+              \}\
+              reset(\cf4 $this\cf0 ->contents[\cf4 $products_id\cf0 ][\cf3 'attributes'\cf0 ]);\
+              \cf2 while \cf0 (\cf2 list\cf0 (\cf4 $option\cf0 , \cf4 $value\cf0 ) = each(\cf4 $this\cf0 ->contents[\cf4 $products_id\cf0 ][\cf3 'attributes'\cf0 ])) \{\
+                \cf4 $attr_value \cf0 = \cf4 $this\cf0 ->contents[\cf4 $products_id\cf0 ][\cf3 'attributes_values'\cf0 ][\cf4 $option\cf0 ];\
+                tep_db_query(\cf3 "insert into " \cf0 . TABLE_CUSTOMERS_BASKET_ATTRIBUTES . \cf3 " (customers_id, products_id, products_options_id, products_options_value_id, products_options_value_text) values ('" \cf0 . (int)\cf4 $customer_id \cf0 . \cf3 "', '" \cf0 . tep_db_input(\cf4 $products_id\cf0 ) . \cf3 "', '" \cf0 . \cf4 $option \cf0 . \cf3 "', '" \cf0 . (int)\cf4 $value \cf0 . \cf3 "', '" \cf0 . tep_db_input(\cf4 $attr_value\cf0 ) . \cf3 "')"\cf0 );\
+\cf5 //EOF - Zappo - Option Types v2 - Update query to include attribute value && Check for Uploads from customer and copy to Upload dir\cf0 \
+\
+\
+*** FIND ***\
+\
+\
+        \cf4 $attributes_query \cf0 = tep_db_query(\cf3 "select products_options_id, products_options_value_id from " \cf0 . TABLE_CUSTOMERS_BASKET_ATTRIBUTES . \cf3 " where customers_id = '" \cf0 . (int)\cf4 $customer_id \cf0 . \cf3 "' and products_id = '" \cf0 . tep_db_input(\cf4 $products\cf0 [\cf3 'products_id'\cf0 ]) . \cf3 "'"\cf0 );\
+        \cf2 while \cf0 (\cf4 \ul \ulc4 $attributes \cf0 \ulc0 = tep_db_fetch_array(\cf4 \ulc4 $attributes_query\cf0 \ulc0 )\ulnone ) \{\
+          \cf4 $this\cf0 ->contents[\cf4 $products\cf0 [\cf3 'products_id'\cf0 ]][\cf3 'attributes'\cf0 ][\cf4 $attributes\cf0 [\cf3 'products_options_id'\cf0 ]] = \cf4 $attributes\cf0 [\cf3 'products_options_value_id'\cf0 ];\
+\
+\
+*** REPLACE WITH ***: \
+\
+\cf5 //BOF - Zappo - Option Types v2 - Update query to pull attribute value_text. This is needed for text attributes.\cf0 \
+        \cf4 $attributes_query \cf0 = tep_db_query(\cf3 "select products_options_id, products_options_value_id, products_options_value_text from " \cf0 . TABLE_CUSTOMERS_BASKET_ATTRIBUTES . \cf3 " where customers_id = '" \cf0 . (int)\cf4 $customer_id \cf0 . \cf3 "' and products_id = '" \cf0 . tep_db_input(\cf4 $products\cf0 [\cf3 'products_id'\cf0 ]) . \cf3 "'"\cf0 );\
+        \cf2 while \cf0 (\cf4 $attributes \cf0 = tep_db_fetch_array(\cf4 $attributes_query\cf0 )) \{\
+          \cf4 $this\cf0 ->contents[\cf4 $products\cf0 [\cf3 'products_id'\cf0 ]][\cf3 'attributes'\cf0 ][\cf4 $attributes\cf0 [\cf3 'products_options_id'\cf0 ]] = \cf4 $attributes\cf0 [\cf3 'products_options_value_id'\cf0 ];\
+          \cf5 // - Zappo - Option Types v2 - If attribute is Text, set additional information\cf0 \
+          \cf2 if \cf0 (\cf4 $attributes\cf0 [\cf3 'products_options_value_id'\cf0 ] == OPTIONS_VALUE_TEXT_ID) \{\
+            \cf4 $this\cf0 ->contents[\cf4 $products\cf0 [\cf3 'products_id'\cf0 ]][\cf3 'attributes_values'\cf0 ][\cf4 $attributes\cf0 [\cf3 'products_options_id'\cf0 ]] = \cf4 $attributes\cf0 [\cf3 'products_options_value_text'\cf0 ];\
+          \}\
+\cf5 //EOF - Zappo - Option Types v2 - Update query to pull attribute value_text. This is needed for text attributes.\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 *** FIND ***\
+\
+\pard\pardeftab720\ql\qnatural
+\cf25 \
+\pard\pardeftab720\ql\qnatural
+\cf0      \cf2 if \cf0 (\ul is_array\ulnone (\cf4 $attributes\cf0 )) \{\
+        \ul reset\ulnone (\cf4 $attributes\cf0 );\
+        \cf2 while \cf0 (\cf2 \ul \ulc2 list\cf0 \ulc0 (\cf4 \ulc4 $option\cf0 \ulc0 , \cf4 \ulc4 $value\cf0 \ulc0 ) = each(\cf4 \ulc4 $attributes\cf0 \ulc0 )\ulnone ) \{\
+          \cf2 if \cf0 (!is_numeric(\cf4 $option\cf0 ) || !is_numeric(\cf4 $value\cf0 )) \{\
+            \cf4 $attributes_pass_check \cf0 = \cf2 false\cf0 ;\
+            \cf2 break\cf0 ;\
+          \}\
+        \}\
+      \}\
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Because of Text and Upload options, $option AND $value don't have to be numeric!\cf0 \
+\cf5 /*      if (is_array($attributes)) \{\cf0 \
+\cf5         reset($attributes);\cf0 \
+\cf5         while (list($option, $value) = each($attributes)) \{\cf0 \
+\cf5           if (!is_numeric($option) || !is_numeric($value)) \{\cf0 \
+\cf5             $attributes_pass_check = false;\cf0 \
+\cf5             break;\cf0 \
+\cf5           \}\cf0 \
+\cf5         \}\cf0 \
+\cf5       \} */\cf0 \
+\cf5 //EOF - Zappo - Option Types v2 - Because of Text and Upload options, $option AND $value don't have to be numeric!\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 *** FIND ***\
+\
+\pard\pardeftab720\ql\qnatural
+\cf16 \
+\pard\pardeftab720\ql\qnatural
+\cf0                 \cf4 $this\cf0 ->contents[\cf4 $products_id_string\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $option\cf0 ] = \cf4 $value\cf0 ;\
+\pard\pardeftab720\ql\qnatural
+\cf5 // insert into database\cf0 \
+                \cf2 if \cf0 (tep_session_is_registered(\cf3 'customer_id'\cf0 )) tep_db_query(\cf3 "insert into " \cf0 . TABLE_CUSTOMERS_BASKET_ATTRIBUTES . \cf3 " (customers_id, products_id, products_options_id, products_options_value_id) values ('" \cf0 . (int)\cf4 $customer_id \cf0 . \cf3 "', '" \cf0 . tep_db_input(\cf4 $products_id_string\cf0 ) . \cf3 "', '" \cf0 . (int)\cf4 $option \cf0 . \cf3 "', '" \cf0 . (int)\cf4 $value \cf0 . \cf3 "')"\cf0 );\
+\
+\
+*** REPLACE WITH ***: \
+\
+\cf5 //BOF - Zappo - Option Types v2 - Check options loop, and add attributes accordingly...\cf0 \
+                \cf4 $attr_value \cf0 = NULL;\
+                \cf4 $blank_value \cf0 = \cf2 FALSE\cf0 ;\
+                \cf2 if \cf0 (strstr(\cf4 $option\cf0 , TEXT_PREFIX)) \{  \cf5 //Check for Text and Upload Options\cf0 \
+                  \cf2 if \cf0 (trim(\cf4 $value\cf0 ) == NULL) \{ \cf5 //Check if the Text Option has a value (Or is the value blank?)\cf0 \
+                    \cf4 $blank_value \cf0 = \cf2 TRUE\cf0 ;\
+                  \} \cf2 else \cf0 \{                               \cf5 //Value is valid and contains data --> Add Text Option value\cf0 \
+                    \cf4 $option \cf0 = str_replace(TEXT_PREFIX,\cf3 ''\cf0 ,\cf4 $option\cf0 );\
+                    \cf4 $attr_value \cf0 = htmlspecialchars(stripslashes(\cf4 $value\cf0 ), ENT_QUOTES);\
+                    \cf4 $value \cf0 = OPTIONS_VALUE_TEXT_ID;\
+                    \cf4 $this\cf0 ->contents[\cf4 $products_id_string\cf0 ][\cf3 'attributes_values'\cf0 ][\cf4 $option\cf0 ] = \cf4 $attr_value\cf0 ;\
+                  \}\
+                \}\
+\
+                \cf2 if \cf0 (!\cf4 $blank_value\cf0 ) \{  \cf5 // If the Value is valid and Contains Data, add the option to the Cart....\cf0 \
+                  \cf4 $this\cf0 ->contents[\cf4 $products_id_string\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $option\cf0 ] = \cf4 $value\cf0 ;\
+\cf5 // insert into database\cf0 \
+                  \cf5 // - Zappo - Option Types v2 - Added products_options_value_text For saving Text and Upload Option Values\cf0 \
+                  \cf2 if \cf0 (tep_session_is_registered(\cf3 'customer_id'\cf0 )) tep_db_query(\cf3 "insert into " \cf0 . TABLE_CUSTOMERS_BASKET_ATTRIBUTES . \cf3 " (customers_id, products_id, products_options_id, products_options_value_id, products_options_value_text) values ('" \cf0 . (int)\cf4 $customer_id \cf0 . \cf3 "', '" \cf0 . tep_db_input(\cf4 $products_id_string\cf0 ) . \cf3 "', '" \cf0 . \cf4 $option \cf0 . \cf3 "', '" \cf0 . (int)\cf4 $value \cf0 . \cf3 "', '" \cf0 . tep_db_input(\cf4 $attr_value\cf0 ) . \cf3 "')"\cf0 );\
+                \}\
+\cf5 //EOF - Zappo - Option Types v2 - Check options loop, and add attributes accordingly...\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 *** FIND ***\
+\
+\pard\pardeftab720\ql\qnatural
+\cf14 \
+\pard\pardeftab720\ql\qnatural
+\cf2 if \cf0 (\ul is_array\ulnone (\cf4 $attributes\cf0 )) \{\
+        \ul reset\ulnone (\cf4 $attributes\cf0 );\
+        \cf2 while \cf0 (\cf2 \ul \ulc2 list\cf0 \ulc0 (\cf4 \ulc4 $option\cf0 \ulc0 , \cf4 \ulc4 $value\cf0 \ulc0 ) = each(\cf4 \ulc4 $attributes\cf0 \ulc0 )\ulnone ) \{\
+          \cf2 if \cf0 (!is_numeric(\cf4 $option\cf0 ) || !is_numeric(\cf4 $value\cf0 )) \{\
+            \cf4 $attributes_pass_check \cf0 = \cf2 false\cf0 ;\
+            \cf2 break\cf0 ;\
+          \}\
+        \}\
+      \}\
+\
+\
+*** REPLACE WITH ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Because of Text and Upload options, $option AND $value don't have to be numeric!\cf0 \
+\cf5 /*      if (is_array($attributes)) \{\cf0 \
+\cf5         reset($attributes);\cf0 \
+\cf5         while (list($option, $value) = each($attributes)) \{\cf0 \
+\cf5           if (!is_numeric($option) || !is_numeric($value)) \{\cf0 \
+\cf5             $attributes_pass_check = false;\cf0 \
+\cf5             break;\cf0 \
+\cf5           \}\cf0 \
+\cf5         \}\cf0 \
+\cf5       \} */\cf0 \
+\cf5 //EOF - Zappo - Option Types v2 - Because of Text and Upload options, $option AND $value don't have to be numeric!\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 *** FIND ***\
+\
+\
+ \cf4 $this\cf0 ->contents[\cf4 $products_id_string\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $option\cf0 ] = \cf4 $value\cf0 ;\
+\pard\pardeftab720\ql\qnatural
+\cf5 // update database\cf0 \
+            \cf2 if \cf0 (tep_session_is_registered(\cf3 'customer_id'\cf0 )) tep_db_query(\cf3 "update " \cf0 . TABLE_CUSTOMERS_BASKET_ATTRIBUTES . \cf3 " set products_options_value_id = '" \cf0 . (int)\cf4 $value \cf0 . \cf3 "' where customers_id = '" \cf0 . (int)\cf4 $customer_id \cf0 . \cf3 "' and products_id = '" \cf0 . tep_db_input(\cf4 $products_id_string\cf0 ) . \cf3 "' and products_options_id = '" \cf0 . (int)\cf4 $option \cf0 . \cf3 "'"\cf0 );\
+\
+\
+*** REPLACE WITH ***:\
+\
+\cf5 //BOF - Zappo - Option Types v2 - Check options loop for Text & Uploads, and add attributes accordingly...\cf0 \
+            \cf4 $attr_value \cf0 = NULL;\
+			      \cf4 $blank_value \cf0 = \cf2 FALSE\cf0 ;\
+            \cf2 if \cf0 (strstr(\cf4 $option\cf0 , TEXT_PREFIX)) \{  \cf5 //Check for Text and Upload Options\cf0 \
+              \cf2 if \cf0 (trim(\cf4 $value\cf0 ) == NULL) \{ \cf5 //Check if the Text Option has a value (Or is the value blank?)\cf0 \
+                \cf4 $blank_value \cf0 = \cf2 TRUE\cf0 ;\
+              \} \cf2 else \cf0 \{                               \cf5 //Value is valid and contains data --> Prepare for database\cf0 \
+                \cf4 $option \cf0 = str_replace(TEXT_PREFIX,\cf3 ''\cf0 ,\cf4 $option\cf0 );\
+                \cf4 $attr_value \cf0 = htmlspecialchars(stripslashes(\cf4 $value\cf0 ), ENT_QUOTES);\
+                \cf4 $value \cf0 = OPTIONS_VALUE_TEXT_ID;\
+                \cf4 $this\cf0 ->contents[\cf4 $products_id_string\cf0 ][\cf3 'attributes_values'\cf0 ][\cf4 $option\cf0 ] = \cf4 $attr_value\cf0 ;\
+              \}\
+            \} \
+            \cf2 if \cf0 (!\cf4 $blank_value\cf0 ) \{\
+              \cf4 $this\cf0 ->contents[\cf4 $products_id_string\cf0 ][\cf3 'attributes'\cf0 ][\cf4 $option\cf0 ] = \cf4 $value\cf0 ;\
+\cf5 // update database\cf0 \
+              \cf2 if \cf0 (tep_session_is_registered(\cf3 'customer_id'\cf0 )) tep_db_query(\cf3 "update " \cf0 . TABLE_CUSTOMERS_BASKET_ATTRIBUTES . \cf3 " set products_options_value_id = '" \cf0 . (int)\cf4 $value \cf0 . \cf3 "', products_options_value_text = '" \cf0 . tep_db_input(\cf4 $attr_value\cf0 ) . \cf3 "' where customers_id = '" \cf0 . (int)\cf4 $customer_id \cf0 . \cf3 "' and products_id = '" \cf0 . tep_db_input(\cf4 $products_id\cf0 ) . \cf3 "' and products_options_id = '" \cf0 . (int)\cf4 $option \cf0 . \cf3 "'"\cf0 );\
+            \}\
+\cf5 //EOF - Zappo - Option Types v2 - Check options loop for Text & Uploads, and add attributes accordingly...\cf0 \
+\
+\
+*** FIND ***\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf2 function \cf0 remove(\cf4 $products_id\cf0 ) \{\
+      \cf2 global \cf4 $customer_id\cf0 ;\
+\
+*** BELOW ADD *** : \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - ONE LINE - Add call to tep_get_uprid to correctly format product ids containing quotes\cf0 \
+      \cf4 $products_id \cf0 = tep_get_uprid(\cf4 $products_id\cf0 , \cf4 $attributes\cf0 );\
+\
+\
+*** FIND ***\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf4 $products_array\cf0 [] = \cf2 array\cf0 (\cf3 'id' \cf0 => \cf4 $products_id\cf0 ,\
+                                    \cf3 'name' \cf0 => \cf4 $products\cf0 [\cf3 'products_name'\cf0 ],\
+                                    \cf3 'model' \cf0 => \cf4 $products\cf0 [\cf3 'products_model'\cf0 ],\
+                                    \cf3 'image' \cf0 => \cf4 $products\cf0 [\cf3 'products_image'\cf0 ],\
+\
+*** BELOW ADD *** : \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - ONE LINE - Include attribute value_text. This is needed for text attributes.\cf0 \
+                                    \cf3 'attributes_values' \cf0 => (\cf2 isset\cf0 (\cf4 $this\cf0 ->contents[\cf4 $products_id\cf0 ][\cf3 'attributes_values'\cf0 ]) ? \cf4 $this\cf0 ->contents[\cf4 $products_id\cf0 ][\cf3 'attributes_values'\cf0 ] : \cf3 ''\cf0 ),\
+\
+\
+\
+***********\
+Open /catalog/includes/functions/general.php\
+\
+Find (around line 915)\
+\
+\pard\pardeftab720\ql\qnatural
+\cf2 function \cf0 tep_get_uprid(\cf4 $prid\cf0 , \cf4 $params\cf0 ) \{\
+    \cf2 if \cf0 (is_numeric(\cf4 $prid\cf0 )) \{\
+      \cf4 $uprid \cf0 = \cf4 $prid\cf0 ;\
+\
+      \cf2 if \cf0 (\ul is_array\ulnone (\cf4 $params\cf0 ) && (\ul sizeof\ulnone (\cf4 $params\cf0 ) > \cf6 0\cf0 )) \{\
+        \cf4 $attributes_check \cf0 = \cf2 true\cf0 ;\
+        \cf4 $attributes_ids \cf0 = \cf3 ''\cf0 ;\
+\
+        \ul reset\ulnone (\cf4 $params\cf0 );\
+        \cf2 while \cf0 (\cf2 \ul \ulc2 list\cf0 \ulc0 (\cf4 \ulc4 $option\cf0 \ulc0 , \cf4 \ulc4 $value\cf0 \ulc0 ) = each(\cf4 \ulc4 $params\cf0 \ulc0 )\ulnone ) \{\
+          \cf2 if \cf0 (is_numeric(\cf4 $option\cf0 ) && is_numeric(\cf4 $value\cf0 )) \{\
+            \cf4 $attributes_ids \cf0 .= \cf3 '\{' \cf0 . (int)\cf4 $option \cf0 . \cf3 '\}' \cf0 . (int)\cf4 $value\cf0 ;\
+          \} \cf2 else \cf0 \{\
+            \cf4 $attributes_check \cf0 = \cf2 false\cf0 ;\
+            \cf2 break\cf0 ;\
+          \}\
+        \}\
+\
+        \cf2 if \cf0 (\cf4 $attributes_check \cf0 == \cf2 true\cf0 ) \{\
+          \cf4 $uprid \cf0 .= \cf4 $attributes_ids\cf0 ;\
+        \}\
+      \}\
+    \} \cf2 else \cf0 \{\
+      \cf4 $uprid \cf0 = tep_get_prid(\cf4 $prid\cf0 );\
+\
+      \cf2 if \cf0 (is_numeric(\cf4 $uprid\cf0 )) \{\
+        \cf2 if \cf0 (\ul strpos\ulnone (\cf4 $prid\cf0 , \cf3 '\{'\cf0 ) !== \cf2 false\cf0 ) \{\
+          \cf4 $attributes_check \cf0 = \cf2 true\cf0 ;\
+          \cf4 $attributes_ids \cf0 = \cf3 ''\cf0 ;\
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 // strpos()+1 to remove up to and including the first \{ which would create an empty array element in explode()\cf0 \
+          \cf4 $attributes \cf0 = \ul explode\ulnone (\cf3 '\{'\cf0 , substr(\cf4 $prid\cf0 , strpos(\cf4 $prid\cf0 , \cf3 '\{'\cf0 )+\cf6 1\cf0 ));\
+\
+          \cf2 for \cf0 (\cf4 $i\cf0 =\cf6 0\cf0 , \cf4 $n\cf0 =\ul sizeof\ulnone (\cf4 $attributes\cf0 ); \cf4 $i\cf0 <\cf4 $n\cf0 ; \cf4 $i\cf0 ++) \{\
+            \cf4 $pair \cf0 = \ul explode\ulnone (\cf3 '\}'\cf0 , \cf4 $attributes\cf0 [\cf4 $i\cf0 ]);\
+\
+            \cf2 if \cf0 (is_numeric(\cf4 $pair\cf0 [\cf6 0\cf0 ]) && is_numeric(\cf4 $pair\cf0 [\cf6 1\cf0 ])) \{\
+              \cf4 $attributes_ids \cf0 .= \cf3 '\{' \cf0 . (int)\cf4 $pair\cf0 [\cf6 0\cf0 ] . \cf3 '\}' \cf0 . (int)\cf4 $pair\cf0 [\cf6 1\cf0 ];\
+            \} \cf2 else \cf0 \{\
+              \cf4 $attributes_check \cf0 = \cf2 false\cf0 ;\
+              \cf2 break\cf0 ;\
+            \}\
+          \}\
+\
+          \cf2 if \cf0 (\cf4 $attributes_check \cf0 == \cf2 true\cf0 ) \{\
+            \cf4 $uprid \cf0 .= \cf4 $attributes_ids\cf0 ;\
+          \}\
+        \}\
+      \} \cf2 else \cf0 \{\
+        \cf2 return false\cf0 ;\
+      \}\
+    \}\
+\
+\
+*** REPLACE WITH ***:  \
+\
+\
+  \cf2 function \cf0 tep_get_uprid(\cf4 $prid\cf0 , \cf4 $params\cf0 ) \{\
+\cf5 //BOF - Zappo - Option Types v2 - Adding Attributes\cf0 \
+    \cf4 $uprid \cf0 = \cf4 $prid\cf0 ;\
+    \cf2 if \cf0 ( (is_array(\cf4 $params\cf0 )) && (!strstr(\cf4 $prid\cf0 , \cf3 '\{'\cf0 )) ) \{\
+      \cf2 while \cf0 (\cf2 list\cf0 (\cf4 $option\cf0 , \cf4 $value\cf0 ) = each(\cf4 $params\cf0 )) \{\
+        \cf4 $uprid \cf0 = \cf4 $uprid \cf0 . \cf3 '\{' \cf0 . \cf4 $option \cf0 . \cf3 '\}' \cf0 . htmlspecialchars(stripslashes(trim(\cf4 $value\cf0 )), ENT_QUOTES);\
+      \}\
+    \} \cf2 else \cf0 \{\
+      \cf4 $uprid \cf0 = htmlspecialchars(stripslashes(\cf4 $uprid\cf0 ), ENT_QUOTES);\
+    \}\
+    \cf2 if \cf0 ( (is_array(\cf4 $params\cf0 )) && (!strstr(\cf4 $prid\cf0 , \cf3 '\{'\cf0 )) ) \{\
+      \cf2 while \cf0 (\cf2 list\cf0 (\cf4 $option\cf0 , \cf4 $value\cf0 ) = each(\cf4 $params\cf0 )) \{\
+        \cf4 $uprid \cf0 = \cf4 $uprid \cf0 . \cf3 '\{' \cf0 . \cf4 $option \cf0 . \cf3 '\}' \cf0 . \cf4 $value\cf0 ;\
+      \}\
+    \}\
+\cf5 //EOF - Zappo - Option Types v2 - Adding Attributes\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 *** FIND ***\
+\
+\
+ \cf2 function \cf0 tep_get_prid(\cf4 $uprid\cf0 ) \{\
+    \cf4 $pieces \cf0 = \ul explode\ulnone (\cf3 '\{'\cf0 , \cf4 $uprid\cf0 );\
+\
+    \cf2 if \cf0 (is_numeric(\cf4 $pieces\cf0 [\cf6 0\cf0 ])) \{\
+      \cf2 return \cf4 $pieces\cf0 [\cf6 0\cf0 ];\
+    \} \cf2 else \cf0 \{\
+      \cf2 return false\cf0 ;\
+    \}\
+  \}\
+\
+\
+*** REPLACE WITH ***: \
+\
+\
+  \cf2 function \cf0 tep_get_prid(\cf4 $uprid\cf0 ) \{\
+    \cf4 $pieces \cf0 = explode(\cf3 '\{'\cf0 , \cf4 $uprid\cf0 );\
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Always return $pieces\cf0 \
+      \cf2 return \cf4 $pieces\cf0 [\cf6 0\cf0 ];\
+\cf5 //EOF - Zappo - Option Types v2 - Always return $pieces\cf0 \
+  \}\
+\
+\
+\
+*** BEFORE THE END ?> ADD ***: \
+\
+\cf5 //BOF - Zappo - Option Types v2 - Add function tep_decode_specialchars\cf0 \
+\cf5 // Decode string encoded with htmlspecialchars()\cf0 \
+  \cf2 function \cf0 tep_decode_specialchars(\cf4 $string\cf0 )\{\
+    \cf4 $string\cf0 =str_replace(\cf3 '&gt;'\cf0 , \cf3 '>'\cf0 , \cf4 $string\cf0 );\
+    \cf4 $string\cf0 =str_replace(\cf3 '&lt;'\cf0 , \cf3 '<'\cf0 , \cf4 $string\cf0 );\
+    \cf4 $string\cf0 =str_replace(\cf3 '&#039;'\cf0 , \cf3 "'"\cf0 , \cf4 $string\cf0 );\
+    \cf4 $string\cf0 =str_replace(\cf3 '&quot;'\cf0 , \cf3 "\\""\cf0 , \cf4 $string\cf0 );\
+    \cf4 $string\cf0 =str_replace(\cf3 '&amp;'\cf0 , \cf3 '&'\cf0 , \cf4 $string\cf0 );\
+\
+    \cf2 return \cf4 $string\cf0 ;\
+  \}\
+\cf5 //EOF - Zappo - Option Types v2 - Add function tep_decode_specialchars\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf14 **********\
+Open /catalog/includes/languages/english.php\
+\
+\
+*** BEFORE THE END ?> ADD ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - File upload error strings\cf0 \
+define(\cf3 'ERROR_FILETYPE_NOT_ALLOWED'\cf0 , \cf3 'Error:  File type not allowed.'\cf0 );\
+define(\cf3 'WARNING_NO_FILE_UPLOADED'\cf0 , \cf3 'Warning:  no file uploaded.'\cf0 );\
+define(\cf3 'SUCCESS_FILE_SAVED_SUCCESSFULLY'\cf0 , \cf3 'Success:  file saved successfully.'\cf0 );\
+define(\cf3 'ERROR_FILE_NOT_SAVED'\cf0 , \cf3 'Error:  file not saved.'\cf0 );\
+define(\cf3 'ERROR_DESTINATION_NOT_WRITEABLE'\cf0 , \cf3 'Error:  destination not writeable.'\cf0 );\
+define(\cf3 'ERROR_DESTINATION_DOES_NOT_EXIST'\cf0 , \cf3 'Error: destination does not exist.'\cf0 );\
+\cf5 //EOF - Zappo - Option Types v2 - File upload error strings\cf0 \
+\cf5 \
+\pard\pardeftab720\ql\qnatural
+\cf0 *********\
+Open /catalog/includes/languages/english/product_info.php\
+\
+\
+*** BEFORE THE END ?> ADD ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - Option Types text defines\cf0 \
+define(\cf3 'TEXT_NONE'\cf0 , \cf3 '--none--'\cf0 );\
+define(\cf3 'TEXT_PREV_UPLOADS'\cf0 , \cf3 'Previous Files'\cf0 );\
+\cf5 //EOF - Zappo - Option Types v2 - Option Types text defines\
+\
+\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 *********\
+Open /catalog/includes/languages/english/shopping_cart.php\
+\
+*** BEFORE THE END ?> ADD ***: \
+\
+\pard\pardeftab720\ql\qnatural
+\cf5 //BOF - Zappo - Option Types v2 - ONE LINE - Added for new column in Cart...\cf0 \
+define(\cf3 'TABLE_HEADING_OPTIONS'\cf0 , \cf3 'Selected Option(s)'\cf0 );\
+\
+\
+*******\
+Save all files! \
+	}

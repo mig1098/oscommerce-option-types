@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------------
+Option Types v2.1.3
+- Fixed issue with products_attributes.php -> updating Text/Upload Options
+- Fixed issue with Image Types not being added
+- Went back to (Deprecated!!!) $HTTP_####_VARS (to avoid confusion)
+---------------------------------------------------------------------------------
+Option Types v2.1.2
+- Added Product Attribute Sorting Option (Sort dropdowns)
+- Added option for Text(Area) No Progress Bar at all
+- Fixed issue some people had with deleting directory "." and ".."
+- Fixed Attribute Manager installation Guide Typo (missing "*/")
+---------------------------------------------------------------------------------
+Option Types v2.1.1
+- Added missing SQL Query to "Update" installation guide for the Option Images
+- Fixed stupid "Cut and Paste Mistake" in option_types.php ($Image_Dropdown_ID)
+---------------------------------------------------------------------------------
+Option Types v2.1.0
+- Added "Option Type Images"
+  This is to switch a (preview-) image when the selection of a dropdown changes.
+  Function added after requests from people who've seen this functionality on
+  my website http://shop.crystalcopy.nl for selecting Fonts with the Text option.
+- Added Readme and "Update" installation guide for the Option Type Images
+---------------------------------------------------------------------------------
+Option Types v2.0.1
+- Previous Uploads List was not correct when using Multiple Upload fields
+- Couple of Bugs fixed for multiple fields
+- Seperated Attribute Manager from installation (Easier to just Add it if needed)
+- Added Attribute Manager installation guide
+- Fixed some bugs in Attribute Manager
+- Prepared Attribute Manager for "Products as Options"
+- Added Comments for changes made in Attribute Manager
+- Found some small mistakes in the Admin Language files
+- Updated (and renamed) the ReadMe
+
+- (Created "Products as Options" for "Product Types" and "Linked Products")
+- (Created "Option Types v2" support for "Linked Products")
+----------------------------------------------------------------------------------
+Option Types v2
+- Initial Release

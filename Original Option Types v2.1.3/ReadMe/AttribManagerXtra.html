@@ -1,0 +1,299 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>Option Types v2 - AttribManager - Remove Standard Product Attributes</title>
+		<style type="text/css">
+			* {
+				font-family: Arial;
+				font-family: 'Trebuchet MS' Arial;
+				font-size: 11px;
+			}
+			body {
+			  margin:20px;
+			}
+			h2 {
+				font-family: 'Trebuchet MS' Arial;
+				color:#000;
+				font-weight: bold;
+				font-size: 14px;
+			}
+			h1 {
+				font-family: 'Trebuchet MS' Arial;
+				color:#537f7e;
+				font-weight:bold;
+				font-size:18px;
+			}
+			pre {
+				font-family:courier new;
+				padding:9px;
+				font-size:10px;
+			
+			}
+			fieldset.main {
+				color: #000000;
+			 	border-color: #36CB33;
+        border-style:solid;
+        border-width:2px;
+			}
+			fieldset {
+				color: #000000;
+			 	border-color: #96CB33;
+        border-style:solid;
+        border-width:1px;
+			}
+			legend {
+			  font-weight:bold;
+			}
+			a {
+				color:#537f7e;
+				font-weight:bold;
+				text-decoration:none;
+			}
+			a:hover {
+				text-decoration:underline
+			}
+		</style>
+	</head>
+
+	<body>
+		<div>
+			<h1>Option Types v2 - Remove (the standard, unhandy and now obsolete) "Products Attributes"</h1>
+<a href="./AttribManager.html" taget="_self"><h2>- Back to Attribute Manager Installation guide</h2></a>
+<a href="../ReadMe.html" taget="_self"><h2>- Back to Main Option Types v2 ReadMe</h2></a>
+<br>
+<br>
+	
+1) Open admin/products_attributes.php
+<br/>
+<fieldset>
+<legend>Find (Around line 20 - with Option Types v2 Installed) </legend>
+<pre>
+  $attribute_page = (isset($HTTP_GET_VARS['attribute_page']) && is_numeric($HTTP_GET_VARS['attribute_page'])) ? $HTTP_GET_VARS['attribute_page'] : 1;
+</pre>
+</fieldset>
+<fieldset>
+<legend>Comment (or Remove) that line.</legend>
+<pre>
+//BOF - Zappo - Option Types v2 - AttribManager - ONE LINE - Comment next line to Remove (unhandy) Attributes Page
+//  $attribute_page = (isset($HTTP_GET_VARS['attribute_page']) && is_numeric($HTTP_GET_VARS['attribute_page'])) ? $HTTP_GET_VARS['attribute_page'] : 1;
+</pre>
+</fieldset>
+
+<br />
+<br />
+<fieldset class="main">
+<legend>Comment or Remove from around line 84 until around line 112:</legend>
+<fieldset>
+<legend>Find (Around line 84 - with Option Types v2 Installed) </legend>
+<pre>
+     case 'add_product_attributes':
+</pre>
+</fieldset>
+<fieldset>
+<legend>Start Commenting (or Removing) From that line:</legend>
+<pre>
+//BOF - Zappo - Option Types v2 - AttribManager - Start Comment here (with /*) to Remove (unhandy) Attributes Page
+/*     case 'add_product_attributes':
+</pre>
+</fieldset>
+<br/>
+<fieldset>
+<legend>Find (Around line 112 - with Option Types v2 Installed) </legend>
+<pre>
+        break;
+        case 'update_option_name':
+</pre>
+</fieldset>
+<fieldset>
+<legend>Stop Commenting (or Removing) after the "break;":</legend>
+<pre>
+        break; */
+//EOF - Zappo - Option Types v2 - AttribManager - Stop Comment here (with */) to Remove (unhandy) Attributes Page
+      case 'update_option_name':
+</pre>
+</fieldset>
+</fieldset>
+
+<br />
+<br />
+<fieldset class="main">
+<legend>Comment or Remove from around line 192 until around line 227:</legend>
+<fieldset>
+<legend>Find (Around line 192 - with Option Types v2 Installed) </legend>
+<pre>
+     case 'update_product_attribute':
+</pre>
+</fieldset>
+<fieldset>
+<legend>Start Commenting (or Removing) From that line:</legend>
+<pre>
+//BOF - Zappo - Option Types v2 - AttribManager - Start Comment here (with /*) to Remove (unhandy) Attributes Page
+/*      case 'update_product_attribute':
+</pre>
+</fieldset>
+<br/>
+<fieldset>
+<legend>Find (Around line 227 - with Option Types v2 Installed) </legend>
+<pre>
+        break;
+        case 'delete_option':
+</pre>
+</fieldset>
+<fieldset>
+<legend>Stop Commenting (or Removing) after the "break;":</legend>
+<pre>
+        break;  */
+//EOF - Zappo - Option Types v2 - AttribManager - Stop Comment here (with */) to Remove (unhandy) Attributes Page
+      case 'delete_option':
+</pre>
+</fieldset>
+</fieldset>
+
+<br />
+<br />
+<fieldset class="main">
+<legend>Comment or Remove from around line 246 until around line 256:</legend>
+<fieldset>
+<legend>Find (Around line 246 - with Option Types v2 Installed) </legend>
+<pre>
+     case 'delete_attribute':
+</pre>
+</fieldset>
+<fieldset>
+<legend>Start Commenting (or Removing) From that line:</legend>
+<pre>
+//BOF - Zappo - Option Types v2 - AttribManager - Start Comment here (with /*) to Remove (unhandy) Attributes Page
+/*      case 'delete_attribute':
+</pre>
+</fieldset>
+<br/>
+<fieldset>
+<legend>Find (Around line 255 - with Option Types v2 Installed) </legend>
+<pre>
+        tep_redirect(tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, $page_info));
+        break;
+</pre>
+</fieldset>
+<fieldset>
+<legend>Stop Commenting (or Removing) after the "break;":</legend>
+<pre>
+        tep_redirect(tep_href_link(FILENAME_PRODUCTS_ATTRIBUTES, $page_info));
+        break; */
+//EOF - Zappo - Option Types v2 - AttribManager - Stop Comment here (with */) to Remove (unhandy) Attributes Page
+</pre>
+</fieldset>
+</fieldset>
+
+<br />
+<br />
+<fieldset>
+<legend>Find (Around line 305 - with Option Types v2 Installed) </legend>
+<pre>
+&lt;!-- options and values//--&gt;
+      &lt;tr&gt;
+        &lt;td width="100%"&gt;&lt;table width="100%" border="0" cellspacing="0" cellpadding="0"&gt;
+          &lt;tr&gt;
+            &lt;td valign="top" width="50%"&gt;&lt;table width="100%" border="0" cellspacing="0" cellpadding="2"&gt;
+</pre>
+</fieldset>
+<fieldset>
+<legend>Replace With:</legend>
+<pre>
+&lt;!-- options and values//--&gt;
+      &lt;tr&gt;
+        &lt;td width="100%"&gt;&lt;table width="100%" border="0" cellspacing="0" cellpadding="0"&gt;
+ &lt;?php
+//BOF - Zappo - Option Types v2 - AttribManager - Rearanged Product options and Option Values
+/*          &lt;tr&gt;
+            &lt;td valign="top" width="50%"&gt;&lt;table width="100%" border="0" cellspacing="0" cellpadding="2"&gt; */
+//EOF - Zappo - Option Types v2 - AttribManager - Rearanged Product options and Option Values
+?&gt;
+</pre>
+</fieldset>
+
+<br />
+<br />
+<fieldset>
+<legend>Find (Around line 496 - with Option Types v2 Installed) </legend>
+<pre>
+&lt;!-- options eof //--&gt;
+            &lt;td valign="top" width="50%"&gt;&lt;table width="100%" border="0" cellspacing="0" cellpadding="2"&gt;
+</pre>
+</fieldset>
+<fieldset>
+<legend>Replace With:</legend>
+<pre>
+&lt;!-- options eof //--&gt;
+//BOF - Zappo - Option Types v2 - AttribManager - Rearanged Product options and Option Values
+?&gt;
+      &lt;/tr&gt;
+        &lt;tr&gt;
+        &lt;td width="100%"&gt;&lt;table width="100%" border="0" cellspacing="0" cellpadding="0"&gt;
+&lt;?php
+/*            &lt;td valign="top" width="50%"&gt;&lt;table width="100%" border="0" cellspacing="0" cellpadding="2"&gt; */
+//EOF - Zappo - Option Types v2 - AttribManager - Rearanged Product options and Option Values
+?&gt;
+</pre>
+</fieldset>
+
+<br />
+<br />
+<fieldset class="main">
+<legend>Comment or Remove from around line 714 until around line 956:</legend>
+<fieldset>
+<legend>Find (Around line 714 - with Option Types v2 Installed) </legend>
+<pre>
+&lt;!-- option value eof //--&gt;
+</pre>
+</fieldset>
+<fieldset>
+<legend> Below add: (Start Commenting (or Removing) after that line)</legend>
+<pre>
+&lt;?php
+//BOF - Zappo - Option Types v2 - AttribManager - Start Comment here (with /*) to Remove (unhandy) Attributes Page
+/* ?&gt;
+</pre>
+</fieldset>
+<br />
+<fieldset>
+<legend>Find (Around line 956- with Option Types v2 Installed) </legend>
+<pre>
+&lt;!-- products_attributes_eof //--&gt;
+</pre>
+</fieldset>
+<fieldset>
+<legend> Below add: (Stop Commenting (or Removing) after that line)</legend>
+<pre>
+&lt;?php */
+//EOF - Zappo - Option Types v2 - AttribManager - Stop Comment here (with */) to Remove (unhandy) Attributes Page
+?&gt;
+</pre>
+</fieldset>
+</fieldset>
+
+<br />
+<br />
+<a name="Rename"></a><fieldset class="main">
+<legend>To Rename "Products Attributes in Admin (to Products Options):</legend>
+1) Open admin/includes/languages/english.php (And any other Language files)
+<fieldset>
+<legend>Find (Around line 74) </legend>
+<pre>
+define('BOX_CATALOG_CATEGORIES_PRODUCTS_ATTRIBUTES', 'Products Attributes');
+</pre>
+</fieldset>
+<fieldset>
+<legend>Replace With:</legend>
+<pre>
+//BOF - Zappo - Option Types v2 - AttribManager - Changed Admin Menu name (No more Attributes there!)
+define('BOX_CATALOG_CATEGORIES_PRODUCTS_ATTRIBUTES', 'Products Options');
+</pre>
+</fieldset>
+</fieldset>
+<br><br>
+<a href="./AttribManager.html" taget="_self"><h2>- Back to Attribute Manager Installation guide</h2></a>
+<a href="../ReadMe.html" taget="_self"><h2>- Back to Main Option Types v2 ReadMe</h2></a>
+<br>
+		</div>
+	</body>
+</html>
