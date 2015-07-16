@@ -3,5 +3,5 @@
 
 not still fixed for files upload
 
-osccomerce addons link original <br/>
+osccomerce addons original link  <br/>
 Option Types 2.3.1 : http://addons.oscommerce.com/info/8193/v,23
